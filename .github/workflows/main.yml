@@ -22,11 +22,11 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
-      - run: npm install
-      - run: npx nx-cloud start-ci-run
-      - run: npx nx affected --target=build --parallel --max-parallel=3
-      - run: npx nx affected --target=test --parallel --max-parallel=2
-      - run: npx nx-cloud stop-all-agents
+      - run: yarn
+      - run: yarn nx-cloud start-ci-run
+      - run: yarn nx affected --target=build --parallel --max-parallel=3
+      - run: yarn nx affected --target=test --parallel --max-parallel=2
+      - run: yarn nx-cloud stop-all-agents
   pr:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
@@ -40,11 +40,11 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
-      - run: npm install
-      - run: npx nx-cloud start-ci-run
-      - run: npx nx affected --target=build --parallel --max-parallel=3
-      - run: npx nx affected --target=test --parallel --max-parallel=2
-      - run: npx nx-cloud stop-all-agents
+      - run: yarn
+      - run: yarn nx-cloud start-ci-run
+      - run: yarn nx affected --target=build --parallel --max-parallel=3
+      - run: yarn nx affected --target=test --parallel --max-parallel=2
+      - run: yarn nx-cloud stop-all-agents
   agents:
     runs-on: ubuntu-latest
     name: Agent 1
@@ -57,6 +57,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
-      - run: npm install
+      - run: yarn
       - name: Start Nx Agent ${{ matrix.agent }}
-        run: npx nx-cloud start-agent
+        run: yarn nx-cloud start-agent
