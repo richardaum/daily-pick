@@ -3,6 +3,7 @@
  * This is only a minimal backend to get started.
  */
 
+import 'dotenv-flow/config';
 import * as express from 'express';
 
 const app = express();
