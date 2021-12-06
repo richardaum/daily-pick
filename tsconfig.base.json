@@ -5,16 +5,24 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
     "lib": ["es2017", "dom"],
+    "strict": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@daily-pick/bolt": ["libs/bolt/src/index.ts"],
+      "@daily-pick/database": ["libs/database/src/index.ts"],
+      "@daily-pick/express": ["libs/express/src/index.ts"],
+      "@daily-pick/get-port": ["libs/get-port/src/index.ts"],
+      "@daily-pick/routes": ["libs/routes/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

@@ -1,6 +1,11 @@
 {
   "version": 2,
   "projects": {
-    "api": "apps/api"
+    "api": "apps/api",
+    "bolt": "libs/bolt",
+    "database": "libs/database",
+    "express": "libs/express",
+    "get-port": "libs/get-port",
+    "routes": "libs/routes"
   }
 }
