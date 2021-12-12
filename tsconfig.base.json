@@ -18,6 +18,7 @@
     "baseUrl": ".",
     "paths": {
       "@daily-pick/bolt": ["libs/bolt/src/index.ts"],
+      "@daily-pick/cron": ["libs/cron/src/index.ts"],
       "@daily-pick/database": ["libs/database/src/index.ts"],
       "@daily-pick/express": ["libs/express/src/index.ts"],
       "@daily-pick/get-port": ["libs/get-port/src/index.ts"],

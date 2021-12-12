@@ -1,4 +1,5 @@
 import '@daily-pick/routes';
+import '@daily-pick/cron';
 
 import { PORT } from './constants';
 import { api } from '@daily-pick/express';

@@ -1,8 +1,8 @@
-import { slack } from '@daily-pick/bolt';
 import { SlackViewAction } from '@slack/bolt';
-import { addSeconds, getUnixTime } from 'date-fns';
 import { Response } from 'express';
 import { Request, ViewSubmissionRequest } from './types';
+import { schedule } from '@daily-pick/cron';
+import { slack } from '@daily-pick/bolt';
 
 export function isSubmitting(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
@@ -25,6 +25,16 @@ export async function submit(req: Request, res: Response) {
       response_action: 'errors',
       errors: { repeat_every_week_monday: 'Please select at least one week day' },
     });
+
+  // eslint-disable-next-line no-debugger
+  debugger;
+  inputs.filter(Boolean).forEach(async (input) => {
+    // schedule(`0 ${input.value}`, () => {
+    //   slack.client.chat.postMessage({
+    //     channel: payload.view.private_metadata,
+    //   });
+    // });
+  });
 
   res.end();
 }

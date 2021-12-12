@@ -30,10 +30,14 @@ export async function openModal(req: SlashCommandRequest, res: Response) {
     )
     .buildToObject();
 
-  await slack.client.views.open({
-    trigger_id: req.body.trigger_id,
-    view: modal,
-  });
+  try {
+    await slack.client.views.open({
+      trigger_id: req.body.trigger_id,
+      view: modal,
+    });
+  } catch (e) {
+    console.error(JSON.stringify(e, null, 2));
+  }
 
-  res.end();
+  res.send(modal);
 }
