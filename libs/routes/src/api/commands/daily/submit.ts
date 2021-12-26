@@ -1,14 +1,14 @@
 import { SlackViewAction } from '@slack/bolt';
 import { Response } from 'express';
-import { Request, ViewSubmissionRequest } from './types';
+import { Request, ViewSubmissionRequest } from './utils/types';
 import { schedule } from '@daily-pick/cron';
 import { slack } from '@daily-pick/bolt';
 
 export function isSubmitting(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
-  const from = payload.view?.external_id;
-  return payload.type === 'view_submission' && from === 'modal_repeat_every_week';
+  const from = payload.view?.callback_id;
+  return payload.type === 'view_submission' && from === 'updateModalRepeatEveryWeek';
 }
 
 export async function submit(req: Request, res: Response) {
@@ -26,15 +26,23 @@ export async function submit(req: Request, res: Response) {
       errors: { repeat_every_week_monday: 'Please select at least one week day' },
     });
 
-  // eslint-disable-next-line no-debugger
-  debugger;
-  inputs.filter(Boolean).forEach(async (input) => {
-    // schedule(`0 ${input.value}`, () => {
-    //   slack.client.chat.postMessage({
-    //     channel: payload.view.private_metadata,
-    //   });
-    // });
-  });
+  inputs
+    .filter((i) => i.value != null)
+    .map((i) => {
+      const [hour, minute] = (i.value as string).split(':');
+      return { ...i, value: { hour, minute } };
+    })
+    .forEach(async (input) => {
+      const dayWeek = input.weekday.slice(0, 3).toUpperCase();
+      const { hour, minute } = input.value;
+      const interval = `0 ${minute} ${hour} * * ${dayWeek}`;
+      schedule(interval, () => {
+        slack.client.chat.postMessage({
+          channel: payload.view.private_metadata,
+          text: `:tada: It's time to pick a daily pick! :tada:`,
+        });
+      });
+    });
 
   res.end();
 }

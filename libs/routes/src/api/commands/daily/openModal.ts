@@ -1,7 +1,7 @@
 import { slack } from '@daily-pick/bolt';
 import { Response } from 'express';
 import { Blocks, Elements, Modal, Option } from 'slack-block-builder';
-import { Request, SlashCommandRequest } from './types';
+import { Request, SlashCommandRequest } from './utils/types';
 
 export function isRequestingToOpenModal(req: Request): req is SlashCommandRequest {
   return 'trigger_id' in req.body;
@@ -9,10 +9,9 @@ export function isRequestingToOpenModal(req: Request): req is SlashCommandReques
 
 export async function openModal(req: SlashCommandRequest, res: Response) {
   const modal = Modal({
-    callbackId: 'daily-pick',
+    callbackId: 'openModal',
     title: 'Daily Pick',
     submit: 'Next',
-    externalId: 'first_modal',
     privateMetaData: req.body.channel_id,
   })
     .blocks(
@@ -30,14 +29,10 @@ export async function openModal(req: SlashCommandRequest, res: Response) {
     )
     .buildToObject();
 
-  try {
-    await slack.client.views.open({
-      trigger_id: req.body.trigger_id,
-      view: modal,
-    });
-  } catch (e) {
-    console.error(JSON.stringify(e, null, 2));
-  }
+  await slack.client.views.open({
+    trigger_id: req.body.trigger_id,
+    view: modal,
+  });
 
-  res.send(modal);
+  res.end();
 }

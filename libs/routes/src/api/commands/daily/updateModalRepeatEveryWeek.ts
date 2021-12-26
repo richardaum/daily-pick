@@ -1,23 +1,22 @@
-import { Request, ViewSubmissionRequest } from './types';
+import { Request, ViewSubmissionRequest } from './utils/types';
 import { Response } from 'express';
 import { SlackViewAction } from '@slack/bolt';
 import { Blocks, Elements, Modal } from 'slack-block-builder';
-import { CustomBlocks } from './CustomBlocks';
+import { CustomBlocks } from './utils/CustomBlocks';
 
 export function isGoingToRepeatEveryWeekView(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
-  const from = payload.view?.external_id;
-  return payload.type === 'view_submission' && from === 'first_modal';
+  const from = payload.view?.callback_id;
+  return payload.type === 'view_submission' && from === 'openModal';
 }
 
 export async function updateModalRepeatEveryWeek(req: Request, res: Response) {
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
   const view = Modal({
-    callbackId: 'daily-pick',
+    callbackId: 'updateModalRepeatEveryWeek',
     title: 'Daily Pick',
     submit: 'Submit',
-    externalId: 'modal_repeat_every_week',
     privateMetaData: payload.view.private_metadata,
   })
     .blocks(
