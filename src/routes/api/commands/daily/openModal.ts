@@ -18,16 +18,15 @@ export async function openModal(req: SlashCommandRequest, res: Response) {
   })
     .blocks(
       Blocks.Input({ label: 'Select users', blockId: 'participants' }).element(
-        Elements.UserMultiSelect({ actionId: 'participants_select' })
+        Elements.UserMultiSelect({ actionId: 'participants_select', placeholder: 'Pick users here' })
       ),
-      Blocks.Input({ label: 'Repeat', blockId: 'repeat' }).element(
-        Elements.StaticSelect({ actionId: 'repeat_select' }).options(
-          Option({
-            text: 'Every week',
-            value: 'every-weeek',
-          })
+      Blocks.Input({ label: 'Repeat', blockId: 'repeat' })
+        .dispatchAction(true)
+        .element(
+          Elements.StaticSelect({ actionId: 'repeat_select' }).options(
+            Option({ text: 'Every week', value: 'every-weeek' })
+          )
         )
-      )
     )
     .buildToObject();
 
