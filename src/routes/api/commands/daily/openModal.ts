@@ -13,21 +13,10 @@ export async function openModal(req: SlashCommandRequest, res: Response) {
   const modal = Modal({
     callbackId: 'openModal',
     title: 'Daily Pick',
-    submit: 'Next',
+    submit: 'Submit',
     privateMetaData: req.body.channel_id,
   })
-    .blocks(
-      Blocks.Input({ label: 'Select users', blockId: 'participants' }).element(
-        Elements.UserMultiSelect({ actionId: 'participants_select', placeholder: 'Pick users here' })
-      ),
-      Blocks.Input({ label: 'Repeat', blockId: 'repeat' })
-        .dispatchAction(true)
-        .element(
-          Elements.StaticSelect({ actionId: 'repeat_select' }).options(
-            Option({ text: 'Every week', value: 'every-weeek' })
-          )
-        )
-    )
+    .blocks(...openModalBlocks())
     .buildToObject();
 
   await slack.client.views.open({
@@ -36,4 +25,15 @@ export async function openModal(req: SlashCommandRequest, res: Response) {
   });
 
   res.end();
+}
+
+export function openModalBlocks() {
+  return [
+    Blocks.Input({ label: 'Select users', blockId: 'participants' }).element(
+      Elements.UserMultiSelect({ actionId: 'participants_select', placeholder: 'Pick users here' })
+    ),
+    Blocks.Input({ label: 'Repeat', blockId: 'repeat' })
+      .dispatchAction(true)
+      .element(Elements.StaticSelect({ actionId: 'repeat_select' }).options(Option({ text: 'Daily', value: 'daily' }))),
+  ];
 }

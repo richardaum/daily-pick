@@ -1,6 +1,7 @@
 import { SlackViewAction } from '@slack/bolt';
 import { Response } from 'express';
 
+import { repeatDailyPrefix, timePickerSufix } from './isDaily';
 import { Request, ViewSubmissionRequest } from './utils/types';
 
 import { scheduleMultiple } from '@/services/cron';
@@ -12,15 +13,15 @@ export function isSubmitting(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
   const from = payload.view?.callback_id;
-  return payload.type === 'view_submission' && from === 'updateModalRepeatEveryWeek';
+  return payload.type === 'view_submission' && from === 'updateModalRepeatDaily';
 }
 
 export async function submit(req: Request, res: Response) {
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
 
   const inputs = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].map((weekday) => {
-    const block = payload.view.state.values[`repeat_every_week_${weekday}`];
-    const action = block[`${weekday}_time_picker`];
+    const block = payload.view.state.values[`${repeatDailyPrefix}_${weekday}`];
+    const action = block[`${weekday}_${timePickerSufix}`];
     return { value: action.selected_time, weekday };
   });
 
@@ -28,7 +29,7 @@ export async function submit(req: Request, res: Response) {
     res.send({
       response_action: 'errors',
       errors: {
-        repeat_every_week_monday: 'Please select at least one week day',
+        repeat_daily_monday: 'Please select at least one week day',
       },
     });
     return;
