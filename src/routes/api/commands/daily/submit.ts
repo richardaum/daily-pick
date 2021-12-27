@@ -3,8 +3,8 @@ import { Response } from 'express';
 
 import { Request, ViewSubmissionRequest } from './utils/types';
 
-import { slack } from '@/bolt';
-import { schedule } from '@/cron';
+import { scheduleSingle } from '@/cron';
+import { slack } from '@/slack';
 
 export function isSubmitting(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
@@ -52,7 +52,7 @@ export async function submit(req: Request, res: Response) {
       const dayWeek = input.weekday.slice(0, 3).toUpperCase();
       const { hour, minute } = input.value;
       const interval = `0 ${minute} ${hour} * * ${dayWeek}`;
-      schedule(interval, () => {
+      scheduleSingle(interval, () => {
         slack.client.chat.postMessage({
           channel: payload.view.private_metadata,
           text: `:tada: It's time to pick a daily pick! :tada:`,

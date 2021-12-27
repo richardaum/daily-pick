@@ -3,7 +3,7 @@ import { Blocks, Elements, Modal, Option } from 'slack-block-builder';
 
 import { Request, SlashCommandRequest } from './utils/types';
 
-import { slack } from '@/bolt';
+import { slack } from '@/slack';
 
 export function isRequestingToOpenModal(
   req: Request

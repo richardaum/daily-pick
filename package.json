@@ -10,7 +10,7 @@
   "keywords": [],
   "scripts": {
     "start": "TS_NODE_PROJECT=tsconfig.node.json node build/main/index.js",
-    "dev": "ts-node src/index.ts",
+    "dev": "ts-node-dev --inspect -- src/index.ts",
     "build": "run-p build:*",
     "build:main": "tsc -p tsconfig.build.json",
     "fix": "run-s fix:*",
@@ -39,7 +39,7 @@
     "cron": "^1.8.2",
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.2",
-    "firebase": "^9.6.1",
+    "firebase-admin": "^10.0.1",
     "slack-block-builder": "^2.4.2",
     "tsconfig-paths": "^3.12.0"
   },
@@ -64,6 +64,7 @@
     "standard-version": "^9.0.0",
     "supertest": "^6.1.6",
     "ts-node": "^9.0.0",
+    "ts-node-dev": "^1.1.8",
     "typescript": "4.4.4"
   },
   "files": [
@@ -81,12 +82,7 @@
     }
   },
   "prettier": {
-    "singleQuote": true
-  },
-  "nyc": {
-    "extends": "@istanbuljs/nyc-config-typescript",
-    "exclude": [
-      "**/*.spec.js"
-    ]
+    "singleQuote": true,
+    "printWidth": 120
   }
 }

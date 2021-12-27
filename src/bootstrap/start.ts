@@ -1,9 +1,13 @@
+import '@/database';
 import '@/routes';
 import '@/cron';
 
 import { Server } from 'http';
 
+import { schedule } from './schedule';
+
 import { PORT } from '@/constants';
+import { importUsers } from '@/database/import';
 import { api } from '@/express';
 import { getPort } from '@/get-port';
 
@@ -13,6 +17,9 @@ type Api = {
 };
 
 export const startServer = async () => {
+  await importUsers();
+  await schedule();
+
   const port = await getPort({ port: PORT });
 
   return new Promise<Api>((resolve) => {

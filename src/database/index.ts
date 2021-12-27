@@ -1,11 +1,17 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore/lite';
+import { firestore } from 'firebase-admin';
+import { cert, initializeApp } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
 
-const rawConfig = Buffer.from(
-  process.env.FIREBASE_CONFIG as string,
-  'base64'
-).toString('utf8');
-const credential = JSON.parse(rawConfig);
+const serviceAccount = JSON.parse(
+  Buffer.from(process.env.FIREBASE_CONFIG as string, 'base64').toString('utf8')
+);
 
-export const firebase = initializeApp(credential);
+export const firebase = initializeApp({ credential: cert(serviceAccount) });
+
 export const database = getFirestore(firebase);
+
+database.settings({
+  ignoreUndefinedProperties: true,
+});
+
+export type Timestamp = firestore.Timestamp;
