@@ -3,11 +3,9 @@ import { Blocks, Elements, Modal, Option } from 'slack-block-builder';
 
 import { Request, SlashCommandRequest } from './utils/types';
 
-import { slack } from '@/slack';
+import { slack } from '@/services/slack';
 
-export function isRequestingToOpenModal(
-  req: Request
-): req is SlashCommandRequest {
+export function isRequestingToOpenModal(req: Request): req is SlashCommandRequest {
   return 'trigger_id' in req.body;
 }
 

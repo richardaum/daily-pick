@@ -1,4 +1,4 @@
-import { Timestamp } from '@/database';
+import { Timestamp } from '@/services/database';
 
 export type Cron = {
   channel: string;

@@ -1,15 +1,11 @@
-import { database } from '@/database';
-import { Queue } from '@/queue';
+import { Queue } from '@/models/queue';
+import { database } from '@/services/database';
 import { Cron, User } from '@/types';
 
 export const getCurrentUser = async (team: string, channel: string) => {
   let currentUserSnapshot, currentUser, currentUserId;
 
-  const channelRef = database
-    .collection('teams')
-    .doc(team)
-    .collection('channels')
-    .doc(channel);
+  const channelRef = database.collection('teams').doc(team).collection('channels').doc(channel);
 
   const usersRef = channelRef.collection('users');
 

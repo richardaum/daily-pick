@@ -1,15 +1,15 @@
-import '@/database';
+import '@/services/database';
 import '@/routes';
-import '@/cron';
+import '@/services/cron';
 
 import { Server } from 'http';
 
 import { schedule } from './schedule';
 
 import { PORT } from '@/constants';
-import { importUsers } from '@/database/import';
-import { api } from '@/express';
-import { getPort } from '@/get-port';
+import { importUsers } from '@/services/database/import';
+import { api } from '@/services/express';
+import { getPort } from '@/services/get-port';
 
 type Api = {
   readonly server: Server;

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { api } from '@/express';
+import { api } from '@/services/express';
 
 api.get('/api/event', async (req: Request, res: Response) => {
   res.json({ challenge: req.body.challenge });

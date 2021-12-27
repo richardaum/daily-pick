@@ -1,8 +1,8 @@
-import { scheduleMultiple } from '@/cron';
-import { importCrons } from '@/database/crons';
-import { updateCurrentUser } from '@/database/update';
-import { getCurrentUser } from '@/database/users';
-import { slack } from '@/slack';
+import { scheduleMultiple } from '@/services/cron';
+import { importCrons } from '@/services/database/crons';
+import { updateCurrentUser } from '@/services/database/update';
+import { getCurrentUser } from '@/services/database/users';
+import { slack } from '@/services/slack';
 
 export const schedule = async () => {
   const intervals = await importCrons();

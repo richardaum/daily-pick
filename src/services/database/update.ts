@@ -1,11 +1,7 @@
-import { database } from '@/database';
+import { database } from '@/services/database';
 import { User } from '@/types';
 
-export const updateCurrentUser = async (
-  team: string,
-  channel: string,
-  user: User
-) => {
+export const updateCurrentUser = async (team: string, channel: string, user: User) => {
   await database
     .collection('teams')
     .doc(team)

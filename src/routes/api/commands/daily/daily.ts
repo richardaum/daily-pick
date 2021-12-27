@@ -1,12 +1,9 @@
 import { isRequestingToOpenModal, openModal } from './openModal';
 import { isSubmitting, submit } from './submit';
-import {
-  isEveryWeek,
-  updateModalRepeatEveryWeek,
-} from './updateModalRepeatEveryWeek';
+import { isEveryWeek, updateModalRepeatEveryWeek } from './updateModalRepeatEveryWeek';
 import { Request } from './utils/types';
 
-import { api } from '@/express';
+import { api } from '@/services/express';
 
 api.post('/api/commands/daily/pick', async (req: Request, res) => {
   if (isRequestingToOpenModal(req)) return await openModal(req, res);
