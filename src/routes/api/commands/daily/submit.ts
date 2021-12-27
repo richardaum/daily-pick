@@ -3,8 +3,10 @@ import { Response } from 'express';
 
 import { Request, ViewSubmissionRequest } from './utils/types';
 
-import { scheduleSingle } from '@/services/cron';
-import { slack } from '@/services/slack';
+import { scheduleMultiple } from '@/services/cron';
+import { updateCurrentUser } from '@/services/database/update';
+import { getCurrentUser } from '@/services/database/users';
+import { postMessage } from '@/services/slack';
 
 export function isSubmitting(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
@@ -42,11 +44,12 @@ export async function submit(req: Request, res: Response) {
       const dayWeek = input.weekday.slice(0, 3).toUpperCase();
       const { hour, minute } = input.value;
       const interval = `0 ${minute} ${hour} * * ${dayWeek}`;
-      scheduleSingle(interval, () => {
-        slack.client.chat.postMessage({
-          channel: payload.view.private_metadata,
-          text: `:tada: It's time to pick a daily pick! :tada:`,
-        });
+      const channel = payload.view.private_metadata;
+      const cron = { interval, team: payload.view.team_id, channel };
+      scheduleMultiple([cron], async (cron) => {
+        const { current, next } = await getCurrentUser(cron.team, cron.channel);
+        await postMessage({ channel: cron.channel, current: current.name, next: next.name });
+        await updateCurrentUser(cron.team, cron.channel, next);
       });
     });
 

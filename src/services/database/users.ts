@@ -6,7 +6,6 @@ export const getCurrentUser = async (team: string, channel: string) => {
   let currentUserSnapshot, currentUser, currentUserId;
 
   const channelRef = database.collection('teams').doc(team).collection('channels').doc(channel);
-
   const usersRef = channelRef.collection('users');
 
   const cronSnapshot = await channelRef.get();
