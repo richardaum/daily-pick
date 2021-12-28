@@ -4,10 +4,9 @@ import '@/services/cron';
 
 import { Server } from 'http';
 
-// import { schedule } from './schedule';
+import { schedule } from './schedule';
 
 import { PORT } from '@/constants';
-import { importUsers } from '@/services/database/import';
 import { api } from '@/services/express';
 import { getPort } from '@/services/get-port';
 
@@ -17,8 +16,7 @@ type Api = {
 };
 
 export const startServer = async () => {
-  await importUsers();
-  // await schedule();
+  await schedule();
 
   const port = await getPort({ port: PORT });
 

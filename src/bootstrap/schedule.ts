@@ -1,15 +1,17 @@
 import { scheduleMultiple } from '@/services/cron';
-import { importCrons } from '@/services/database/crons';
-import { updateCurrentUser } from '@/services/database/update';
-import { getCurrentUser } from '@/services/database/users';
-import { postMessage } from '@/services/slack';
+import { getUsers, importCrons, updateCurrentUser } from '@/services/database/crons';
+import { getName, postMessage } from '@/services/slack';
+import { Cron } from '@/types';
 
 export const schedule = async () => {
-  const intervals = await importCrons();
+  const crons = await importCrons();
+  scheduleMultiple(crons, handleSchedule);
+};
 
-  scheduleMultiple(intervals, async (cron) => {
-    const { current, next } = await getCurrentUser(cron.team, cron.channel);
-    await postMessage({ channel: cron.channel, current: current.name, next: next.name });
-    await updateCurrentUser(cron.team, cron.channel, next);
-  });
+export const handleSchedule = async (cron: Cron) => {
+  const { current, next } = await getUsers(cron.id);
+  const mentionCurrent = `<@${current}>`;
+  const [nextName] = await getName([next]);
+  await postMessage({ channel: cron.channel, current: mentionCurrent, next: nextName });
+  await updateCurrentUser(cron.id, next);
 };

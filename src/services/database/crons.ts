@@ -1,21 +1,50 @@
 import { database } from './index';
 
+import { Queue } from '@/models/queue';
 import { Cron } from '@/types';
 
 export const importCrons = async () => {
-  const teams = await database.collection('teams').listDocuments();
-
-  const nestedCronsByChannelsByTeams = await Promise.all(
-    teams.map(async (team) => {
-      const channels = await team.collection('channels').listDocuments();
-      return await Promise.all(
-        channels.map(async (channel) => {
-          const doc = await channel.get();
-          return { channel: doc.id, ...doc.data() } as Cron;
-        })
-      );
+  const cronsRef = await database.collection('crons').listDocuments();
+  const crons = await Promise.all(
+    cronsRef.map(async (docRef) => {
+      const cronSnapshot = await docRef.get();
+      const cron = cronSnapshot.data() as Omit<Cron, 'id'>;
+      return { ...cron, id: cronSnapshot.id };
     })
   );
+  return crons;
+};
 
-  return nestedCronsByChannelsByTeams.flat().flat();
+export const createCron = async (cron: Omit<Cron, 'id'>): Promise<Cron> => {
+  const { users, team, channel, intervals } = cron;
+  const crons = database.collection('crons');
+  const cronRef = crons.doc();
+  await cronRef.set({ team, channel, users, intervals });
+  return { ...cron, id: cronRef.id };
+};
+
+export const updateCurrentUser = async (cronId: string, user: string) => {
+  await database.collection('crons').doc(cronId).update({ current: user });
+};
+
+export const getUsers = async (cronId: string) => {
+  let currentUserId;
+
+  const cronRef = database.collection('crons').doc(cronId);
+  const cronSnapshot = await cronRef.get();
+  const cron = cronSnapshot.data() as Cron;
+
+  const order = new Queue(cron.users);
+  currentUserId = cron.current;
+
+  if (!currentUserId) {
+    currentUserId = order.getByIndex(0).get();
+  }
+
+  const nextUserId = order.getByValue(currentUserId).next().get();
+
+  return {
+    current: currentUserId,
+    next: nextUserId,
+  };
 };

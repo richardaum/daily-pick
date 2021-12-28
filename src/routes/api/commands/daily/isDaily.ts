@@ -25,7 +25,7 @@ export async function updateModalRepeatDaily(req: Request, res: Response) {
     .blocks(...openModalBlocks(), ...isDailyBlocks())
     .buildToObject();
 
-  await slack.client.views.update({
+  slack.client.views.update({
     view_id: payload.view?.root_view_id ?? undefined,
     hash: payload.view?.hash,
     view,
@@ -35,31 +35,31 @@ export async function updateModalRepeatDaily(req: Request, res: Response) {
 }
 
 export const repeatDailyPrefix = 'repeat_daily';
-export const timePickerSufix = 'time_picker';
+export const timePickerSuffix = 'time_picker';
 
 export const isDailyBlocks = () => {
   return [
     Blocks.Header({ text: 'Daily options', blockId: 'daily_options' }),
     Blocks.Input({ label: 'Sunday', blockId: `${repeatDailyPrefix}_sunday` })
       .optional(true)
-      .element(Elements.TimePicker({ actionId: `sunday_${timePickerSufix}` })),
+      .element(Elements.TimePicker({ actionId: `sunday_${timePickerSuffix}` })),
     Blocks.Input({ label: 'Monday', blockId: `${repeatDailyPrefix}_monday` })
       .optional(true)
-      .element(Elements.TimePicker({ actionId: `monday_${timePickerSufix}` })),
+      .element(Elements.TimePicker({ actionId: `monday_${timePickerSuffix}` })),
     Blocks.Input({ label: 'Tuesday', blockId: `${repeatDailyPrefix}_tuesday` })
       .optional(true)
-      .element(Elements.TimePicker({ actionId: `tuesday_${timePickerSufix}` })),
+      .element(Elements.TimePicker({ actionId: `tuesday_${timePickerSuffix}` })),
     Blocks.Input({ label: 'Wednesday', blockId: `${repeatDailyPrefix}_wednesday` })
       .optional(true)
-      .element(Elements.TimePicker({ actionId: `wednesday_${timePickerSufix}` })),
+      .element(Elements.TimePicker({ actionId: `wednesday_${timePickerSuffix}` })),
     Blocks.Input({ label: 'Thursday', blockId: `${repeatDailyPrefix}_thursday` })
       .optional(true)
-      .element(Elements.TimePicker({ actionId: `thursday_${timePickerSufix}` })),
+      .element(Elements.TimePicker({ actionId: `thursday_${timePickerSuffix}` })),
     Blocks.Input({ label: 'Friday', blockId: `${repeatDailyPrefix}_friday` })
       .optional(true)
-      .element(Elements.TimePicker({ actionId: `friday_${timePickerSufix}` })),
+      .element(Elements.TimePicker({ actionId: `friday_${timePickerSuffix}` })),
     Blocks.Input({ label: 'Saturday', blockId: `${repeatDailyPrefix}_saturday` })
       .optional(true)
-      .element(Elements.TimePicker({ actionId: `saturday_${timePickerSufix}` })),
+      .element(Elements.TimePicker({ actionId: `saturday_${timePickerSuffix}` })),
   ];
 };

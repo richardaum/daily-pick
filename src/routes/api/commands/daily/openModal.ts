@@ -19,7 +19,7 @@ export async function openModal(req: SlashCommandRequest, res: Response) {
     .blocks(...openModalBlocks())
     .buildToObject();
 
-  await slack.client.views.open({
+  slack.client.views.open({
     trigger_id: req.body.trigger_id,
     view: modal,
   });
