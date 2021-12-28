@@ -1,3 +1,5 @@
+import { buildCreatedAt } from './buildCreatedAt';
+
 import { database } from './index';
 
 import { Queue } from '@/models/queue';
@@ -11,7 +13,7 @@ export const fetchCrons = async () => {
       const cron = cronSnapshot.data() as Cron;
       return {
         ...cron,
-        createdAt: cronSnapshot.createTime?.toDate().toISOString(),
+        createdAt: buildCreatedAt(cronSnapshot.createTime?.toDate()),
         id: cronSnapshot.id,
       } as PersistedCron;
     })
@@ -24,7 +26,7 @@ export const destroyCron = async (cronId: string) => {
   const cronData = cronSnapshot.data() as Cron;
   const cron = {
     ...cronData,
-    createdAt: cronSnapshot.createTime?.toDate().toISOString(),
+    createdAt: buildCreatedAt(cronSnapshot.createTime?.toDate()),
     id: cronSnapshot.id,
   } as PersistedCron;
 
@@ -39,7 +41,7 @@ export const fetchCronsByChannelAndTeam = async (channel: string, team: string) 
     const cron = cronSnapshot.data() as Cron;
     return {
       ...cron,
-      createdAt: cronSnapshot.createTime?.toDate().toISOString(),
+      createdAt: buildCreatedAt(cronSnapshot.createTime?.toDate()),
       id: cronSnapshot.id,
     } as PersistedCron;
   });
