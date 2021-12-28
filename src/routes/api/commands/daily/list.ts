@@ -18,7 +18,7 @@ export const listCrons = async (_: SlashCommandRequest, res: Response) => {
     .blocks(
       ...crons.map((cron) =>
         Blocks.Section({
-          text: `:calendar: *${cron.createdAt}*.`,
+          text: `:calendar: *${cron.createdAt}*`,
         }).accessory(
           Elements.Button({
             actionId: 'remove',

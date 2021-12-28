@@ -5,7 +5,6 @@ export const slack = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   logLevel: LogLevel.DEBUG,
-  socketMode: true,
 });
 
 type PostMessageNamedParams = { channel: string; current: string; next: string };
