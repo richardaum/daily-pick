@@ -10,7 +10,7 @@ export const repeatDailyPrefix = 'repeat_daily';
 export const timePickerSuffix = 'time_picker';
 
 export function isOpeningModal(req: Request): req is SlashCommandRequest {
-  return 'trigger_id' in req.body && !req.body.text;
+  return 'trigger_id' in req.body && req.body.text === 'pick';
 }
 
 export async function openModal(req: SlashCommandRequest, res: Response) {
