@@ -1,9 +1,30 @@
-import schedule from 'node-schedule';
+import cronParser from 'cron-parser';
+import { cancelJob, RecurrenceRule, scheduleJob } from 'node-schedule';
 
+import { TIMEZONE } from '@/constants';
 import { PersistedCron } from '@/types';
 
-export const scheduleSingle = (cronId: string, cronTime: string, onTick: () => void) => {
-  schedule.scheduleJob(cronId, cronTime, onTick);
+export type CronFields = {
+  second: number[];
+  minute: number[];
+  hour: number[];
+  dayOfMonth: number[];
+  month: number[];
+  dayOfWeek: number[];
+};
+
+export const scheduleSingle = (cronId: string, interval: string, onTick: () => void) => {
+  const raw = cronParser.parseExpression(interval, { tz: TIMEZONE });
+  const fields = JSON.parse(JSON.stringify(raw.fields)) as CronFields;
+  const rule = new RecurrenceRule();
+  rule.second = fields.second;
+  rule.minute = fields.minute;
+  rule.hour = fields.hour;
+  rule.date = fields.dayOfMonth;
+  rule.month = fields.month;
+  rule.dayOfWeek = fields.dayOfWeek;
+  rule.tz = TIMEZONE;
+  scheduleJob(cronId, rule, onTick);
 };
 
 export const scheduleMultiple = <T extends PersistedCron>(crons: T[], onTick: (cron: T) => void) => {
@@ -15,7 +36,7 @@ export const scheduleMultiple = <T extends PersistedCron>(crons: T[], onTick: (c
 };
 
 export const stopCron = (cronId: string) => {
-  return schedule.cancelJob(cronId);
+  return cancelJob(cronId);
 };
 
 export const buildCronId = (cronId: string, interval: string) => {
