@@ -11,7 +11,7 @@ export function isClosingList(req: Request): req is BlockActionRequest {
   return payload.type === 'block_actions' && payload.actions[0]?.action_id === 'close_list';
 }
 
-export function closeList(req: Request, res: Response): void | PromiseLike<void> {
+export function closeList(req: Request, res: Response) {
   const payload = JSON.parse(req.body.payload) as BlockAction;
   axios.post(payload.response_url, Surfaces.Message().deleteOriginal(true).buildToObject());
   res.end();

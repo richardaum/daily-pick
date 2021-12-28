@@ -4,18 +4,26 @@ import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 
 import { Request, SlashCommandRequest } from './utils/types';
 
-import { fetchCrons } from '@/services/database/crons';
+import { fetchCronsByChannelAndTeam } from '@/services/database/crons';
+import { Cron } from '@/types';
 
 export const isListingCrons = (req: Request): req is SlashCommandRequest => {
   const body = req.body as SlashCommand;
   return body.text === 'list';
 };
 
-export const listCrons = async (_: SlashCommandRequest, res: Response) => {
-  const crons = await fetchCrons();
-  const message = Surfaces.Message()
+export const listCrons = async (req: SlashCommandRequest, res: Response) => {
+  const crons = await fetchCronsByChannelAndTeam(req.body.channel_id, req.body.team_id);
+  const message = listCronsView(crons).buildToObject();
+  res.json(message);
+};
+
+export const listCronsView = (crons: Cron[]) =>
+  Surfaces.Message()
     .ephemeral(true)
     .blocks(
+      Blocks.Section({ text: '*Agendamentos* (por data de criação):' }),
+      Blocks.Divider(),
       ...crons.map((cron) =>
         Blocks.Section({
           text: `:calendar: *${cron.createdAt}*`,
@@ -24,18 +32,17 @@ export const listCrons = async (_: SlashCommandRequest, res: Response) => {
             actionId: 'remove',
             value: cron.id,
             text: 'Remover',
-          })
+          }).danger()
         )
       ),
-      Blocks.Divider(),
+      ...(() => {
+        if (crons.length > 0) return [];
+        return [Blocks.Section({ text: 'Nenhum agendamento encontrado' })];
+      })(),
       Blocks.Actions().elements(
         Elements.Button({
           text: `Fechar lista`,
           actionId: 'close_list',
         })
       )
-    )
-    .buildToObject();
-
-  res.json(message);
-};
+    );
