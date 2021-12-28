@@ -5,7 +5,7 @@ import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 import { Request, SlashCommandRequest } from './utils/types';
 
 import { fetchCronsByChannelAndTeam } from '@/services/database/crons';
-import { Cron } from '@/types';
+import { PersistedCron } from '@/types';
 
 export const isListingCrons = (req: Request): req is SlashCommandRequest => {
   const body = req.body as SlashCommand;
@@ -18,7 +18,7 @@ export const listCrons = async (req: SlashCommandRequest, res: Response) => {
   res.json(message);
 };
 
-export const listCronsView = (crons: Cron[]) =>
+export const listCronsView = (crons: PersistedCron[]) =>
   Surfaces.Message()
     .ephemeral(true)
     .blocks(

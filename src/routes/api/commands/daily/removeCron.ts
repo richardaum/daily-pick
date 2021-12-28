@@ -5,6 +5,7 @@ import { Response } from 'express';
 import { listCronsView } from './list';
 import { BlockActionRequest, Request } from './utils/types';
 
+import { buildCronId, stopCron } from '@/services/cron';
 import { destroyCron, fetchCrons } from '@/services/database/crons';
 
 export function isRemovingCron(req: Request): req is BlockActionRequest {
@@ -16,9 +17,14 @@ export function isRemovingCron(req: Request): req is BlockActionRequest {
 export async function removeCron(req: Request, res: Response) {
   const payload = JSON.parse(req.body.payload) as BlockAction;
   const action = payload.actions[0] as ButtonAction;
-  await destroyCron(action.value);
+
+  // Remotely destroy and locally stop crons
+  const cron = await destroyCron(action.value);
+  cron.intervals.forEach((interval) => {
+    stopCron(buildCronId(cron.id, interval));
+  });
+
   const crons = await fetchCrons();
-  // stopcron
   axios.post(payload.response_url, listCronsView(crons).buildToObject());
   res.end();
 }

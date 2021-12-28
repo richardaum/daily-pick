@@ -20,7 +20,17 @@ export const fetchCrons = async () => {
 };
 
 export const destroyCron = async (cronId: string) => {
-  return await database.collection('crons').doc(cronId).delete();
+  const cronSnapshot = await database.collection('crons').doc(cronId).get();
+  const cronData = cronSnapshot.data() as Cron;
+  const cron = {
+    ...cronData,
+    createdAt: cronSnapshot.createTime?.toDate().toISOString(),
+    id: cronSnapshot.id,
+  } as PersistedCron;
+
+  await database.collection('crons').doc(cronId).delete();
+
+  return cron;
 };
 
 export const fetchCronsByChannelAndTeam = async (channel: string, team: string) => {
@@ -36,12 +46,12 @@ export const fetchCronsByChannelAndTeam = async (channel: string, team: string) 
   return crons;
 };
 
-export const createCron = async (cron: Omit<Cron, 'id'>): Promise<Cron> => {
+export const createCron = async (cron: Omit<Cron, 'id'>): Promise<PersistedCron> => {
   const { users, team, channel, intervals } = cron;
   const crons = database.collection('crons');
   const cronRef = crons.doc();
   await cronRef.set({ team, channel, users, intervals });
-  return { ...cron, id: cronRef.id };
+  return { ...cron, id: cronRef.id, current: users[0] };
 };
 
 export const updateCurrentUser = async (cronId: string, user: string) => {
@@ -53,7 +63,7 @@ export const getUsers = async (cronId: string) => {
 
   const cronRef = database.collection('crons').doc(cronId);
   const cronSnapshot = await cronRef.get();
-  const cron = cronSnapshot.data() as Cron;
+  const cron = cronSnapshot.data() as PersistedCron;
 
   const order = new Queue(cron.users);
   currentUserId = cron.current;

@@ -1,7 +1,7 @@
 import { SlackViewAction } from '@slack/bolt';
 import { Response } from 'express';
 
-import { repeatDailyPrefix, timePickerSuffix } from './isDaily';
+import { OPEN_MODAL, repeatDailyPrefix, timePickerSuffix } from './openModal';
 import { Request, ViewSubmissionRequest } from './utils/types';
 
 import { handleSchedule } from '@/bootstrap/schedule';
@@ -12,7 +12,7 @@ export function isSubmitting(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
   const from = payload.view?.callback_id;
-  return payload.type === 'view_submission' && from === 'updateModalRepeatDaily';
+  return payload.type === 'view_submission' && from === OPEN_MODAL;
 }
 
 export async function submit(req: Request, res: Response) {
@@ -52,7 +52,7 @@ export async function submit(req: Request, res: Response) {
     users: payload.view.state.values.participants.participants_select.selected_users ?? [],
   });
 
-  scheduleMultiple([cron], handleSchedule);
+  scheduleMultiple([cron], (cron) => handleSchedule(cron));
 
   res.end();
 }

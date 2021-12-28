@@ -1,15 +1,23 @@
-import { CronJob } from 'cron';
+import schedule from 'node-schedule';
 
-import { Cron } from '@/types';
+import { PersistedCron } from '@/types';
 
-export const scheduleSingle = (cronTime: string, onTick: () => void) => {
-  new CronJob(cronTime, onTick, null, true, 'America/Sao_Paulo');
+export const scheduleSingle = (cronId: string, cronTime: string, onTick: () => void) => {
+  schedule.scheduleJob(cronId, cronTime, onTick);
 };
 
-export const scheduleMultiple = <T extends Cron>(crons: T[], onTick: (cron: T) => void) => {
+export const scheduleMultiple = <T extends PersistedCron>(crons: T[], onTick: (cron: T) => void) => {
   crons.forEach((cron) => {
     cron.intervals.forEach((interval) => {
-      scheduleSingle(interval, () => onTick(cron));
+      scheduleSingle(buildCronId(cron.id, interval), interval, () => onTick(cron));
     });
   });
+};
+
+export const stopCron = (cronId: string) => {
+  return schedule.cancelJob(cronId);
+};
+
+export const buildCronId = (cronId: string, interval: string) => {
+  return `${cronId}_${interval}`;
 };
