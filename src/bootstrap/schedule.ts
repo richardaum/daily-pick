@@ -1,10 +1,10 @@
 import { scheduleMultiple } from '@/services/cron';
-import { getUsers, importCrons, updateCurrentUser } from '@/services/database/crons';
+import { fetchCrons, getUsers, updateCurrentUser } from '@/services/database/crons';
 import { getName, postMessage } from '@/services/slack';
 import { Cron } from '@/types';
 
 export const schedule = async () => {
-  const crons = await importCrons();
+  const crons = await fetchCrons();
   scheduleMultiple(crons, handleSchedule);
 };
 

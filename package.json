@@ -36,6 +36,7 @@
   "dependencies": {
     "@bitauth/libauth": "^1.17.1",
     "@slack/bolt": "^3.8.1",
+    "axios": "^0.24.0",
     "cron": "^1.8.2",
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.2",

@@ -6,7 +6,7 @@ import { Request, SlashCommandRequest } from './utils/types';
 import { slack } from '@/services/slack';
 
 export function isRequestingToOpenModal(req: Request): req is SlashCommandRequest {
-  return 'trigger_id' in req.body;
+  return 'trigger_id' in req.body && !req.body.text;
 }
 
 export async function openModal(req: SlashCommandRequest, res: Response) {
