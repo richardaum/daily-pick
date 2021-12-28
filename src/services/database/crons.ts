@@ -46,7 +46,7 @@ export const fetchCronsByChannelAndTeam = async (channel: string, team: string) 
   return crons;
 };
 
-export const createCron = async (cron: Omit<Cron, 'id'>): Promise<PersistedCron> => {
+export const persistCron = async (cron: Omit<Cron, 'id'>): Promise<PersistedCron> => {
   const { users, team, channel, intervals } = cron;
   const crons = database.collection('crons');
   const cronRef = crons.doc();

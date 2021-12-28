@@ -9,7 +9,7 @@ export const OPEN_MODAL = 'openModal';
 export const repeatDailyPrefix = 'repeat_daily';
 export const timePickerSuffix = 'time_picker';
 
-export function isRequestingToOpenModal(req: Request): req is SlashCommandRequest {
+export function isOpeningModal(req: Request): req is SlashCommandRequest {
   return 'trigger_id' in req.body && !req.body.text;
 }
 

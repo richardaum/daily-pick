@@ -6,16 +6,16 @@ import { Request, ViewSubmissionRequest } from './utils/types';
 
 import { handleSchedule } from '@/bootstrap/schedule';
 import { scheduleMultiple } from '@/services/cron';
-import { createCron } from '@/services/database/crons';
+import { persistCron } from '@/services/database/crons';
 
-export function isSubmitting(req: Request): req is ViewSubmissionRequest {
+export function isCreatingCron(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
   const from = payload.view?.callback_id;
   return payload.type === 'view_submission' && from === OPEN_MODAL;
 }
 
-export async function submit(req: Request, res: Response) {
+export async function createCron(req: Request, res: Response) {
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
   const team = payload.view.team_id;
   const channel = payload.view.private_metadata;
@@ -45,7 +45,7 @@ export async function submit(req: Request, res: Response) {
       return `0 ${minute} ${hour} * * ${dayWeek}`;
     });
 
-  const cron = await createCron({
+  const cron = await persistCron({
     team,
     channel,
     intervals,
