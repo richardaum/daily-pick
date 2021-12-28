@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { Blocks, Surfaces } from 'slack-block-builder';
 
-import { Request } from './utils/types';
+import { Request } from '../utils/types';
 
 export function help(_: Request, res: Response) {
   const view = Surfaces.Message()

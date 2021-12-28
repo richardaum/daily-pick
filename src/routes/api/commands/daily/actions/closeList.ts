@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Response } from 'express';
 import { Surfaces } from 'slack-block-builder';
 
-import { BlockActionRequest, Request } from './utils/types';
+import { BlockActionRequest, Request } from '../utils/types';
 
 export function isClosingList(req: Request): req is BlockActionRequest {
   if (!req.body.payload) return false;

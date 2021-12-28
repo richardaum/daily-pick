@@ -1,2 +1,2 @@
-// @index('./*', f => `export * from '${f.path}'`)
-export * from './api';
+// @index('./*', f => `import from '${f.path}'`)
+import './api';

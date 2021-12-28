@@ -2,7 +2,7 @@ import { SlashCommand } from '@slack/bolt';
 import { Response } from 'express';
 import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 
-import { Request, SlashCommandRequest } from './utils/types';
+import { Request, SlashCommandRequest } from '../utils/types';
 
 import { fetchCronsByChannelAndTeam } from '@/services/database/crons';
 import { PersistedCron } from '@/types';

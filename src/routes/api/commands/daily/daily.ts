@@ -1,11 +1,11 @@
 import { Response } from 'express';
 
-import { closeList, isClosingList } from './closeList';
-import { createCron, isCreatingCron } from './createCron';
-import { help } from './help';
-import { isListingCrons, listCrons } from './list';
-import { isOpeningModal, openModal } from './openModal';
-import { isRemovingCron, removeCron } from './removeCron';
+import { closeList, isClosingList } from './actions/closeList';
+import { createCron, isCreatingCron } from './actions/createCron';
+import { help } from './actions/help';
+import { isListingCrons, listCrons } from './actions/list';
+import { isOpeningModal, openModal } from './actions/openModal';
+import { isRemovingCron, removeCron } from './actions/removeCron';
 import { Request } from './utils/types';
 
 import { api } from '@/services/express';

@@ -2,8 +2,9 @@ import { BlockAction, ButtonAction } from '@slack/bolt';
 import axios from 'axios';
 import { Response } from 'express';
 
+import { BlockActionRequest, Request } from '../utils/types';
+
 import { listCronsView } from './list';
-import { BlockActionRequest, Request } from './utils/types';
 
 import { buildCronId, stopCron } from '@/services/cron';
 import { destroyCron, fetchCronsByChannelAndTeam } from '@/services/database/crons';

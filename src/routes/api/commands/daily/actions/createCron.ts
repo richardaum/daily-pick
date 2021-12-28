@@ -1,8 +1,9 @@
 import { SlackViewAction } from '@slack/bolt';
 import { Response } from 'express';
 
+import { Request, ViewSubmissionRequest } from '../utils/types';
+
 import { OPEN_MODAL, repeatDailyPrefix, timePickerSuffix } from './openModal';
-import { Request, ViewSubmissionRequest } from './utils/types';
 
 import { handleSchedule } from '@/bootstrap/schedule';
 import { scheduleMultiple } from '@/services/cron';

@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { Blocks, Elements, Modal } from 'slack-block-builder';
 
-import { Request, SlashCommandRequest } from './utils/types';
+import { Request, SlashCommandRequest } from '../utils/types';
 
 import { slack } from '@/services/slack';
 
