@@ -3,5 +3,8 @@ export const slack = {
     views: {
       open: jest.fn(),
     },
+    chat: {
+      postEphemeral: jest.fn(),
+    },
   },
 };

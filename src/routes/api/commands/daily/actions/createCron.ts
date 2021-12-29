@@ -6,10 +6,10 @@ import { Request, ViewSubmissionRequest } from '../utils/types';
 import { OPEN_MODAL, repeatDailyPrefix, timePickerSuffix } from './openModal';
 
 import { handleSchedule } from '@/bootstrap/schedule';
-import { SELECT_AT_LEAST_ONE_WEEKDAY, UNKNOWN_NAME } from '@/i18n';
+import { SELECT_AT_LEAST_ONE_WEEKDAY, UNKNOWN_NAME, WAS_CREATED, YOUR_CRON } from '@/i18n';
 import { scheduleMultiple } from '@/services/cron';
 import { persistCron } from '@/services/database/functions/persistCron';
-
+import { slack } from '@/services/slack';
 export function isCreatingCron(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
@@ -56,6 +56,12 @@ export async function createCron(req: Request, res: Response) {
   });
 
   scheduleMultiple([cron], (cron) => handleSchedule(cron));
+
+  await slack.client.chat.postEphemeral({
+    channel,
+    user: payload.user.id,
+    text: `${YOUR_CRON} "${cron.name}" ${WAS_CREATED}`,
+  });
 
   res.end();
 }
