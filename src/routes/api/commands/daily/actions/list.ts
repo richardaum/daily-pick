@@ -4,7 +4,7 @@ import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 
 import { Request, SlashCommandRequest } from '../utils/types';
 
-import { BY_CREATION_DATE, CLOSE_LIST, CRONS, NO_CRONS_FOUND, REMOVE } from '@/i18n';
+import { BY_CREATION_DATE, CLOSE_LIST, CRONS, NO_CRONS_FOUND, REMOVE, UNKNOWN_NAME } from '@/i18n';
 import { fetchCronsByChannelAndTeam } from '@/services/database/functions/fetchCronsByChannelAndTeam';
 import { PersistedCron } from '@/types';
 
@@ -27,7 +27,7 @@ export const listCronsView = (crons: PersistedCron[]) =>
       Blocks.Divider(),
       ...crons.map((cron) =>
         Blocks.Section({
-          text: `:calendar: *${cron.name}*`,
+          text: `:calendar: *${cron.name ?? UNKNOWN_NAME}*`,
         }).accessory(
           Elements.Button({
             actionId: 'remove',
