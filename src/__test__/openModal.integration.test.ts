@@ -6,9 +6,11 @@ import { pick } from '@/fixtures/pick';
 
 let server: Server;
 
+jest.mock('@/bootstrap/schedule');
+
 describe('openModal', () => {
   beforeAll(async () => {
-    const { startServer } = require('@/bootstrap/start');
+    const { startServer } = await import('@/bootstrap/start');
     ({ server } = await startServer());
   });
 
@@ -20,6 +22,6 @@ describe('openModal', () => {
 
   it('should open modal', async () => {
     const response = await request(server).post('/api/commands/daily/pick').send(pick);
-    expect(response.body).toBe(200);
+    expect(response.statusCode).toBe(200);
   });
 });

@@ -1,6 +1,5 @@
 import '@/services/database';
 import '@/routes';
-import '@/services/cron';
 
 import { Server } from 'http';
 

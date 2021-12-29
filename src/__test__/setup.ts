@@ -2,5 +2,9 @@ beforeEach(() => {
   jest.resetModules();
 });
 
-jest.mock('@/services/database', () => null);
-jest.mock('@/services/slack', () => null);
+function noop() {
+  /*  */
+}
+
+jest.mock('@/services/database', noop);
+jest.mock('@/services/slack', noop);
