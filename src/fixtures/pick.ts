@@ -9,7 +9,7 @@ export const pick = {
     user_id: 'U02PXB0JD41',
     user_name: 'richard.lopes92',
     command: '/daily',
-    text: 'list',
+    text: 'pick',
     api_app_id: 'A02Q94LGHUG',
     is_enterprise_install: 'false',
     response_url: 'https://hooks.slack.com/commands/T02PFPNF6BF/2891815230836/DPdzppubsOCYLJCUTeKGoRtp',

@@ -293,11 +293,6 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bitauth/libauth@^1.17.1":
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/@bitauth/libauth/-/libauth-1.19.0.tgz#61193fb44d95ececd195a4feadfce0b0ba9f981d"
-  integrity sha512-UtfCijrCcPCQdstlxiv29hBNuYs/1hqeDMgS6CPjxps7r7/y/0p9TRGDx65fczlO12Pa5rQdWO/GzwsXo03uIg==
-
 "@commitlint/config-validator@^16.0.0":
   version "16.0.0"
   resolved "https://registry.yarnpkg.com/@commitlint/config-validator/-/config-validator-16.0.0.tgz#61dd84895e5dcab6066ff5e21e2b9a96b0ed6323"

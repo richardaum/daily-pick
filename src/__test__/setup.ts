@@ -7,4 +7,4 @@ function noop() {
 }
 
 jest.mock('@/services/database', noop);
-jest.mock('@/services/slack', noop);
+jest.mock('@/services/slack');
