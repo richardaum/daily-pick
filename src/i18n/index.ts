@@ -25,3 +25,4 @@ export const SELECT_AT_LEAST_ONE_WEEKDAY = 'Selecione pelo menos um dia da seman
 export const UNKNOWN_NAME = 'Sem nome';
 export const YOUR_CRON = 'Seu agendamento';
 export const WAS_CREATED = 'foi criado';
+export const MORE_INFO = 'Para mais informação, entre em contato com @richard.lopes';
