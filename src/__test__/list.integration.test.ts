@@ -1,6 +1,6 @@
 import { request } from './server';
 
-import { list } from '@/fixtures/list';
+import { list } from '@/__test__/fixtures/list';
 import * as functions from '@/services/database/functions/fetchCronsByChannelAndTeam';
 
 jest.mock('@/bootstrap/schedule');

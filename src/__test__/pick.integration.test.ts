@@ -2,7 +2,7 @@ import { mocked } from 'jest-mock';
 
 import { request } from './server';
 
-import { pick } from '@/fixtures/pick';
+import { pick } from '@/__test__/fixtures/pick';
 import { slack } from '@/services/slack';
 
 jest.mock('@/bootstrap/schedule');

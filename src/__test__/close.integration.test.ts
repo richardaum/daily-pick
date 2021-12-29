@@ -4,7 +4,7 @@ import { mocked } from 'jest-mock';
 
 import { request } from './server';
 
-import { close } from '@/fixtures/close';
+import { close } from '@/__test__/fixtures/close';
 
 jest.mock('@/bootstrap/schedule');
 

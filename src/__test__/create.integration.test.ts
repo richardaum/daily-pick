@@ -3,7 +3,7 @@ import { mocked } from 'jest-mock';
 
 import { request } from './server';
 
-import { create } from '@/fixtures/create';
+import { create } from '@/__test__/fixtures/create';
 import * as cron from '@/services/cron';
 import * as functions from '@/services/database/functions/persistCron';
 
