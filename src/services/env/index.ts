@@ -5,11 +5,11 @@ const config = {
   GOOGLE_CLOUD_LOGGING_BUNYAN_ENABLED: process.env.GOOGLE_CLOUD_LOGGING_BUNYAN_ENABLED,
 };
 
-const required = new Set(['PORT', 'FIREBASE_CONFIG']);
+const optional = new Set(['LOG_DISABLED', 'GOOGLE_CLOUD_LOGGING_BUNYAN_ENABLED']);
 
 export const env = (key: keyof typeof config) => {
   const value = config[key] ?? process.env[key];
-  if (value == null && required.has(key)) throw new Error(`Missing required environment variable ${key}`);
+  if (value == null && !optional.has(key)) throw new Error(`Missing required environment variable ${key}`);
   return value;
 };
 
