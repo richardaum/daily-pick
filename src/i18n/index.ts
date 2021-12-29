@@ -1,0 +1,10 @@
+export const AVAILABLE_COMMANDS = 'Comandos disponíveis:';
+export const TO_ADD_A_NEW_CRON = 'Para adicionar um novo agendamento:';
+export const TO_LIST_CRONS = 'Para listar os agendamentos já criados:';
+export const CRONS = 'Agendamentos';
+export const BY_CREATION_DATE = 'por data de criação';
+export const NO_CRONS_FOUND = 'Nenhum agendamento encontrado';
+export const REMOVE = 'Remover';
+export const CLOSE_LIST = 'Fechar lista';
+export const ITS_YOUR_TURN = 'é sua vez na daily de hoje!';
+export const ITS_YOU_TOMORROW = 'Amanhã é você';

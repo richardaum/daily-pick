@@ -20,9 +20,11 @@
     "luxon",
     "Millis",
     "mkdir",
+    "Paulo",
     "pino",
     "prettierignore",
     "sandboxed",
+    "tada",
     "transpiled",
     "typedoc",
     "untracked"
@@ -34,6 +36,7 @@
     "yarn.lock",
     "tsconfig.json",
     "node_modules/**",
-    "__test__/fixtures"
+    "**/__test__/fixtures/**",
+    "**/i18n/**"
   ]
 }

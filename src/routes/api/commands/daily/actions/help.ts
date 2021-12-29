@@ -3,12 +3,14 @@ import { Blocks, Surfaces } from 'slack-block-builder';
 
 import { Request } from '../utils/types';
 
+import { AVAILABLE_COMMANDS, TO_ADD_A_NEW_CRON, TO_LIST_CRONS } from '@/i18n';
+
 export function help(_: Request, res: Response) {
   const view = Surfaces.Message()
     .blocks(
-      Blocks.Header({ text: 'Comandos disponíveis:' }),
-      Blocks.Section({ text: [`Para adicionar um novo agendamento:`, '`/daily pick`\n'].join('\n') }),
-      Blocks.Section({ text: [`Para listar os agendamentos já criados:`, '`/daily list`'].join('\n') })
+      Blocks.Header({ text: AVAILABLE_COMMANDS }),
+      Blocks.Section({ text: [TO_ADD_A_NEW_CRON, '`/daily pick`\n'].join('\n') }),
+      Blocks.Section({ text: [TO_LIST_CRONS, '`/daily list`'].join('\n') })
     )
     .buildToObject();
   res.json(view);

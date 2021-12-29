@@ -4,6 +4,7 @@ import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 
 import { Request, SlashCommandRequest } from '../utils/types';
 
+import { BY_CREATION_DATE, CLOSE_LIST, CRONS, NO_CRONS_FOUND, REMOVE } from '@/i18n';
 import { fetchCronsByChannelAndTeam } from '@/services/database/functions/fetchCronsByChannelAndTeam';
 import { PersistedCron } from '@/types';
 
@@ -22,7 +23,7 @@ export const listCronsView = (crons: PersistedCron[]) =>
   Surfaces.Message()
     .ephemeral(true)
     .blocks(
-      Blocks.Section({ text: '*Agendamentos* (por data de criação):' }),
+      Blocks.Section({ text: `*${CRONS}* (${BY_CREATION_DATE}):` }),
       Blocks.Divider(),
       ...crons.map((cron) =>
         Blocks.Section({
@@ -31,17 +32,17 @@ export const listCronsView = (crons: PersistedCron[]) =>
           Elements.Button({
             actionId: 'remove',
             value: cron.id,
-            text: 'Remover',
+            text: REMOVE,
           }).danger()
         )
       ),
       ...(() => {
         if (crons.length > 0) return [];
-        return [Blocks.Section({ text: 'Nenhum agendamento encontrado' })];
+        return [Blocks.Section({ text: NO_CRONS_FOUND })];
       })(),
       Blocks.Actions().elements(
         Elements.Button({
-          text: `Fechar lista`,
+          text: CLOSE_LIST,
           actionId: 'close_list',
         })
       )
