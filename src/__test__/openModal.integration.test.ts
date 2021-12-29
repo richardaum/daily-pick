@@ -16,7 +16,7 @@ describe('openModal', () => {
 
   afterAll(() => {
     server?.close((err) => {
-      if (err) console.error(err);
+      if (err) throw err;
     });
   });
 

@@ -1,5 +1,5 @@
-import { cert, initializeApp } from 'firebase-admin/lib/app';
-import { getFirestore } from 'firebase-admin/lib/firestore';
+import { cert, initializeApp } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
 
 import { env } from '@/services/env';
 

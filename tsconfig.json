@@ -10,6 +10,7 @@
     "inlineSourceMap": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "allowJs": true,
 
     "strict": true,
 
@@ -30,7 +31,7 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "jest.config.js"],
+  "include": ["src/**/*.ts", "src/**/*.js", "jest.config.js"],
   "exclude": ["node_modules/**"],
   "compileOnSave": false
 }

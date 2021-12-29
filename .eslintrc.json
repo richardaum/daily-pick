@@ -2,7 +2,7 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "parserOptions": { "project": "./tsconfig.json" },
-  "env": { "es6": true },
+  "env": { "es6": true, "node": true },
   "ignorePatterns": ["node_modules", "build", "coverage"],
   "plugins": ["import", "eslint-comments", "functional"],
   "extends": [
@@ -21,5 +21,5 @@
     "import/order": ["error", { "newlines-between": "always", "alphabetize": { "order": "asc" } }],
     "sort-imports": ["error", { "ignoreDeclarationSort": true, "ignoreCase": true }]
   },
-  "overrides": [{ "files": "**/*.test.ts", "rules": { "@typescript-eslint/no-var-requires": "off" } }]
+  "overrides": [{ "files": ["**/*.test.ts", "**/*.js"], "rules": { "@typescript-eslint/no-var-requires": "off" } }]
 }
