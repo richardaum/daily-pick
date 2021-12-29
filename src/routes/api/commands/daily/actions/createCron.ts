@@ -6,6 +6,7 @@ import { Request, ViewSubmissionRequest } from '../utils/types';
 import { OPEN_MODAL, repeatDailyPrefix, timePickerSuffix } from './openModal';
 
 import { handleSchedule } from '@/bootstrap/schedule';
+import { SELECT_AT_LEAST_ONE_WEEKDAY, UNKNOWN_NAME } from '@/i18n';
 import { scheduleMultiple } from '@/services/cron';
 import { persistCron } from '@/services/database/functions/persistCron';
 
@@ -31,7 +32,7 @@ export async function createCron(req: Request, res: Response) {
     res.send({
       response_action: 'errors',
       errors: {
-        repeat_daily_monday: 'Please select at least one week day',
+        repeat_daily_monday: SELECT_AT_LEAST_ONE_WEEKDAY,
       },
     });
     return;
@@ -50,6 +51,7 @@ export async function createCron(req: Request, res: Response) {
     team,
     channel,
     intervals,
+    name: payload.view.state.values.name.name_input.value ?? UNKNOWN_NAME,
     users: payload.view.state.values.participants.participants_select.selected_users ?? [],
   });
 

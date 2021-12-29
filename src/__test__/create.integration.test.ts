@@ -20,6 +20,7 @@ describe('createCron', () => {
       users: payload.view.state.values.participants.participants_select.selected_users ?? [],
       intervals: [],
       current: payload.user.id,
+      name: payload.view.state.values.name.name_input.value ?? 'Unknown name',
       id: 'id',
     });
 

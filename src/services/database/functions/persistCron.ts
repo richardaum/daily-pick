@@ -2,7 +2,9 @@ import { database } from '..';
 
 import { Cron, PersistedCron } from '@/types';
 
-export const persistCron = async (cron: Omit<Cron, 'id'>): Promise<PersistedCron> => {
+type PersistingCron = Omit<Cron, 'id'> & { name: string };
+
+export const persistCron = async (cron: PersistingCron): Promise<PersistedCron> => {
   const { users, team, channel, intervals } = cron;
   const crons = database.collection('crons');
   const cronRef = crons.doc();

@@ -18,6 +18,7 @@ describe('pick', () => {
     jest.spyOn(f2, 'fetchCronsByChannelAndTeam').mockResolvedValue([
       {
         id: '1',
+        name: 'cron',
         intervals: ['* * * * *'],
         channel: 'C1',
         team: 'T1',

@@ -1,4 +1,5 @@
 export type Cron = {
+  name?: string;
   channel: string;
   team: string;
   users: string[];
@@ -7,6 +8,7 @@ export type Cron = {
 
 export type PersistedCron = Cron & {
   id: string;
+  name: string;
   current: string;
   createdAt?: string;
 };

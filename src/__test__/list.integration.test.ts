@@ -22,6 +22,7 @@ describe('listCrons', () => {
     jest.spyOn(functions, 'fetchCronsByChannelAndTeam').mockResolvedValue([
       {
         id: '1',
+        name: 'cron 1',
         intervals: ['* * * * *'],
         channel: 'C1',
         team: 'T1',
@@ -31,6 +32,7 @@ describe('listCrons', () => {
       },
       {
         id: '2',
+        name: 'cron 2',
         intervals: ['* * * * *'],
         channel: 'C1',
         team: 'T1',
