@@ -1,3 +1,4 @@
+import { SlackViewAction } from '@slack/bolt';
 import { mocked } from 'jest-mock';
 
 import { request } from './server';
@@ -10,15 +11,15 @@ jest.mock('@/bootstrap/schedule');
 
 describe('createCron', () => {
   it('should persist and schedule cron', async () => {
-    const payload = JSON.parse(create.body.payload);
+    const payload = JSON.parse(create.body.payload) as SlackViewAction;
 
     jest.spyOn(cron, 'scheduleMultiple');
     jest.spyOn(functions, 'persistCron').mockResolvedValue({
-      channel: payload.channel_id,
-      team: payload.team_id,
-      users: [payload.user_id],
+      channel: payload.view.private_metadata,
+      team: payload.view.team_id,
+      users: payload.view.state.values.participants.participants_select.selected_users ?? [],
       intervals: [],
-      current: payload.user_id,
+      current: payload.user.id,
       id: 'id',
     });
 

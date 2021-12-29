@@ -5,7 +5,7 @@ import * as functions from '@/services/database/functions/fetchCronsByChannelAnd
 
 jest.mock('@/bootstrap/schedule');
 
-describe('createCron', () => {
+describe('listCrons', () => {
   it('should display an empty list', async () => {
     jest.spyOn(functions, 'fetchCronsByChannelAndTeam').mockResolvedValue([]);
 
