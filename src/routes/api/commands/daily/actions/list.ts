@@ -27,7 +27,7 @@ export const listCronsView = (crons: PersistedCron[]) =>
       Blocks.Divider(),
       ...crons.map((cron) =>
         Blocks.Section({
-          text: `:calendar: *${cron.createdAt}*`,
+          text: `:calendar: *${cron.name}*`,
         }).accessory(
           Elements.Button({
             actionId: 'remove',

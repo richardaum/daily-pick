@@ -47,8 +47,8 @@ describe('listCrons', () => {
     const body = JSON.stringify(res.body, null, 2);
 
     expect(body).not.toContain(NO_CRONS_FOUND);
-    expect(body).toContain('*createdAt #1*');
-    expect(body).toContain('*createdAt #2*');
+    expect(body).toContain('*cron 1*');
+    expect(body).toContain('*cron 2*');
     expect(res.statusCode).toBe(200);
   });
 });
