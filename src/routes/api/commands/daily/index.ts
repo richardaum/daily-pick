@@ -1,2 +1,3 @@
 // @index('./*', f => `import '${f.path}'`)
-import './daily';
+import './pick';
+import './act';

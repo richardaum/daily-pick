@@ -6,7 +6,7 @@ import { Server } from 'http';
 
 import { schedule } from './schedule';
 
-import { PORT } from '@/constants';
+import { env } from '@/services/env';
 import { api } from '@/services/express';
 import { getPort } from '@/services/get-port';
 
@@ -18,7 +18,7 @@ type Api = {
 export const startServer = async () => {
   await schedule();
 
-  const port = await getPort({ port: PORT });
+  const port = await getPort({ port: Number(env('PORT')) });
 
   return new Promise<Api>((resolve) => {
     const handle = async () => {

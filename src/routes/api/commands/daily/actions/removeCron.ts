@@ -7,7 +7,8 @@ import { BlockActionRequest, Request } from '../utils/types';
 import { listCronsView } from './list';
 
 import { buildCronId, stopCron } from '@/services/cron';
-import { destroyCron, fetchCronsByChannelAndTeam } from '@/services/database/crons';
+import { fetchCronsByChannelAndTeam } from '@/services/database/functions/fetchCronsByChannelAndTeam';
+import { destroyCron } from '@/services/database/functions/destroyCron';
 
 export function isRemovingCron(req: Request): req is BlockActionRequest {
   if (!req.body.payload) return false;

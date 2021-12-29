@@ -4,7 +4,7 @@ import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 
 import { Request, SlashCommandRequest } from '../utils/types';
 
-import { fetchCronsByChannelAndTeam } from '@/services/database/crons';
+import { fetchCronsByChannelAndTeam } from '@/services/database/functions/fetchCronsByChannelAndTeam';
 import { PersistedCron } from '@/types';
 
 export const isListingCrons = (req: Request): req is SlashCommandRequest => {

@@ -7,7 +7,7 @@ import { OPEN_MODAL, repeatDailyPrefix, timePickerSuffix } from './openModal';
 
 import { handleSchedule } from '@/bootstrap/schedule';
 import { scheduleMultiple } from '@/services/cron';
-import { persistCron } from '@/services/database/crons';
+import { persistCron } from '@/services/database/functions/persistCron';
 
 export function isCreatingCron(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
