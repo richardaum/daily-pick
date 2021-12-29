@@ -5,7 +5,7 @@ import { help } from '@/__test__/fixtures/help';
 jest.mock('@/bootstrap/schedule');
 
 describe('pick', () => {
-  it('should open modal', async () => {
+  it('should send help instructions', async () => {
     const req = request().post('/api/commands/daily/pick');
     const res = await req.send(help.body);
 
