@@ -16,9 +16,10 @@ describe('pick', () => {
     expect(open).toHaveBeenCalledTimes(1);
 
     const parameter = open.mock.calls[0][0];
-    expect(res.statusCode).toBe(200);
     expect(parameter?.view.callback_id).toBe('openModal');
     expect(parameter?.trigger_id).toBe(pick.body.trigger_id);
     expect(parameter?.view.private_metadata).toBe(pick.body.channel_id);
+
+    expect(res.statusCode).toBe(200);
   });
 });
