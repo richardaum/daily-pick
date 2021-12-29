@@ -19,8 +19,7 @@ export function getPort({ port }: { port?: number } = {}) {
       server.close();
       if (!called) {
         called = true;
-        if (!port)
-          return reject(new Error("Unable to get the server's given port"));
+        if (!port) return reject(new Error("Unable to get the server's given port"));
         resolve(port);
       }
     });
