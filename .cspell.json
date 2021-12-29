@@ -1,7 +1,7 @@
 {
   "version": "0.1",
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json",
-  "language": "en",
+  "language": "en,pt-BR",
   "words": [
     "bitauth",
     "bitjson",
@@ -33,6 +33,7 @@
     "package-lock.json",
     "yarn.lock",
     "tsconfig.json",
-    "node_modules/**"
+    "node_modules/**",
+    "__test__/fixtures"
   ]
 }
