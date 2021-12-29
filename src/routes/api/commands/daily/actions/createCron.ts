@@ -10,6 +10,7 @@ import { SELECT_AT_LEAST_ONE_WEEKDAY, UNKNOWN_NAME, WAS_CREATED, YOUR_CRON } fro
 import { scheduleMultiple } from '@/services/cron';
 import { persistCron } from '@/services/database/functions/persistCron';
 import { slack } from '@/services/slack';
+
 export function isCreatingCron(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
