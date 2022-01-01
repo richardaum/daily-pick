@@ -30,6 +30,7 @@ Also this is a technical and personal use case of some technologies I'd like to 
 - [x] 🐋 Dockerfile 
 - [ ] Configurable timezone (TBD)
 - [ ] Alternative databases (MySQL, PostgreSQL)
+- [ ] Multi-languages (currently, only pt-BR is available)
 
 
 ## Configuration
