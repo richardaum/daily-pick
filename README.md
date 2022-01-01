@@ -1,3 +1,7 @@
-# daily-pick
+![The Well App](docs/assets/thumbnail.png)
 
-Daily pick slack app
+<div align="center">
+
+apenas um teste
+
+</div>
