@@ -27,7 +27,9 @@ Also this is a technical and personal use case of some technologies I'd like to 
 - [x] 📣 Isolate schedules per Slack channel.
 - [x] 👀 List all schedules created on a Slack channel.
 - [x] 🗑 Remove a schedule from the list.
+- [x] 🐋 Dockerfile 
 - [ ] Configurable timezone (TBD)
+- [ ] Alternative databases (MySQL, PostgreSQL)
 
 
 ## Configuration
@@ -65,7 +67,7 @@ Please check how this app behaves on your infrastructure to decide how much memo
 
 You need to create a private Slack application. Follow [this resource](https://api.slack.com/apps?new_app=1) to make it happen. After creating an application, look for to the following features: `Interactivity & Shortcuts` and `Slash Commands` - those will be used to configure how your instance will be served (see [Hosting](#Hosting)).
 
-The following environment variables are related and must be defined on your side:
+The following environment variables are required and must be defined on your side:
 
 | Variable | Located at |
 | -- | -- |
@@ -83,9 +85,9 @@ This is totally free and does not have any costs associated so far.
 [![Paid](https://img.shields.io/static/v1?label=&message=Paid&color=red)](https://)
 ![Free](https://img.shields.io/static/v1?label=&message=Free&color=2ea44f)
 
-A opinionated database choise was made here, because [Google Firebase](https://firebase.google.com/) is the only database support this project provide.
+A opinionated database choise was made here, because [Google Firebase](https://firebase.google.com/) is the only database supported by this project.
 
-The following environment are related and must be defined on your side:
+The following environment variables are required and must be defined on your side:
 
 | Variable | Located at | Instructions |
 | -- | -- | -- |
@@ -93,7 +95,7 @@ The following environment are related and must be defined on your side:
 
 #### Pricing
 
- [Google Firebase](https://firebase.google.com/) charges according to the usage of their resource. If your company is small, this may fit for you because so far it is free for lightweight usage. Read carefully all pricing instructions to make it work for you.
+[Google Firebase](https://firebase.google.com/) charges according to the usage of their resource. If your company is small, this may fit for you because so far it is free for lightweight usage. Read carefully all pricing instructions to make it work for you.
 
 ### Sentry
 
@@ -103,13 +105,14 @@ This is an optional step, you can skip it if you don't want it.
 
 Sentry is a platform to keep track of all error that happen on your backend instace.
 
-The following environment are related and must be defined on your side:
+The following environment variables are required and must be defined on your side:
 
-```properties
-SENTRY_DSN=       # An URL provided by sentry 
-```
+| Variable | Instructions |
+| -- | -- |
+| SENTRY_DSN | https://docs.sentry.io/product/sentry-basics/dsn-explainer/#dsn-utilization |
 
-After creating a Sentry account and a Node.js project, you will find your DSN key by following these [instructions](https://docs.sentry.io/product/sentry-basics/dsn-explainer/#dsn-utilization).
+
+### Done!
 
 Your application is available to use. You can test it by running the Slash command you created previously, e.g. `/daily`. If your application was successfully created, the bot will sent you a message containing the instructions to use the bot. 
 
