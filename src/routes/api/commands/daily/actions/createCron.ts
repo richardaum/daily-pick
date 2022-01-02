@@ -9,6 +9,7 @@ import { handleSchedule } from '@/bootstrap/schedule';
 import { SELECT_AT_LEAST_ONE_WEEKDAY, UNKNOWN_NAME, WAS_CREATED, YOUR_CRON } from '@/i18n';
 import { scheduleMultiple } from '@/services/cron';
 import { persistCron } from '@/services/database/functions/persistCron';
+import { createLogger } from '@/services/logger';
 import { slack } from '@/services/slack';
 
 const logger = createLogger();
