@@ -11,6 +11,8 @@ import { scheduleMultiple } from '@/services/cron';
 import { persistCron } from '@/services/database/functions/persistCron';
 import { slack } from '@/services/slack';
 
+const logger = createLogger();
+
 export function isCreatingCron(req: Request): req is ViewSubmissionRequest {
   if (!req.body.payload) return false;
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
@@ -56,13 +58,21 @@ export async function createCron(req: Request, res: Response) {
     users: payload.view.state.values.participants.participants_select.selected_users ?? [],
   });
 
-  scheduleMultiple([cron], (cron) => handleSchedule(cron));
+  scheduleMultiple([cron], (cron) => {
+    logger.debug({ hint: 'cron is running', cron });
+
+    handleSchedule(cron);
+  });
+
+  logger.debug({ hint: 'cron is scheduled', cron });
 
   await slack.client.chat.postEphemeral({
     channel,
     user: payload.user.id,
     text: `${YOUR_CRON} "${cron.name}" ${WAS_CREATED}`,
   });
+
+  logger.debug({ hint: 'slack message is sent', cron });
 
   res.end();
 }
