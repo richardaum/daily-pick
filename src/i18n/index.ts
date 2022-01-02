@@ -26,3 +26,4 @@ export const UNKNOWN_NAME = 'Sem nome';
 export const YOUR_CRON = 'Seu agendamento';
 export const WAS_CREATED = 'foi criado';
 export const MORE_INFO = 'Para mais informação, entre em contato com @richard.lopes';
+export const OUTSIDE_CHANNEL_MESSAGE = 'Desculpe, este comando só pode ser executado dentro de um canal';

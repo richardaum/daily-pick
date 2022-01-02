@@ -1,4 +1,5 @@
 import { BlockAction, SlackViewAction, SlashCommand } from '@slack/bolt';
+import { Response as RawResponse } from 'express';
 
 export interface BlockActionPayload {
   payload: BlockAction;
@@ -21,3 +22,5 @@ export interface BlockActionRequest {
 }
 
 export type Request = SlashCommandRequest | ViewSubmissionRequest | BlockActionRequest;
+
+export type Response = RawResponse;
