@@ -1,11 +1,11 @@
 import '@/services/database';
 import '@/routes';
-
 import { Server } from 'http';
 
 import { schedule } from './schedule';
 
 import { env } from '@/services/env';
+import { postRouterSetup } from '@/services/error-tracking';
 import { api } from '@/services/express';
 import { getPort } from '@/services/get-port';
 import { createLogger } from '@/services/logger';
@@ -27,6 +27,13 @@ export const startServer = async () => {
       logger.info(`Listening at http://localhost:${port}/api`);
       resolve({ server, port });
     };
+
+    api.use((req, res, next) => {
+      logger.info({ method: req.method, url: req.url, statusCode: res.statusCode });
+      next();
+    });
+
+    postRouterSetup(api);
 
     const server = api.listen(port, handle).on('error', logger.error);
   });

@@ -10,7 +10,7 @@
   "keywords": [],
   "scripts": {
     "start": "NODE_ENV=production node build/main/index.js",
-    "dev": "ts-node-dev --inspect -- src/index.ts | bunyan -L",
+    "dev": "NODE_ENV=development ts-node-dev --inspect -- src/index.ts | bunyan -L",
     "build": "run-p build:*",
     "build:main": "tsc -p tsconfig.build.json",
     "fix": "run-s fix:*",
