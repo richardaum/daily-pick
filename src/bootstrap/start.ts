@@ -1,4 +1,5 @@
 import '@/services/database';
+import '@/services/error-tracking';
 import '@/routes';
 
 import { Server } from 'http';
