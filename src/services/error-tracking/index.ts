@@ -1,23 +1,19 @@
 import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
+import { Express } from 'express';
 
-// import * as Tracing from '@sentry/tracing';
+import { env } from '../env';
 
-Sentry.init({
-  dsn: 'https://9e6d07ebc04c444594a39827796188ab@o1103807.ingest.sentry.io/6130396',
-  tracesSampleRate: 1.0,
-});
+export const setupSentry = (app: Express) => {
+  if (!env('SENTRY_DSN')) return;
 
-// const transaction = Sentry.startTransaction({
-//   op: "test",
-//   name: "My First Test Transaction",
-// });
+  Sentry.init({
+    dsn: env('SENTRY_DSN'),
+    tracesSampleRate: 1.0,
+    integrations: [new Sentry.Integrations.Http({ tracing: true }), new Tracing.Integrations.Express({ app })],
+  });
 
-// setTimeout(() => {
-//   try {
-//     foo();
-//   } catch (e) {
-//     Sentry.captureException(e);
-//   } finally {
-//     transaction.finish();
-//   }
-// }, 99);
+  app.use(Sentry.Handlers.requestHandler());
+  app.use(Sentry.Handlers.tracingHandler());
+  app.use(Sentry.Handlers.errorHandler());
+};

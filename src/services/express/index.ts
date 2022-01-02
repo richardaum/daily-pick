@@ -1,5 +1,6 @@
 import express from 'express';
 
+import { setupSentry } from '../error-tracking';
 import { createLogger } from '../logger';
 
 const logger = createLogger();
@@ -13,3 +14,5 @@ api.use((req, res, next) => {
   logger.info({ method: req.method, url: req.url, statusCode: res.statusCode });
   next();
 });
+
+setupSentry(api);
