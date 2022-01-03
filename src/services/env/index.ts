@@ -4,9 +4,10 @@ const config = {
   LOG_DISABLED: process.env.LOG_DISABLED,
   SENTRY_DSN: process.env.SENTRY_DSN,
   NODE_ENV: process.env.NODE_ENV,
+  LOG_LEVEL: process.env.LOG_LEVEL,
 };
 
-const optional = new Set(['LOG_DISABLED', 'SENTRY_DSN']);
+const optional = new Set(['LOG_DISABLED', 'SENTRY_DSN', 'LOG_LEVEL']);
 
 export const env = (key: keyof typeof config) => {
   const value = config[key];
