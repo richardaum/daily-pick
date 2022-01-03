@@ -1,5 +1,4 @@
-import cronParser from 'cron-parser';
-import { cancelJob, RecurrenceRule, scheduleJob } from 'node-schedule';
+import { cancelJob, scheduleJob } from 'node-schedule';
 
 import { TIMEZONE } from '@/constants';
 import { PersistedCron } from '@/types';
@@ -14,17 +13,7 @@ export type CronFields = {
 };
 
 export const scheduleSingle = (cronId: string, interval: string, onTick: () => void) => {
-  const raw = cronParser.parseExpression(interval, { tz: TIMEZONE });
-  const fields = JSON.parse(JSON.stringify(raw.fields)) as CronFields;
-  const rule = new RecurrenceRule();
-  rule.second = fields.second;
-  rule.minute = fields.minute;
-  rule.hour = fields.hour;
-  rule.date = fields.dayOfMonth;
-  rule.month = fields.month;
-  rule.dayOfWeek = fields.dayOfWeek;
-  rule.tz = TIMEZONE;
-  scheduleJob(cronId, rule, onTick);
+  scheduleJob(cronId, { rule: interval, tz: TIMEZONE }, onTick);
 };
 
 export const scheduleMultiple = <T extends PersistedCron>(crons: T[], onTick: (cron: T) => void) => {
