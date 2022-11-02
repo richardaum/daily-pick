@@ -5,8 +5,7 @@ import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 import { Request, SlashCommandRequest } from '../utils/types';
 
 import { BY_CREATION_DATE, CLOSE_LIST, CRONS, NO_CRONS_FOUND, REMOVE, UNKNOWN_NAME } from '@/i18n';
-import { fetchCronsByChannelAndTeam } from '@/services/database/functions/fetchCronsByChannelAndTeam';
-import { PersistedCron } from '@/types';
+import { repository } from '@/services/repository';
 
 export const isListingCrons = (req: Request): req is SlashCommandRequest => {
   const body = req.body as SlashCommand;
@@ -14,12 +13,17 @@ export const isListingCrons = (req: Request): req is SlashCommandRequest => {
 };
 
 export const listCrons = async (req: SlashCommandRequest, res: Response) => {
-  const crons = await fetchCronsByChannelAndTeam(req.body.channel_id, req.body.team_id);
+  const crons = await repository.fetchCronsByChannelAndTeam(req.body.channel_id, req.body.team_id);
   const message = listCronsView(crons).buildToObject();
   res.json(message);
 };
 
-export const listCronsView = (crons: PersistedCron[]) =>
+type PartialCron = {
+  name: string;
+  id: string;
+};
+
+export const listCronsView = (crons: PartialCron[]) =>
   Surfaces.Message()
     .ephemeral(true)
     .blocks(

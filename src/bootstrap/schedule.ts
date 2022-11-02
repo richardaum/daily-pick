@@ -1,20 +1,31 @@
 import { scheduleMultiple } from '@/services/cron';
-import { fetchCrons } from '@/services/database/functions/fetchCrons';
-import { getUsers } from '@/services/database/functions/getUsers';
-import { updateCurrentUser } from '@/services/database/functions/updateCurrentUser';
+import { createLogger } from '@/services/logger';
+import { repository } from '@/services/repository';
 import { getName } from '@/services/slack/functions/getName';
 import { postMessage } from '@/services/slack/functions/postMessage';
-import { PersistedCron } from '@/types';
+
+const logger = createLogger();
 
 export const schedule = async () => {
-  const crons = await fetchCrons();
+  const crons = await repository.fetchCrons();
+
+  crons.forEach((cron) => {
+    logger.trace(`Scheduled cron: ${cron.id}`);
+  });
+
   scheduleMultiple(crons, handleSchedule);
 };
 
-export const handleSchedule = async (cron: PersistedCron) => {
-  const { current, next } = await getUsers(cron.id);
+type PartialCron = {
+  id: string;
+  channel: string;
+  responseUrl?: string;
+};
+
+export const handleSchedule = async (cron: PartialCron) => {
+  const { current, next } = await repository.getUsers(cron.id);
   const mentionCurrent = `<@${current}>`;
   const [nextName] = await getName([next]);
-  await postMessage({ channel: cron.channel, current: mentionCurrent, next: nextName });
-  await updateCurrentUser(cron.id, next);
+  await postMessage({ channel: cron.channel, responseUrl: cron.responseUrl, current: mentionCurrent, next: nextName });
+  await repository.updateCurrentUser(cron.id, next);
 };

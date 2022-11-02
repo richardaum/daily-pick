@@ -1,14 +1,13 @@
-import { database } from '..';
-
 import { Queue } from '@/models/queue';
-import { PersistedCron } from '@/types';
+import { database } from '@/services/repository/firebase';
+import { Cron, Repository } from '@/types';
 
-export const getUsers = async (cronId: string) => {
+export const getUsers: Repository['getUsers'] = async (cronId) => {
   let currentUserId;
 
-  const cronRef = database.collection('crons').doc(cronId);
+  const cronRef = database().collection('crons').doc(cronId);
   const cronSnapshot = await cronRef.get();
-  const cron = cronSnapshot.data() as PersistedCron;
+  const cron = cronSnapshot.data() as Cron;
 
   const order = new Queue(cron.users);
   currentUserId = cron.current;

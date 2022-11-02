@@ -6,7 +6,7 @@ import { request } from './server';
 import { create } from '@/__test__/fixtures/create';
 import { WAS_CREATED, YOUR_CRON } from '@/i18n';
 import * as cron from '@/services/cron';
-import * as functions from '@/services/database/functions/persistCron';
+import { repository } from '@/services/repository';
 import { slack } from '@/services/slack';
 
 jest.mock('@/bootstrap/schedule');
@@ -26,12 +26,12 @@ describe('createCron', () => {
     };
 
     jest.spyOn(cron, 'scheduleMultiple');
-    jest.spyOn(functions, 'persistCron').mockResolvedValue(cronPayload);
+    jest.spyOn(repository, 'persistCron').mockResolvedValue(cronPayload);
 
     const req = request().post('/api/commands/daily/act');
     const res = await req.send(create.body);
 
-    const persistCron = mocked(functions.persistCron, true);
+    const persistCron = mocked(repository.persistCron, true);
     expect(persistCron).toHaveBeenCalledTimes(1);
 
     const parameter = persistCron.mock.calls[0][0];

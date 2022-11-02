@@ -18,6 +18,7 @@ import {
   TUESDAY_LABEL,
   WEDNESDAY_LABEL,
 } from '@/i18n';
+import { serializeMetadata } from '@/services/metadata';
 import { slack } from '@/services/slack';
 
 export const OPEN_MODAL = 'openModal';
@@ -33,7 +34,7 @@ export async function openModal(req: SlashCommandRequest, res: Response) {
     callbackId: OPEN_MODAL,
     title: MODAL_TITLE,
     submit: SUBMIT_BUTTON,
-    privateMetaData: req.body.channel_id,
+    privateMetaData: serializeMetadata({ c: req.body.channel_id, r: req.body.response_url }),
   })
     .blocks(...openModalBlocks())
     .buildToObject();
