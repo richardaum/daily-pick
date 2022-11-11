@@ -28,8 +28,15 @@ Also this is a technical and personal use case of some technologies I'd like to 
 - [x] 👀 List all schedules created on a Slack channel.
 - [x] 🗑 Remove a schedule from the list.
 - [x] 🐋 Dockerfile
-- [ ] Configurable timezone (TBD)
-- [ ] Alternative databases (MySQL, PostgreSQL)
+
+### Coming up
+
+- SQLite 3 support (alternative support to firebase).
+- Skip feature, when the participant is not available to join.
+
+### Future
+
+- [ ] Configurable timezone
 - [ ] Multi-languages (currently, only pt-BR is available)
 
 ## Configuration
