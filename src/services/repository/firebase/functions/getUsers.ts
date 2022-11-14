@@ -1,4 +1,3 @@
-import { Queue } from '@/models/queue';
 import { database } from '@/services/repository/firebase';
 import { Cron, Repository } from '@/types';
 

@@ -5,10 +5,8 @@ import { isOutsideChannel, warnOutsideChannel } from './warnOutsideChannel';
 
 import { slack as app } from '@/services/slack';
 
-app.command('/daily', async ({ command, ack, body, respond, client }) => {
+app.command('/daily', async ({ command, ack, body, respond }) => {
   await ack();
-
-  const members = await client.conversations.members({ channel: body.channel_id });
 
   if (isOutsideChannel(body)) return await warnOutsideChannel(respond);
   if (isListingCrons(command)) return await listCrons(body, respond);

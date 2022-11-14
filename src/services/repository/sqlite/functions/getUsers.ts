@@ -1,8 +1,6 @@
-import { Queue } from '@/models/queue';
 import { buildCronFromSQLite } from '@/services/cron';
 import { database } from '@/services/repository/sqlite';
 import { Repository, SQLiteCron } from '@/types';
-import { Cron } from '@/types';
 
 export const getUsers: Repository['getUsers'] = async (cronId: string) => {
   const rawCron = await database().get<SQLiteCron>(

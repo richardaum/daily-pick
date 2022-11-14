@@ -7,7 +7,6 @@ import { BACK_TO_LIST, DELETE_MESSAGE } from '@/i18n';
 import { repository } from '@/services/repository';
 
 export const seeDetails = async ({
-  body,
   cronId,
   respond,
 }: {
