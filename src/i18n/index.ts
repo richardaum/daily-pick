@@ -31,9 +31,3 @@ export const OUTSIDE_CHANNEL_MESSAGE = 'Desculpe, este comando só pode ser exec
 export const TRIGGER = 'Acionar';
 export const TRIGGER_ACTION = 'trigger';
 export const SKIP = 'Pular';
-export const ADD_BOT_INTEGRATION_MESSAGE = [
-  'Primeiro, você precisa adicionar a integração do Daily Pick neste canal.',
-  'Você pode fazer isso agora, digtando o seguinte comando `/invite @Daily Pick`.',
-].join('\n');
-export const ALREADY_ADDED_BOT_INTEGRATION = 'Já adicionei!';
-export const CANCELD_ADDING_BOT_INTEGRATION = 'Cancelar';
