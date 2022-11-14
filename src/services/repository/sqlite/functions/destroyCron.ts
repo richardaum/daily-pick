@@ -1,6 +1,7 @@
+import { buildCronFromSQLite } from '@/services/cron';
 import { database } from '@/services/repository/sqlite';
 import { Repository } from '@/types';
-import { Cron, SQLiteCron } from '@/types';
+import { SQLiteCron } from '@/types';
 
 export const destroyCron: Repository['destroyCron'] = async (cronId: string) => {
   const cron = await database().get<SQLiteCron>(
@@ -21,11 +22,5 @@ export const destroyCron: Repository['destroyCron'] = async (cronId: string) => 
     { ':id': cronId }
   );
 
-  return {
-    ...cron,
-    users: JSON.parse(cron.users) as Cron['users'],
-    team: cron.team,
-    intervals: JSON.parse(cron.intervals) as Cron['intervals'],
-    createdAt: cron.createTime,
-  } as Cron;
+  return buildCronFromSQLite(cron);
 };

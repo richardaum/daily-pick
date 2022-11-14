@@ -1,6 +1,4 @@
-export type RepositoryCron = (FirebaseCron & { type: 'firebase' }) | (SQLiteCron & { type: 'sqlite' });
-
-export type FirebaseCronSnapshot = Omit<Cron, 'id' | 'createdAt'>;
+export type FirebaseCronDocumentData = Omit<Cron, 'id' | 'createdAt'>;
 
 export type FirebaseCron = Cron;
 
@@ -33,7 +31,7 @@ export type Cron = {
 
 export interface Repository {
   fetchCrons(): Promise<Cron[]>;
-  fetchCronById(id: string): Promise<RepositoryCron | undefined>;
+  fetchCronById(id: string): Promise<Cron | undefined>;
   fetchCronsByChannelAndTeam(channelId: string, teamId: string): Promise<Crons>;
   destroyCron(cronId: string): Promise<Cron | undefined>;
   getUsers(cronId: string): Promise<{ current: string; next: string }>;

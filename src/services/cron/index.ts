@@ -1,7 +1,8 @@
 import { cancelJob, scheduleJob } from 'node-schedule';
 
 import { TIMEZONE } from '@/constants';
-import { Cron, FirebaseCron, SQLiteCron } from '@/types';
+import { buildCreatedAt } from '@/services/repository/common';
+import { Cron, FirebaseCron, FirebaseCronDocumentData, SQLiteCron } from '@/types';
 
 export type CronFields = {
   second: number[];
@@ -37,6 +38,10 @@ export const buildCronId = (cronId: string, interval: string) => {
   return `${cronId}_${interval}`;
 };
 
+export const buildCronsFromSQLite = (crons: SQLiteCron[]): Cron[] => {
+  return crons.map((cron) => buildCronFromSQLite(cron));
+};
+
 export const buildCronFromSQLite = (cron: SQLiteCron): Cron => {
   return {
     ...cron,
@@ -44,5 +49,15 @@ export const buildCronFromSQLite = (cron: SQLiteCron): Cron => {
     team: cron.team,
     intervals: JSON.parse(cron.intervals) as FirebaseCron['intervals'],
     createdAt: cron.createTime,
+  };
+};
+
+export const buildCronFromFirebase = (
+  snapshot: FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>
+): Cron => {
+  return {
+    ...(snapshot.data() as FirebaseCronDocumentData),
+    createdAt: buildCreatedAt(snapshot.createTime?.toDate()),
+    id: snapshot.id,
   };
 };

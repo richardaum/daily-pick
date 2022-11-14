@@ -1,3 +1,4 @@
+import { buildCronFromSQLite } from '@/services/cron';
 import { database } from '@/services/repository/sqlite';
 import { Repository, SQLiteCron } from '@/types';
 
@@ -10,5 +11,5 @@ export const fetchCronById: Repository['fetchCronById'] = async (cronId: string)
     { ':id': cronId }
   );
 
-  return cron ? { ...cron, type: 'sqlite' } : cron;
+  return cron ? buildCronFromSQLite(cron) : cron;
 };
