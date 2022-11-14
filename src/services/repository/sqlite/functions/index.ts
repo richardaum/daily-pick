@@ -1,7 +1,18 @@
-// @index('./*', f => `export * from '${f.path}'`)
-export * from './destroyCron';
-export * from './fetchCrons';
-export * from './fetchCronsByChannelAndTeam';
-export * from './getUsers';
-export * from './persistCron';
-export * from './updateCurrentUser';
+import { destroyCron } from '@/services/repository/sqlite/functions/destroyCron';
+import { fetchCronById } from '@/services/repository/sqlite/functions/fetchCronById';
+import { fetchCrons } from '@/services/repository/sqlite/functions/fetchCrons';
+import { fetchCronsByChannelAndTeam } from '@/services/repository/sqlite/functions/fetchCronsByChannelAndTeam';
+import { getUsers } from '@/services/repository/sqlite/functions/getUsers';
+import { persistCron } from '@/services/repository/sqlite/functions/persistCron';
+import { updateCurrentUser } from '@/services/repository/sqlite/functions/updateCurrentUser';
+import { Repository } from '@/types';
+
+export const sqliteRepository: Repository = {
+  destroyCron: destroyCron,
+  fetchCrons: fetchCrons,
+  fetchCronsByChannelAndTeam: fetchCronsByChannelAndTeam,
+  getUsers: getUsers,
+  persistCron: persistCron,
+  updateCurrentUser: updateCurrentUser,
+  fetchCronById: fetchCronById,
+};

@@ -12,7 +12,6 @@ export const isListingCrons = (command: SlashCommand) => {
 export const listCrons = async (body: SlashCommand, respond: RespondFn) => {
   const crons = await repository.fetchCronsByChannelAndTeam(body.channel_id, body.team_id);
   const message = listCronsView(crons).buildToObject();
-  console.log(JSON.stringify(message));
   await respond(message);
 };
 
@@ -35,7 +34,7 @@ export const listCronsView = (crons: PartialCron[]) =>
           Elements.OverflowMenu({ actionId: 'list_overflow_click' })
             .options([
               Option({ value: `${REMOVE_CRON_ACTION}#${cron.id}`, text: REMOVE }),
-              // Option({ value: `${SEE_DETAILS_ACTION}#${cron.id}`, text: SEE_DETAILS }),
+              Option({ value: `${SEE_DETAILS_ACTION}#${cron.id}`, text: SEE_DETAILS }),
             ])
             .end()
         )

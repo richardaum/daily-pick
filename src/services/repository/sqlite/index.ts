@@ -27,4 +27,4 @@ export const connectSqlite = async () => {
   instance = database;
 };
 
-export const sqliteRepository = functions as Repository;
+export { sqliteRepository } from './functions';

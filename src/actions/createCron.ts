@@ -68,4 +68,6 @@ app.view<ViewSubmitAction>({ type: 'view_submission', callback_id: OPEN_MODAL },
   });
 
   logger.debug({ hint: 'slack message is sent', cron });
+
+  await ack();
 });
