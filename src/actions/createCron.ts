@@ -1,9 +1,12 @@
 import { ViewSubmitAction } from '@slack/bolt';
 import axios from 'axios';
+import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 
 import { handleSchedule } from '@/bootstrap/schedule';
 import { OPEN_MODAL, repeatDailyPrefix, timePickerSuffix } from '@/commands/daily/openModal';
-import { SELECT_AT_LEAST_ONE_WEEKDAY, WAS_CREATED, YOUR_CRON } from '@/i18n';
+import { DELETE_MESSAGE_ACTION } from '@/constants';
+import { BACK_TO_LIST_ACTION } from '@/constants/actions';
+import { BACK_TO_LIST, DELETE_MESSAGE, SELECT_AT_LEAST_ONE_WEEKDAY, WAS_CREATED, YOUR_CRON } from '@/i18n';
 import { scheduleMultiple } from '@/services/cron';
 import { createLogger } from '@/services/logger';
 import { parseMetadata } from '@/services/metadata';
@@ -12,7 +15,7 @@ import { slack as app } from '@/services/slack';
 
 const logger = createLogger();
 
-app.view<ViewSubmitAction>({ type: 'view_submission', callback_id: OPEN_MODAL }, async ({ ack, body }) => {
+app.view<ViewSubmitAction>({ type: 'view_submission', callback_id: OPEN_MODAL }, async ({ ack, body, respond }) => {
   const team = body.view.team_id;
   const metadata = parseMetadata(body.view.private_metadata);
   const responseUrl = metadata.r;
@@ -62,8 +65,12 @@ app.view<ViewSubmitAction>({ type: 'view_submission', callback_id: OPEN_MODAL },
   logger.debug({ hint: 'cron is scheduled', cron });
 
   await axios.post(responseUrl, {
-    user: body.user.id,
-    text: `${YOUR_CRON} "${cron.name}" ${WAS_CREATED}`,
+    blocks: Surfaces.Message()
+      .blocks(
+        Blocks.Section({ text: `${YOUR_CRON} "${cron.name}" ${WAS_CREATED}` }),
+        Blocks.Actions().elements(Elements.Button({ text: DELETE_MESSAGE, actionId: DELETE_MESSAGE_ACTION }))
+      )
+      .buildToObject().blocks,
     response_type: 'ephemeral',
   });
 
