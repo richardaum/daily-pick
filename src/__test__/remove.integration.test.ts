@@ -5,17 +5,16 @@ import { mocked } from 'jest-mock';
 import { request } from './server';
 
 import { remove } from '@/__test__/fixtures/remove';
-import * as f1 from '@/services/database/functions/destroyCron';
-import * as f2 from '@/services/database/functions/fetchCronsByChannelAndTeam';
-import { PersistedCron } from '@/types';
+import { repository } from '@/services/repository';
+import { Cron } from '@/types';
 
 jest.mock('@/bootstrap/schedule');
 
 describe('pick', () => {
   it('should remove a cron', async () => {
     jest.spyOn(axios, 'post').mockResolvedValueOnce({});
-    jest.spyOn(f1, 'destroyCron').mockResolvedValue({ intervals: [] } as unknown as PersistedCron);
-    jest.spyOn(f2, 'fetchCronsByChannelAndTeam').mockResolvedValue([
+    jest.spyOn(repository, 'destroyCron').mockResolvedValue({ intervals: [] } as unknown as Cron);
+    jest.spyOn(repository, 'fetchCronsByChannelAndTeam').mockResolvedValue([
       {
         id: '1',
         name: 'cron',
@@ -36,7 +35,7 @@ describe('pick', () => {
     const post = mocked(axios.post, true);
     expect(post).toHaveBeenCalled();
 
-    const destroy = mocked(f1.destroyCron, true);
+    const destroy = mocked(repository.destroyCron, true);
     const action = payload.actions[0] as ButtonAction;
     expect(destroy).toHaveBeenCalledWith(action.value);
 

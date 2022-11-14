@@ -7,8 +7,7 @@ import { BlockActionRequest, Request } from '../utils/types';
 import { listCronsView } from './list';
 
 import { buildCronId, stopCron } from '@/services/cron';
-import { destroyCron } from '@/services/database/functions/destroyCron';
-import { fetchCronsByChannelAndTeam } from '@/services/database/functions/fetchCronsByChannelAndTeam';
+import { repository } from '@/services/repository';
 
 export function isRemovingCron(req: Request): req is BlockActionRequest {
   if (!req.body.payload) return false;
@@ -26,12 +25,12 @@ export async function removeCron(req: Request, res: Response) {
   }
 
   // Remotely destroy and locally stop crons
-  const cron = await destroyCron(action.value);
+  const cron = await repository.destroyCron(action.value);
   cron.intervals.forEach((interval) => {
     stopCron(buildCronId(cron.id, interval));
   });
 
-  const crons = await fetchCronsByChannelAndTeam(payload.channel.id, payload.team.id);
+  const crons = await repository.fetchCronsByChannelAndTeam(payload.channel.id, payload.team.id);
   axios.post(payload.response_url, listCronsView(crons).buildToObject());
   res.end();
 }

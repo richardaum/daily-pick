@@ -2,13 +2,13 @@ import { request } from './server';
 
 import { list } from '@/__test__/fixtures/list';
 import { NO_CRONS_FOUND } from '@/i18n';
-import * as functions from '@/services/database/functions/fetchCronsByChannelAndTeam';
+import { repository } from '@/services/repository';
 
 jest.mock('@/bootstrap/schedule');
 
 describe('listCrons', () => {
   it('should display an empty list', async () => {
-    jest.spyOn(functions, 'fetchCronsByChannelAndTeam').mockResolvedValue([]);
+    jest.spyOn(repository, 'fetchCronsByChannelAndTeam').mockResolvedValue([]);
 
     const req = request().post('/api/commands/daily/pick');
     const res = await req.send(list.body);
@@ -19,7 +19,7 @@ describe('listCrons', () => {
   });
 
   it('should display a list', async () => {
-    jest.spyOn(functions, 'fetchCronsByChannelAndTeam').mockResolvedValue([
+    jest.spyOn(repository, 'fetchCronsByChannelAndTeam').mockResolvedValue([
       {
         id: '1',
         name: 'cron 1',

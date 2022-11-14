@@ -1,7 +1,6 @@
 import { cancelJob, scheduleJob } from 'node-schedule';
 
 import { TIMEZONE } from '@/constants';
-import { PersistedCron } from '@/types';
 
 export type CronFields = {
   second: number[];
@@ -16,7 +15,12 @@ export const scheduleSingle = (cronId: string, interval: string, onTick: () => v
   scheduleJob(cronId, { rule: interval, tz: TIMEZONE }, onTick);
 };
 
-export const scheduleMultiple = <T extends PersistedCron>(crons: T[], onTick: (cron: T) => void) => {
+type PartialCron = {
+  id: string;
+  intervals: string[];
+};
+
+export const scheduleMultiple = <T extends PartialCron>(crons: T[], onTick: (cron: T) => void) => {
   crons.forEach((cron) => {
     cron.intervals.forEach((interval) => {
       scheduleSingle(buildCronId(cron.id, interval), interval, () => onTick(cron));

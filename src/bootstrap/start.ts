@@ -1,4 +1,3 @@
-import '@/services/database';
 import '@/routes';
 import { Server } from 'http';
 
@@ -9,6 +8,7 @@ import { postRouterSetup } from '@/services/error-tracking';
 import { api } from '@/services/express';
 import { getPort } from '@/services/get-port';
 import { createLogger } from '@/services/logger';
+import { connect } from '@/services/repository';
 
 type Api = {
   readonly server: Server;
@@ -18,6 +18,7 @@ type Api = {
 const logger = createLogger();
 
 export const startServer = async () => {
+  await connect();
   await schedule();
 
   const port = await getPort({ port: Number(env('PORT')) });

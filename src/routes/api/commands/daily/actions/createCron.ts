@@ -1,4 +1,5 @@
 import { SlackViewAction } from '@slack/bolt';
+import axios from 'axios';
 import { Response } from 'express';
 
 import { Request, ViewSubmissionRequest } from '../utils/types';
@@ -8,9 +9,9 @@ import { OPEN_MODAL, repeatDailyPrefix, timePickerSuffix } from './openModal';
 import { handleSchedule } from '@/bootstrap/schedule';
 import { SELECT_AT_LEAST_ONE_WEEKDAY, UNKNOWN_NAME, WAS_CREATED, YOUR_CRON } from '@/i18n';
 import { scheduleMultiple } from '@/services/cron';
-import { persistCron } from '@/services/database/functions/persistCron';
 import { createLogger } from '@/services/logger';
-import { slack } from '@/services/slack';
+import { parseMetadata } from '@/services/metadata';
+import { repository } from '@/services/repository';
 
 const logger = createLogger();
 
@@ -24,7 +25,9 @@ export function isCreatingCron(req: Request): req is ViewSubmissionRequest {
 export async function createCron(req: Request, res: Response) {
   const payload = JSON.parse(req.body.payload) as SlackViewAction;
   const team = payload.view.team_id;
-  const channel = payload.view.private_metadata;
+  const metadata = parseMetadata(payload.view.private_metadata);
+  const responseUrl = metadata.r;
+  const channel = metadata.c;
 
   const inputs = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].map((weekday) => {
     const block = payload.view.state.values[`${repeatDailyPrefix}_${weekday}`];
@@ -51,8 +54,9 @@ export async function createCron(req: Request, res: Response) {
       return `0 ${minute} ${hour} * * ${dayWeek}`;
     });
 
-  const cron = await persistCron({
+  const cron = await repository.persistCron({
     team,
+    responseUrl,
     channel,
     intervals,
     name: payload.view.state.values.name.name_input.value ?? UNKNOWN_NAME,
@@ -67,10 +71,10 @@ export async function createCron(req: Request, res: Response) {
 
   logger.debug({ hint: 'cron is scheduled', cron });
 
-  await slack.client.chat.postEphemeral({
-    channel,
+  await axios.post(responseUrl, {
     user: payload.user.id,
     text: `${YOUR_CRON} "${cron.name}" ${WAS_CREATED}`,
+    response_type: 'ephemeral',
   });
 
   logger.debug({ hint: 'slack message is sent', cron });

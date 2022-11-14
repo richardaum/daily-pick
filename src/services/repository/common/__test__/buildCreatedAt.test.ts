@@ -1,4 +1,4 @@
-import { buildCreatedAt } from './buildCreatedAt';
+import { buildCreatedAt } from '../../common/buildCreatedAt';
 
 describe('buildCreatedAt', () => {
   it('should return a date string', () => {
