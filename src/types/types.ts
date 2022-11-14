@@ -1,4 +1,6 @@
-export type FirebaseCron = Omit<Cron, 'createdAt'>;
+export type FirebaseCronDocumentData = Omit<Cron, 'id' | 'createdAt'>;
+
+export type FirebaseCron = Cron;
 
 export type SQLiteCron = Omit<Cron, 'users' | 'intervals' | 'createdAt'> & {
   users: string;
@@ -24,14 +26,14 @@ export type Cron = {
   intervals: string[];
 
   channel: string;
-  responseUrl?: string;
 };
 
 export interface Repository {
   fetchCrons(): Promise<Cron[]>;
+  fetchCronById(id: string): Promise<Cron | undefined>;
   fetchCronsByChannelAndTeam(channelId: string, teamId: string): Promise<Crons>;
-  destroyCron(cronId: string): Promise<Cron>;
-  getUsers(cronId: string): Promise<{ current: string; next: string }>;
+  destroyCron(cronId: string): Promise<Cron | undefined>;
+  getUsers(cronId: string): Promise<string[]>;
   persistCron(cron: FirebasePersistingCron): Promise<Omit<Cron, 'createdAt'>>;
   updateCurrentUser(cronId: string, user: string): Promise<void>;
 }
@@ -43,4 +45,4 @@ export type Crons = (FirebaseCron & {
   createdAt?: string | undefined;
 })[];
 
-export type FirebasePersistingCron = Omit<FirebaseCron, 'id' | 'current'>;
+export type FirebasePersistingCron = Omit<FirebaseCron, 'id' | 'current' | 'createdAt'>;

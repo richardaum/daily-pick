@@ -1,7 +1,5 @@
-import { Response } from 'express';
+import { SlashCommand } from '@slack/bolt';
 import { Blocks, Elements, Modal } from 'slack-block-builder';
-
-import { Request, SlashCommandRequest } from '../utils/types';
 
 import {
   FRIDAY_LABEL,
@@ -25,26 +23,24 @@ export const OPEN_MODAL = 'openModal';
 export const repeatDailyPrefix = 'repeat_daily';
 export const timePickerSuffix = 'time_picker';
 
-export function isOpeningModal(req: Request): req is SlashCommandRequest {
-  return 'trigger_id' in req.body && req.body.text === 'pick';
+export function isOpeningModal(body: SlashCommand) {
+  return Boolean(body.trigger_id) && body.text === 'pick';
 }
 
-export async function openModal(req: SlashCommandRequest, res: Response) {
+export async function openModal(body: SlashCommand) {
   const modal = Modal({
     callbackId: OPEN_MODAL,
     title: MODAL_TITLE,
     submit: SUBMIT_BUTTON,
-    privateMetaData: serializeMetadata({ c: req.body.channel_id, r: req.body.response_url }),
+    privateMetaData: serializeMetadata({ c: body.channel_id, r: body.response_url }),
   })
     .blocks(...openModalBlocks())
     .buildToObject();
 
   slack.client.views.open({
-    trigger_id: req.body.trigger_id,
+    trigger_id: body.trigger_id,
     view: modal,
   });
-
-  res.end();
 }
 
 export function openModalBlocks() {

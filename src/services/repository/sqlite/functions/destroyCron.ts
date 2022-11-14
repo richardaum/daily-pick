@@ -1,18 +1,26 @@
-import { buildCreatedAt } from '@/services/repository/common';
-import { database } from '@/services/repository/firebase';
+import { buildCronFromSQLite } from '@/services/cron';
+import { database } from '@/services/repository/sqlite';
 import { Repository } from '@/types';
-import { Cron, FirebaseCron } from '@/types';
+import { SQLiteCron } from '@/types';
 
 export const destroyCron: Repository['destroyCron'] = async (cronId: string) => {
-  const cronSnapshot = await database().collection('crons').doc(cronId).get();
-  const cronData = cronSnapshot.data() as FirebaseCron;
-  const cron = {
-    ...cronData,
-    createdAt: buildCreatedAt(cronSnapshot.createTime?.toDate()),
-    id: cronSnapshot.id,
-  } as Cron;
+  const cron = await database().get<SQLiteCron>(
+    `
+      SELECT * FROM cron
+      WHERE id = :id
+    `,
+    { ':id': cronId }
+  );
 
-  await database().collection('crons').doc(cronId).delete();
+  if (!cron) return;
 
-  return cron;
+  await database().run(
+    `
+      DELETE FROM cron 
+      WHERE id = :id
+    `,
+    { ':id': cronId }
+  );
+
+  return buildCronFromSQLite(cron);
 };
