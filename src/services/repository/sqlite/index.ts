@@ -3,9 +3,7 @@ import { resolve } from 'path';
 import { Database, open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 
-import * as functions from './functions';
-
-import { Repository } from '@/types';
+import { env } from '@/services/env';
 
 let instance: Database<sqlite3.Database, sqlite3.Statement>;
 
@@ -23,6 +21,8 @@ export const connectSqlite = async () => {
   await database.migrate({
     migrationsPath: resolve(__dirname, 'migrations'),
   });
+
+  if (env('LOG_LEVEL') === 'debug') sqlite3.verbose();
 
   instance = database;
 };

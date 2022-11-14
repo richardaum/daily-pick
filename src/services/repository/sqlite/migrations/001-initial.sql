@@ -6,6 +6,5 @@ CREATE TABLE IF NOT EXISTS cron (
   team STRING NOT NULL,
   users STRING NOT NULL,
   createTime STRING NOT NULL,
-  channel STRING NULL,
-  responseUrl STRING NULL
+  channel STRING NULL
 )

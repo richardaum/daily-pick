@@ -2,7 +2,16 @@ import { RespondFn, SlashCommand } from '@slack/bolt';
 import { Blocks, Elements, Option, Surfaces } from 'slack-block-builder';
 
 import { DELETE_MESSAGE_ACTION, REMOVE_CRON_ACTION, SEE_DETAILS_ACTION } from '@/constants';
-import { BY_CREATION_DATE, CRONS, DELETE_MESSAGE, NO_CRONS_FOUND, REMOVE, SEE_DETAILS } from '@/i18n';
+import {
+  BY_CREATION_DATE,
+  CRONS,
+  DELETE_MESSAGE,
+  NO_CRONS_FOUND,
+  REMOVE,
+  SEE_DETAILS,
+  TRIGGER,
+  TRIGGER_ACTION,
+} from '@/i18n';
 import { repository } from '@/services/repository';
 
 export const isListingCrons = (command: SlashCommand) => {
@@ -35,6 +44,7 @@ export const listCronsView = (crons: PartialCron[]) =>
             .options([
               Option({ value: `${REMOVE_CRON_ACTION}#${cron.id}`, text: REMOVE }),
               Option({ value: `${SEE_DETAILS_ACTION}#${cron.id}`, text: SEE_DETAILS }),
+              Option({ value: `${TRIGGER_ACTION}#${cron.id}`, text: TRIGGER }),
             ])
             .end()
         )

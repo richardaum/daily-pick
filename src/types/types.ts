@@ -26,7 +26,6 @@ export type Cron = {
   intervals: string[];
 
   channel: string;
-  responseUrl?: string;
 };
 
 export interface Repository {

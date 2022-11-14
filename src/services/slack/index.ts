@@ -6,6 +6,6 @@ export const slack = new App({
   appToken: env('SLACK_APP_TOKEN'),
   token: env('SLACK_BOT_TOKEN'),
   signingSecret: env('SLACK_SIGNING_SECRET'),
-  logLevel: LogLevel.DEBUG,
+  logLevel: env('LOG_LEVEL') === 'debug' ? LogLevel.DEBUG : LogLevel.INFO,
   port: Number(env('PORT')),
 });

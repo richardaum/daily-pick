@@ -19,13 +19,12 @@ export const schedule = async () => {
 type PartialCron = {
   id: string;
   channel: string;
-  responseUrl?: string;
 };
 
 export const handleSchedule = async (cron: PartialCron) => {
   const { current, next } = await repository.getUsers(cron.id);
   const mentionCurrent = `<@${current}>`;
   const [nextName] = await getName([next]);
-  await postMessage({ channel: cron.channel, responseUrl: cron.responseUrl, current: mentionCurrent, next: nextName });
+  await postMessage({ channel: cron.channel, current: mentionCurrent, next: nextName });
   await repository.updateCurrentUser(cron.id, next);
 };

@@ -17,7 +17,6 @@ export const seeDetails = async ({
 }) => {
   const cron = await repository.fetchCronById(cronId);
   if (!cron) throw new Error(`The cron ${cronId} was not found`);
-  console.log(cron);
 
   respond(
     Surfaces.Message({ text: 'Cron details' })
