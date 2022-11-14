@@ -1,3 +1,5 @@
+import { VError } from 'verror';
+
 import { scheduleMultiple } from '@/services/cron';
 import { createLogger } from '@/services/logger';
 import { repository } from '@/services/repository';
@@ -19,6 +21,7 @@ export const schedule = async () => {
 
 type PartialCron = {
   id: string;
+  name: string;
   channel: string;
   current?: string;
 };
@@ -28,6 +31,18 @@ export const handleSchedule = async (cron: PartialCron) => {
   const it = buildQueueIterator(users, cron.current);
   const mentionCurrent = `<@${it.get()}>`;
   const [nextName] = await getName([it.next().get()]);
-  await postMessage({ cronId: cron.id, channel: cron.channel, current: mentionCurrent, next: nextName });
+
+  try {
+    await postMessage({ cronId: cron.id, channel: cron.channel, current: mentionCurrent, next: nextName });
+  } catch (e) {
+    const error = e as Error;
+
+    if (error?.message?.includes('channel_not_found') || error?.message?.includes('not_in_channel')) {
+      throw new VError(error, `Invalid channel ${cron.channel} for cron ${cron.id} (${cron.name})`);
+    }
+
+    throw e;
+  }
+
   await repository.updateCurrentUser(cron.id, it.next().get());
 };
