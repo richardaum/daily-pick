@@ -30,7 +30,7 @@ export type Cron = {
 export interface Repository {
   fetchCrons(): Promise<Cron[]>;
   fetchCronsByChannelAndTeam(channelId: string, teamId: string): Promise<Crons>;
-  destroyCron(cronId: string): Promise<Cron>;
+  destroyCron(cronId: string): Promise<Cron | undefined>;
   getUsers(cronId: string): Promise<{ current: string; next: string }>;
   persistCron(cron: FirebasePersistingCron): Promise<Omit<Cron, 'createdAt'>>;
   updateCurrentUser(cronId: string, user: string): Promise<void>;
