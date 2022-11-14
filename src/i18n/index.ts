@@ -7,6 +7,7 @@ export const NO_CRONS_FOUND = 'Nenhum agendamento encontrado';
 export const REMOVE = 'Remover';
 export const SEE_DETAILS = 'Ver detalhes';
 export const DELETE_MESSAGE = 'OK';
+export const BACK_TO_LIST = 'Voltar';
 export const ITS_YOUR_TURN = 'é sua vez na daily de hoje!';
 export const ITS_YOU_TOMORROW = 'Amanhã é você';
 export const NAME_LABEL = 'Nome';
