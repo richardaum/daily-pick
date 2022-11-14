@@ -28,6 +28,6 @@ export const handleSchedule = async (cron: PartialCron) => {
   const it = buildQueueIterator(users, cron.current);
   const mentionCurrent = `<@${it.get()}>`;
   const [nextName] = await getName([it.next().get()]);
-  await postMessage({ channel: cron.channel, current: mentionCurrent, next: nextName });
+  await postMessage({ cronId: cron.id, channel: cron.channel, current: mentionCurrent, next: nextName });
   await repository.updateCurrentUser(cron.id, it.next().get());
 };

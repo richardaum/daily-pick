@@ -30,3 +30,4 @@ export const MORE_INFO = 'Para mais informação, entre em contato com @richard.
 export const OUTSIDE_CHANNEL_MESSAGE = 'Desculpe, este comando só pode ser executado dentro de um canal';
 export const TRIGGER = 'Acionar';
 export const TRIGGER_ACTION = 'trigger';
+export const SKIP = 'Pular';
