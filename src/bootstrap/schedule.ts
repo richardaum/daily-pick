@@ -1,6 +1,7 @@
 import { scheduleMultiple } from '@/services/cron';
 import { createLogger } from '@/services/logger';
 import { repository } from '@/services/repository';
+import { buildQueueIterator } from '@/services/repository/common/buildQueueIterator';
 import { getName } from '@/services/slack/functions/getName';
 import { postMessage } from '@/services/slack/functions/postMessage';
 
@@ -19,12 +20,14 @@ export const schedule = async () => {
 type PartialCron = {
   id: string;
   channel: string;
+  current?: string;
 };
 
 export const handleSchedule = async (cron: PartialCron) => {
-  const { current, next } = await repository.getUsers(cron.id);
-  const mentionCurrent = `<@${current}>`;
-  const [nextName] = await getName([next]);
+  const users = await repository.getUsers(cron.id);
+  const it = buildQueueIterator(users, cron.current);
+  const mentionCurrent = `<@${it.get()}>`;
+  const [nextName] = await getName([it.next().get()]);
   await postMessage({ channel: cron.channel, current: mentionCurrent, next: nextName });
-  await repository.updateCurrentUser(cron.id, next);
+  await repository.updateCurrentUser(cron.id, it.next().get());
 };

@@ -33,7 +33,7 @@ export interface Repository {
   fetchCronById(id: string): Promise<Cron | undefined>;
   fetchCronsByChannelAndTeam(channelId: string, teamId: string): Promise<Crons>;
   destroyCron(cronId: string): Promise<Cron | undefined>;
-  getUsers(cronId: string): Promise<{ current: string; next: string }>;
+  getUsers(cronId: string): Promise<string[]>;
   persistCron(cron: FirebasePersistingCron): Promise<Omit<Cron, 'createdAt'>>;
   updateCurrentUser(cronId: string, user: string): Promise<void>;
 }
