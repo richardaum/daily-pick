@@ -37,7 +37,11 @@ export const handleSchedule = async (cron: PartialCron) => {
   } catch (e) {
     const error = e as Error;
 
-    if (error?.message?.includes('channel_not_found') || error?.message?.includes('not_in_channel')) {
+    if (
+      error?.message?.includes('channel_not_found') ||
+      error?.message?.includes('not_in_channel') ||
+      error?.message?.includes('is_archived')
+    ) {
       throw new VError(error, `Invalid channel ${cron.channel} for cron ${cron.id} (${cron.name})`);
     }
 
