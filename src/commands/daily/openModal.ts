@@ -3,6 +3,8 @@ import { Blocks, Elements, Modal } from 'slack-block-builder';
 
 import {
   FRIDAY_LABEL,
+  MESSAGE_LABEL,
+  MESSAGE_PLACEHOLDER,
   MODAL_TITLE,
   MONDAY_LABEL,
   NAME_INPUT_PLACEHOLDER,
@@ -48,9 +50,22 @@ export function openModalBlocks() {
     Blocks.Input({ label: NAME_LABEL, blockId: 'name' }).element(
       Elements.TextInput({ actionId: 'name_input', placeholder: NAME_INPUT_PLACEHOLDER })
     ),
-    Blocks.Input({ label: TEAM_LABEL, blockId: 'participants' }).element(
-      Elements.UserMultiSelect({ actionId: 'participants_select', placeholder: PICK_USERS_PLACEHOLDER })
+    Blocks.Divider(),
+    Blocks.Input({ label: MESSAGE_LABEL, blockId: 'message' }).element(
+      Elements.TextInput({ actionId: 'message_input', placeholder: MESSAGE_PLACEHOLDER }).multiline(true)
     ),
+    Blocks.Section({
+      text: [
+        'Por exemplo: `Hoje é a sua vez, {currentUserMention}!`',
+        '*Variáveis aceitas:*',
+        '`{currentUserMention}`: Menciona a/o parcipante da vez',
+        '`{nextUserName}`: Exibe o nome da/o próxima/o participante',
+      ].join('\n'),
+    }),
+    Blocks.Divider(),
+    Blocks.Input({ label: TEAM_LABEL, blockId: 'participants' })
+      .optional(true)
+      .element(Elements.UserMultiSelect({ actionId: 'participants_select', placeholder: PICK_USERS_PLACEHOLDER })),
     Blocks.Divider(),
     Blocks.Input({ label: SUNDAY_LABEL, blockId: `${repeatDailyPrefix}_sunday` })
       .optional(true)

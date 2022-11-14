@@ -43,6 +43,8 @@ app.view<ViewSubmitAction>({ type: 'view_submission', callback_id: OPEN_MODAL },
       return `0 ${minute} ${hour} * * ${dayWeek}`;
     });
 
+  const message = body.view.state.values.message.message_input.value as string;
+
   const cron = await repository.persistCron({
     team,
     channel,
@@ -50,6 +52,7 @@ app.view<ViewSubmitAction>({ type: 'view_submission', callback_id: OPEN_MODAL },
     name: body.view.state.values.name.name_input.value as string,
     users: body.view.state.values.participants.participants_select.selected_users ?? [],
     author: body.user.id,
+    message,
   });
 
   scheduleMultiple([cron], (cron) => {

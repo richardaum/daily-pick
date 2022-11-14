@@ -5,30 +5,21 @@ import { Repository, SQLiteCron } from '@/types';
 
 export const persistCron: Repository['persistCron'] = async (cron) => {
   const persistedCron: SQLiteCron = {
+    ...cron,
     id: v4(),
-    channel: cron.channel,
     current: cron.users[0],
     intervals: JSON.stringify(cron.intervals),
-    name: cron.name,
-    team: cron.team,
     users: JSON.stringify(cron.users),
     createTime: new Date().toISOString(),
-    author: cron.author,
   };
 
   await database().run(
     `
       INSERT INTO cron 
-      (id, channel, current, intervals, name, team, users, createTime, author) VALUES
-      (:id, :channel, :current, :intervals, :name, :team, :users, :createTime, :author)
+      (id, channel, current, intervals, name, team, users, createTime, author, message) VALUES
+      (:id, :channel, :current, :intervals, :name, :team, :users, :createTime, :author, :message)
     `,
-    Object.entries(persistedCron).reduce(
-      (prefixed, [key, value]) => ({
-        ...prefixed,
-        [`:${key}`]: value,
-      }),
-      {}
-    )
+    Object.entries(persistedCron).reduce((prefixed, [key, value]) => ({ ...prefixed, [`:${key}`]: value }), {})
   );
 
   return { ...cron, id: persistedCron.id, current: persistedCron.current };
