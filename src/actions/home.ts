@@ -1,6 +1,6 @@
 import { Blocks, Surfaces } from 'slack-block-builder';
 
-import { slack as app } from '@/services/slack';
+import { app } from '@/services/slack';
 
 app.event('app_home_opened', async ({ event, client }) => {
   const view = Surfaces.HomeTab({ callbackId: 'home_view' })

@@ -7,7 +7,7 @@ import { schedule } from './schedule';
 import { setupErrorTracking } from '@/services/error-tracking';
 import { createLogger } from '@/services/logger';
 import { connect } from '@/services/repository';
-import { slack as app } from '@/services/slack';
+import { app } from '@/services/slack';
 
 const logger = createLogger();
 

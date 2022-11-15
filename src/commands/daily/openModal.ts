@@ -19,7 +19,7 @@ import {
   WEDNESDAY_LABEL,
 } from '@/i18n';
 import { serializeMetadata } from '@/services/metadata';
-import { slack } from '@/services/slack';
+import { app } from '@/services/slack';
 
 export const OPEN_MODAL = 'openModal';
 export const repeatDailyPrefix = 'repeat_daily';
@@ -39,7 +39,7 @@ export async function openModal(body: SlashCommand) {
     .blocks(...openModalBlocks())
     .buildToObject();
 
-  slack.client.views.open({
+  app.client.views.open({
     trigger_id: body.trigger_id,
     view: modal,
   });

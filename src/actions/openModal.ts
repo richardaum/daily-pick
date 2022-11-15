@@ -19,7 +19,7 @@ import {
   WEDNESDAY_LABEL,
 } from '@/i18n';
 import { serializeMetadata } from '@/services/metadata';
-import { slack as app } from '@/services/slack';
+import { app } from '@/services/slack';
 
 export const OPEN_MODAL = 'openModal';
 export const repeatDailyPrefix = 'repeat_daily';

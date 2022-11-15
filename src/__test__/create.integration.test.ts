@@ -7,7 +7,7 @@ import { create } from '@/__test__/fixtures/create';
 import { WAS_CREATED, YOUR_CRON } from '@/i18n';
 import * as cron from '@/services/cron';
 import { repository } from '@/services/repository';
-import { slack } from '@/services/slack';
+import { app } from '@/services/slack';
 
 jest.mock('@/bootstrap/schedule');
 
@@ -43,7 +43,7 @@ describe('createCron', () => {
     const scheduleMultiple = mocked(cron.scheduleMultiple, true);
     expect(scheduleMultiple).toHaveBeenCalledTimes(1);
 
-    const postEphemeral = mocked(slack.client.chat.postEphemeral, true);
+    const postEphemeral = mocked(app.client.chat.postEphemeral, true);
     expect(postEphemeral).toHaveBeenCalledWith({
       channel: payload.view.private_metadata,
       user: payload.user.id,
