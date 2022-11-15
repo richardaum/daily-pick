@@ -46,7 +46,6 @@ export const buildCronFromSQLite = (cron: SQLiteCron): Cron => {
   return {
     ...cron,
     users: JSON.parse(cron.users) as FirebaseCron['users'],
-    team: cron.team,
     intervals: JSON.parse(cron.intervals) as FirebaseCron['intervals'],
     createdAt: cron.createTime,
   };

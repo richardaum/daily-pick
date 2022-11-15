@@ -49,6 +49,7 @@ app.view<ViewSubmitAction>({ type: 'view_submission', callback_id: OPEN_MODAL },
     intervals,
     name: body.view.state.values.name.name_input.value as string,
     users: body.view.state.values.participants.participants_select.selected_users ?? [],
+    author: body.user.id,
   });
 
   scheduleMultiple([cron], (cron) => {
