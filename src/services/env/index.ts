@@ -9,11 +9,19 @@ const config = {
   SLACK_APP_TOKEN: process.env.SLACK_APP_TOKEN,
   SLACK_BOT_TOKEN: process.env.SLACK_BOT_TOKEN,
   SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET,
+  FIREBASE_TO_SQLITE_MIGRATION_TIMESTAMP: process.env.FIREBASE_TO_SQLITE_MIGRATION_TIMESTAMP,
+  FIREBASE_TO_SQLITE_MIGRATION_ENABLED: process.env.FIREBASE_TO_SQLITE_MIGRATION_ENABLED as string,
 };
 
-const optional = new Set(['LOG_DISABLED', 'SENTRY_DSN', 'LOG_LEVEL']);
+const optional = new Set<keyof typeof config>([
+  'LOG_DISABLED',
+  'SENTRY_DSN',
+  'LOG_LEVEL',
+  'FIREBASE_TO_SQLITE_MIGRATION_TIMESTAMP',
+  'FIREBASE_TO_SQLITE_MIGRATION_ENABLED',
+]);
 
-export const env = (key: keyof typeof config) => {
+export const env = <Key extends keyof typeof config>(key: Key) => {
   const value = config[key];
   if (value == null && !optional.has(key)) throw new Error(`Missing required environment variable ${key}`);
   return value;

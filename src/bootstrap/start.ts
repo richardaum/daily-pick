@@ -6,6 +6,7 @@ import { schedule } from './schedule';
 
 import { setupErrorTracking } from '@/services/error-tracking';
 import { createLogger } from '@/services/logger';
+import { migrate } from '@/services/migration';
 import { connect } from '@/services/repository';
 import { app } from '@/services/slack';
 
@@ -15,6 +16,7 @@ export const startServer = async () => {
   setupErrorTracking();
 
   await connect();
+  await migrate();
   await schedule();
 
   await app.start();
