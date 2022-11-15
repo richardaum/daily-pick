@@ -26,6 +26,9 @@ export type Cron = {
   intervals: string[];
 
   channel: string;
+
+  author?: string;
+  message?: string;
 };
 
 export interface Repository {
@@ -46,3 +49,9 @@ export type Crons = (FirebaseCron & {
 })[];
 
 export type FirebasePersistingCron = Omit<FirebaseCron, 'id' | 'current' | 'createdAt'>;
+
+export type PostMessageNamedParams = {
+  cron: Omit<Cron, 'createdAt'>;
+  current: string;
+  next: string;
+};

@@ -1,27 +1,20 @@
 import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 
-import { slack } from '..';
-
 import { SKIP_ACTION } from '@/constants';
-import { ITS_YOUR_TURN, NEXT_TIME, SKIP } from '@/i18n';
+import { SKIP } from '@/i18n';
+import { app } from '@/services/slack';
+import { applyVariables, getMessage } from '@/services/slack/functions/getMessage';
+import { PostMessageNamedParams } from '@/types';
 
-type PostMessageNamedParams = { cronId: string; channel: string; current: string; next: string };
+export const postMessage = async (params: PostMessageNamedParams) => {
+  const { cron } = params;
+  return await app.client.chat.postMessage({
+    channel: cron.channel,
 
-export const postMessage = async ({ cronId, channel, current, next }: PostMessageNamedParams) => {
-  return await slack.client.chat.postMessage({
-    channel: channel,
-
-    blocks: Surfaces.Message({
-      text: `:tada: ${current}, ${ITS_YOUR_TURN} :calendar:`,
-    })
+    blocks: Surfaces.Message()
       .blocks(
-        Blocks.Section({
-          text: [
-            `:tada: ${current}, ${ITS_YOUR_TURN} :calendar:`,
-            `:black_right_pointing_double_triangle_with_vertical_bar: ${NEXT_TIME}, ${next}. :tada:`,
-          ].join('\n'),
-        }),
-        Blocks.Actions().elements(Elements.Button({ text: SKIP, actionId: SKIP_ACTION, value: cronId }))
+        Blocks.Section({ text: applyVariables(getMessage(cron.message), params) }),
+        Blocks.Actions().elements(Elements.Button({ text: SKIP, actionId: SKIP_ACTION, value: cron.id }))
       )
       .buildToObject().blocks,
   });

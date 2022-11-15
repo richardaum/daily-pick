@@ -3,7 +3,7 @@ import { BlockAction } from '@slack/bolt';
 import { listCronsView } from '@/commands/daily/list';
 import { BACK_TO_LIST_ACTION } from '@/constants';
 import { repository } from '@/services/repository';
-import { slack as app } from '@/services/slack';
+import { app } from '@/services/slack';
 
 app.action<BlockAction>({ type: 'block_actions', action_id: BACK_TO_LIST_ACTION }, async ({ ack, body, respond }) => {
   await ack();

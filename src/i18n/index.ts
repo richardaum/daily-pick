@@ -10,10 +10,13 @@ export const DELETE_MESSAGE = 'OK';
 export const BACK_TO_LIST = 'Voltar';
 export const ITS_YOUR_TURN = 'é sua vez na daily de hoje!';
 export const NEXT_TIME = 'Na próxima vez é você';
-export const NAME_LABEL = 'Nome';
+export const NAME_LABEL = 'Apelido do agendamento';
+export const NAME_EXPLANATION = 'Apenas um nome pra você lembrar desde agendamento.';
+export const MESSAGE_LABEL = 'Mensagem de agendamento';
 export const NAME_INPUT_PLACEHOLDER = 'Escolha uma apelido para o agendamento';
+export const MESSAGE_PLACEHOLDER = 'Escolha uma mensagem para ser exibida toda vez que o agendamento for acionado.';
 export const PICK_USERS_PLACEHOLDER = 'Escolhe a galera aqui';
-export const TEAM_LABEL = 'Time';
+export const TEAM_LABEL = 'Participantes';
 export const SUNDAY_LABEL = 'Domingo';
 export const MONDAY_LABEL = 'Segunda';
 export const TUESDAY_LABEL = 'Terça';
@@ -37,3 +40,9 @@ export const ADD_BOT_INTEGRATION_MESSAGE = [
 ].join('\n');
 export const ALREADY_ADDED_BOT_INTEGRATION = 'Já adicionei!';
 export const CANCELD_ADDING_BOT_INTEGRATION = 'Cancelar';
+export const MESSAGE_INPUT_EXPLANATION = [
+  'Por exemplo: `Hoje é a sua vez, {currentUserMention}!`',
+  '*Variáveis aceitas:*',
+  '`{currentUserMention}`: Menciona a/o parcipante da vez',
+  '`{nextUserName}`: Exibe o nome da/o próxima/o participante',
+].join('\n');

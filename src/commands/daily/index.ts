@@ -3,7 +3,7 @@ import { isListingCrons, listCrons } from './list';
 import { isOutsideChannel, warnOutsideChannel } from './warnOutsideChannel';
 
 import { isPicking, pick } from '@/commands/daily/pick';
-import { slack as app } from '@/services/slack';
+import { app } from '@/services/slack';
 
 app.command('/daily', async ({ command, ack, body, respond }) => {
   await ack();

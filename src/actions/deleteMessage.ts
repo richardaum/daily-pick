@@ -4,7 +4,7 @@ import { Surfaces } from 'slack-block-builder';
 
 import { DELETE_MESSAGE_ACTION } from '../constants/actions';
 
-import { slack as app } from '@/services/slack';
+import { app } from '@/services/slack';
 
 app.action<BlockAction>({ type: 'block_actions', action_id: DELETE_MESSAGE_ACTION }, async ({ ack, body }) => {
   await ack();

@@ -6,7 +6,7 @@ import { removeCron } from '@/actions/listOverflow/removeCron';
 import { seeDetails } from '@/actions/listOverflow/seeDetails';
 import { LIST_OVERFLOW_CLICK_ACTION, REMOVE_CRON_ACTION, SEE_DETAILS_ACTION } from '@/constants';
 import { TRIGGER_ACTION } from '@/i18n';
-import { slack as app } from '@/services/slack';
+import { app } from '@/services/slack';
 
 app.action<BlockAction<OverflowAction>>(
   { type: 'block_actions', action_id: LIST_OVERFLOW_CLICK_ACTION },

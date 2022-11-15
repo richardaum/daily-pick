@@ -3,7 +3,7 @@ import { mocked } from 'jest-mock';
 import { request } from './server';
 
 import { pick } from '@/__test__/fixtures/pick';
-import { slack } from '@/services/slack';
+import { app } from '@/services/slack';
 
 jest.mock('@/bootstrap/schedule');
 
@@ -12,7 +12,7 @@ describe('pick', () => {
     const req = request().post('/api/commands/daily/pick');
     const res = await req.send(pick.body);
 
-    const open = mocked(slack, true).client.views.open;
+    const open = mocked(app, true).client.views.open;
     expect(open).toHaveBeenCalledTimes(1);
 
     const parameter = open.mock.calls[0][0];
