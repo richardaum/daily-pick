@@ -2,11 +2,15 @@ import { BlockButtonAction } from '@slack/bolt';
 import axios from 'axios';
 import { Blocks, Elements, Modal, Surfaces } from 'slack-block-builder';
 
-import { OPEN_MODAL_ACTION } from '@/constants';
+import { MESSAGE_INPUT_ACTION, OPEN_MODAL_ACTION } from '@/constants';
 import {
   FRIDAY_LABEL,
+  MESSAGE_INPUT_EXPLANATION,
+  MESSAGE_LABEL,
+  MESSAGE_PLACEHOLDER,
   MODAL_TITLE,
   MONDAY_LABEL,
+  NAME_EXPLANATION,
   NAME_INPUT_PLACEHOLDER,
   NAME_LABEL,
   PICK_USERS_PLACEHOLDER,
@@ -53,6 +57,13 @@ export function openModalBlocks() {
     Blocks.Input({ label: NAME_LABEL, blockId: 'name' }).element(
       Elements.TextInput({ actionId: 'name_input', placeholder: NAME_INPUT_PLACEHOLDER })
     ),
+    Blocks.Context().elements(NAME_EXPLANATION),
+    Blocks.Divider(),
+    Blocks.Input({ label: MESSAGE_LABEL, blockId: 'message' }).element(
+      Elements.TextInput({ actionId: MESSAGE_INPUT_ACTION, placeholder: MESSAGE_PLACEHOLDER }).multiline(true)
+    ),
+    Blocks.Context().elements(MESSAGE_INPUT_EXPLANATION),
+    Blocks.Divider(),
     Blocks.Input({ label: TEAM_LABEL, blockId: 'participants' }).element(
       Elements.UserMultiSelect({ actionId: 'participants_select', placeholder: PICK_USERS_PLACEHOLDER })
     ),

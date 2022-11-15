@@ -6,6 +6,7 @@ import { repository } from '@/services/repository';
 import { buildQueueIterator } from '@/services/repository/common/buildQueueIterator';
 import { getName } from '@/services/slack/functions/getName';
 import { postMessage } from '@/services/slack/functions/postMessage';
+import { Cron } from '@/types';
 
 const logger = createLogger();
 
@@ -19,21 +20,14 @@ export const schedule = async () => {
   scheduleMultiple(crons, handleSchedule);
 };
 
-type PartialCron = {
-  id: string;
-  name: string;
-  channel: string;
-  current?: string;
-};
-
-export const handleSchedule = async (cron: PartialCron) => {
+export const handleSchedule = async (cron: Omit<Cron, 'createdAt'>) => {
   const users = await repository.getUsers(cron.id);
   const it = buildQueueIterator(users, cron.current);
   const mentionCurrent = `<@${it.get()}>`;
   const [nextName] = await getName([it.next().get()]);
 
   try {
-    await postMessage({ cronId: cron.id, channel: cron.channel, current: mentionCurrent, next: nextName });
+    await postMessage({ cron, current: mentionCurrent, next: nextName });
   } catch (e) {
     const error = e as Error;
     throw new VError(error, `Failed to post message on ${cron.channel} for cron ${cron.id} (${cron.name})`);

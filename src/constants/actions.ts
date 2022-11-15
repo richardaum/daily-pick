@@ -5,3 +5,4 @@ export const SEE_DETAILS_ACTION = 'see_details';
 export const LIST_OVERFLOW_CLICK_ACTION = 'list_overflow_click';
 export const SKIP_ACTION = 'skip';
 export const OPEN_MODAL_ACTION = 'open_modal';
+export const MESSAGE_INPUT_ACTION = 'message_input';

@@ -2,7 +2,13 @@ import { ViewSubmitAction } from '@slack/bolt';
 import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 
 import { handleSchedule } from '@/bootstrap/schedule';
-import { DELETE_MESSAGE_ACTION, OPEN_MODAL, repeatDailyPrefix, timePickerSuffix } from '@/constants';
+import {
+  DELETE_MESSAGE_ACTION,
+  MESSAGE_INPUT_ACTION,
+  OPEN_MODAL,
+  repeatDailyPrefix,
+  timePickerSuffix,
+} from '@/constants';
 import { DELETE_MESSAGE, SELECT_AT_LEAST_ONE_WEEKDAY, WAS_CREATED, YOUR_CRON } from '@/i18n';
 import { scheduleMultiple } from '@/services/cron';
 import { createLogger } from '@/services/logger';
@@ -43,7 +49,7 @@ app.view<ViewSubmitAction>({ type: 'view_submission', callback_id: OPEN_MODAL },
       return `0 ${minute} ${hour} * * ${dayWeek}`;
     });
 
-  const message = body.view.state.values.message.message_input.value as string;
+  const message = body.view.state.values.message[MESSAGE_INPUT_ACTION].value as string;
 
   const cron = await repository.persistCron({
     team,
