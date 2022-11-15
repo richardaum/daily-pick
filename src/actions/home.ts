@@ -59,6 +59,9 @@ app.event('app_home_opened', async ({ event, client }) => {
       Blocks.Section({
         text: ':one: Adicionar e remover participantes do agendamento, sem precisar excluir e criar o agendamento novamente.',
       }),
+      Blocks.Section({
+        text: ':two: Opção para quando houver exceções pontuais para o agendamento e for necessário repetir a última pessoa.',
+      }),
       Blocks.Divider(),
       Blocks.Context().elements(
         ':eyes: Veja todas as tasks usando o comando `/daily list`.',
