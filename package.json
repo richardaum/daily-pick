@@ -36,8 +36,8 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@sentry/node": "^6.16.1",
-    "@sentry/tracing": "^6.16.1",
+    "@sentry/node": "^7.19.0",
+    "@sentry/tracing": "^7.19.0",
     "@slack/bolt": "^3.8.1",
     "axios": "^0.24.0",
     "bunyan": "^1.8.15",
