@@ -44,12 +44,21 @@ app.event('app_home_opened', async ({ event, client }) => {
       Blocks.Section({
         text: ':two: Messagem personalizada por agendamento. Adicione links, instruções gerais, o campo é livre :)',
       }),
-      Blocks.Section({ text: ':three: Funciona *apenas* em canais/channels (públicos ou privados).' }),
       Blocks.Section({ text: ':four: Botão "Pular" avança para a próxima pessoa da lista.' }),
+      Blocks.Divider(),
+      Blocks.Section({
+        text: '*Restrições:*',
+      }),
+      Blocks.Section({ text: ':one: Funciona *apenas* em canais/channels (públicos ou privados).' }),
+      Blocks.Section({
+        text: ':two: Para adicionar ou remover participantes, você precisa deletar e criar o agendamento novamente.',
+      }),
       Blocks.Divider(),
       Blocks.Section({ text: '*Futuro:*' }),
       Blocks.Context().elements('As seguintes funcionalidades ainda não existem:'),
-      Blocks.Section({ text: '- Mande sua sugestão para (<@richard.lopes>)' }),
+      Blocks.Section({
+        text: ':one: Adicionar e remover participantes do agendamento, sem precisar excluir e criar o agendamento novamente.',
+      }),
       Blocks.Divider(),
       Blocks.Context().elements(
         ':eyes: Veja todas as tasks usando o comando `/daily list`.',
