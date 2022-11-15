@@ -36,16 +36,7 @@ export const handleSchedule = async (cron: PartialCron) => {
     await postMessage({ cronId: cron.id, channel: cron.channel, current: mentionCurrent, next: nextName });
   } catch (e) {
     const error = e as Error;
-
-    if (
-      error?.message?.includes('channel_not_found') ||
-      error?.message?.includes('not_in_channel') ||
-      error?.message?.includes('is_archived')
-    ) {
-      throw new VError(error, `Invalid channel ${cron.channel} for cron ${cron.id} (${cron.name})`);
-    }
-
-    throw e;
+    throw new VError(error, `Failed to post message on ${cron.channel} for cron ${cron.id} (${cron.name})`);
   }
 
   await repository.updateCurrentUser(cron.id, it.next().get());
