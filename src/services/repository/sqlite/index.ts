@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import { Database, open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 
-import { env } from '@/services/env';
+import { DEBUG, getLogLevel } from '@/services/logger';
 
 let instance: Database<sqlite3.Database, sqlite3.Statement>;
 
@@ -22,7 +22,7 @@ export const connectSqlite = async () => {
     migrationsPath: resolve(__dirname, 'migrations'),
   });
 
-  if (env('LOG_LEVEL') === 'debug') sqlite3.verbose();
+  if (getLogLevel() >= DEBUG) sqlite3.verbose();
 
   instance = database;
 };
