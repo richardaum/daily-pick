@@ -32,8 +32,9 @@ export const WAS_CREATED = 'foi criado';
 export const MORE_INFO = 'Para mais informação, entre em contato com @richard.lopes';
 export const OUTSIDE_CHANNEL_MESSAGE = 'Desculpe, este comando só pode ser executado dentro de um canal';
 export const TRIGGER = 'Acionar';
-export const TRIGGER_ACTION = 'trigger';
-export const SKIP = 'Pular';
+export const IGNORE = ':x: Ignorar';
+export const BACK = ':rewind: Voltar para {previous}';
+export const SKIP = ':fast_forward: Pular para {next}';
 export const ADD_BOT_INTEGRATION_MESSAGE = [
   'Primeiro, você precisa adicionar a integração do Daily Pick neste canal.',
   'Você pode fazer isso agora, digtando o seguinte comando `/invite @Daily Pick`.',

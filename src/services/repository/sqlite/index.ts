@@ -13,16 +13,16 @@ export const database = () => {
 };
 
 export const connectSqlite = async () => {
-  const sqlite = sqlite3.verbose();
-
   const database = await open({
     filename: './database.sqlite3',
-    driver: sqlite.Database,
+    driver: sqlite3.Database,
   });
 
   await database.migrate({
     migrationsPath: resolve(__dirname, 'migrations'),
   });
+
+  if (env('LOG_LEVEL') === 'debug') sqlite3.verbose();
 
   instance = database;
 };

@@ -29,6 +29,12 @@ export type Cron = {
 
   author?: string;
   message?: string;
+
+  /**
+   * Represents an uuid relative to the last sent message.
+   * This is useful to only accept the last message ignore button click action.
+   **/
+  lastMessage?: string;
 };
 
 export interface Repository {
@@ -39,6 +45,7 @@ export interface Repository {
   getUsers(cronId: string): Promise<string[]>;
   persistCron(cron: FirebasePersistingCron): Promise<Omit<Cron, 'createdAt'>>;
   updateCurrentUser(cronId: string, user: string): Promise<void>;
+  updateLastMessage(cronId: string, lastMessage: string): Promise<void>;
 }
 
 export type Crons = (FirebaseCron & {
@@ -52,6 +59,4 @@ export type FirebasePersistingCron = Omit<FirebaseCron, 'id' | 'current' | 'crea
 
 export type PostMessageNamedParams = {
   cron: Omit<Cron, 'createdAt'>;
-  current: string;
-  next: string;
 };

@@ -5,6 +5,7 @@ import { fetchCronsByChannelAndTeam } from '@/services/repository/sqlite/functio
 import { getUsers } from '@/services/repository/sqlite/functions/getUsers';
 import { persistCron } from '@/services/repository/sqlite/functions/persistCron';
 import { updateCurrentUser } from '@/services/repository/sqlite/functions/updateCurrentUser';
+import { updateLastMessage } from '@/services/repository/sqlite/functions/updateLastMessage';
 import { Repository } from '@/types';
 
 export const sqliteRepository: Repository = {
@@ -14,5 +15,6 @@ export const sqliteRepository: Repository = {
   getUsers: getUsers,
   persistCron: persistCron,
   updateCurrentUser: updateCurrentUser,
+  updateLastMessage: updateLastMessage,
   fetchCronById: fetchCronById,
 };
