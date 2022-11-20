@@ -16,12 +16,15 @@ export const postMessage = async (params: PostMessageNamedParams) => {
   const [next, previous] = await getName([it.next().get(), it.previous().get()]);
   const current = `<@${it.get()}>`;
 
+  const text = applyVariables(getMessage(cron.message), { current, next });
+
   try {
     return await app.client.chat.postMessage({
       channel: cron.channel,
+      text,
       blocks: Surfaces.Message()
         .blocks(
-          Blocks.Section({ text: applyVariables(getMessage(cron.message), { current, next }) }),
+          Blocks.Section({ text }),
           Blocks.Actions().elements(
             Elements.Button({
               text: IGNORE,

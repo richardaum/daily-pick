@@ -21,12 +21,14 @@ export const postConfirmationMessage = async ({
   client: WebClient;
 }) => {
   try {
+    const text = `${YOUR_CRON} "${cron.name}" ${WAS_CREATED}`;
     await client.chat.postEphemeral({
       channel,
       user: body.user.id,
+      text,
       blocks: Surfaces.Message()
         .blocks(
-          Blocks.Section({ text: `${YOUR_CRON} "${cron.name}" ${WAS_CREATED}` }),
+          Blocks.Section({ text }),
           Blocks.Actions().elements(Elements.Button({ text: DELETE_MESSAGE, actionId: DELETE_MESSAGE_ACTION }))
         )
         .buildToObject().blocks,
