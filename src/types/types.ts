@@ -55,7 +55,7 @@ export type Crons = (FirebaseCron & {
   createdAt?: string | undefined;
 })[];
 
-export type FirebasePersistingCron = Omit<FirebaseCron, 'id' | 'current' | 'createdAt'>;
+export type FirebasePersistingCron = Omit<FirebaseCron, 'id' | 'current' | 'createdAt' | 'lastMessage'>;
 
 export type PostMessageNamedParams = {
   cron: Omit<Cron, 'createdAt'>;
