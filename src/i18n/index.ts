@@ -27,6 +27,7 @@ export const SATURDAY_LABEL = 'Sábado';
 export const MODAL_TITLE = 'Daily Pick';
 export const SUBMIT_BUTTON = 'Enviar';
 export const SELECT_AT_LEAST_ONE_WEEKDAY = 'Selecione pelo menos um dia da semana';
+export const INCLUDE_BOT_MESSAGE = 'Você precisa incluir o bot @Daily Pick no canal/channel.';
 export const YOUR_CRON = 'Seu agendamento';
 export const WAS_CREATED = 'foi criado';
 export const MORE_INFO = 'Para mais informação, entre em contato com @richard.lopes';
