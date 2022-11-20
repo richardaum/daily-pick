@@ -1,20 +1,14 @@
 import { ViewSubmitAction } from '@slack/bolt';
-import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 
 import { handleSchedule } from '@/bootstrap/schedule';
-import {
-  DELETE_MESSAGE_ACTION,
-  MESSAGE_INPUT_ACTION,
-  OPEN_MODAL,
-  repeatDailyPrefix,
-  timePickerSuffix,
-} from '@/constants';
-import { DELETE_MESSAGE, SELECT_AT_LEAST_ONE_WEEKDAY, WAS_CREATED, YOUR_CRON } from '@/i18n';
+import { MESSAGE_INPUT_ACTION, OPEN_MODAL, repeatDailyPrefix, timePickerSuffix } from '@/constants';
+import { SELECT_AT_LEAST_ONE_WEEKDAY } from '@/i18n';
 import { scheduleMultiple } from '@/services/cron';
 import { createLogger } from '@/services/logger';
 import { parseMetadata } from '@/services/metadata';
 import { repository } from '@/services/repository';
 import { app } from '@/services/slack';
+import { postConfirmationMessage } from '@/services/slack/functions/postConfirmationMessage';
 
 const logger = createLogger();
 
@@ -69,15 +63,12 @@ app.view<ViewSubmitAction>({ type: 'view_submission', callback_id: OPEN_MODAL },
 
   logger.debug({ hint: 'cron is scheduled', cron });
 
-  await client.chat.postEphemeral({
+  await postConfirmationMessage({
+    client,
     channel,
-    user: body.user.id,
-    blocks: Surfaces.Message()
-      .blocks(
-        Blocks.Section({ text: `${YOUR_CRON} "${cron.name}" ${WAS_CREATED}` }),
-        Blocks.Actions().elements(Elements.Button({ text: DELETE_MESSAGE, actionId: DELETE_MESSAGE_ACTION }))
-      )
-      .buildToObject().blocks,
+    body,
+    cron,
+    ack,
   });
 
   logger.debug({ hint: 'slack message is sent', cron });

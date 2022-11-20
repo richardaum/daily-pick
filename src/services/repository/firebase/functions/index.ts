@@ -5,6 +5,7 @@ import { fetchCronsByChannelAndTeam } from '@/services/repository/firebase/funct
 import { getUsers } from '@/services/repository/firebase/functions/getUsers';
 import { persistCron } from '@/services/repository/firebase/functions/persistCron';
 import { updateCurrentUser } from '@/services/repository/firebase/functions/updateCurrentUser';
+import { updateLastMessage } from '@/services/repository/firebase/functions/updateLastMessage';
 import { Repository } from '@/types';
 
 export const firebaseRepository: Repository = {
@@ -14,5 +15,6 @@ export const firebaseRepository: Repository = {
   getUsers: getUsers,
   persistCron: persistCron,
   updateCurrentUser: updateCurrentUser,
+  updateLastMessage: updateLastMessage,
   fetchCronById: fetchCronById,
 };

@@ -1,4 +1,4 @@
-import { Blocks, Elements, Surfaces } from 'slack-block-builder';
+import { Blocks, Surfaces } from 'slack-block-builder';
 
 import { app } from '@/services/slack';
 

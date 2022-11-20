@@ -24,6 +24,7 @@ export const seeDetails = async ({
         Blocks.Section({ text: `Nome: ${cron.name}` }),
         Blocks.Section({ text: `Horários: ${cron.intervals}` }),
         Blocks.Section({ text: `Participantes: ${cron.users.map((user) => `<@${user}>`).join(', ')}` }),
+        Blocks.Section({ text: `Atual: <@${cron.current}>` }),
         Blocks.Actions().elements(
           Elements.Button({ text: BACK_TO_LIST, actionId: BACK_TO_LIST_ACTION }),
           Elements.Button({ text: DELETE_MESSAGE, actionId: DELETE_MESSAGE_ACTION })

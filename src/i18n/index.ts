@@ -27,13 +27,15 @@ export const SATURDAY_LABEL = 'Sábado';
 export const MODAL_TITLE = 'Daily Pick';
 export const SUBMIT_BUTTON = 'Enviar';
 export const SELECT_AT_LEAST_ONE_WEEKDAY = 'Selecione pelo menos um dia da semana';
+export const INCLUDE_BOT_MESSAGE = 'Você precisa incluir o bot @Daily Pick no canal/channel.';
 export const YOUR_CRON = 'Seu agendamento';
 export const WAS_CREATED = 'foi criado';
 export const MORE_INFO = 'Para mais informação, entre em contato com @richard.lopes';
 export const OUTSIDE_CHANNEL_MESSAGE = 'Desculpe, este comando só pode ser executado dentro de um canal';
 export const TRIGGER = 'Acionar';
-export const TRIGGER_ACTION = 'trigger';
-export const SKIP = 'Pular';
+export const IGNORE = ':x: Ignorar';
+export const BACK = ':rewind: Voltar para {previous}';
+export const SKIP = ':fast_forward: Pular para {next}';
 export const ADD_BOT_INTEGRATION_MESSAGE = [
   'Primeiro, você precisa adicionar a integração do Daily Pick neste canal.',
   'Você pode fazer isso agora, digtando o seguinte comando `/invite @Daily Pick`.',
