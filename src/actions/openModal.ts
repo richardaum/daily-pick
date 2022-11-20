@@ -1,6 +1,5 @@
 import { BlockButtonAction } from '@slack/bolt';
-import axios from 'axios';
-import { Blocks, Elements, Modal, Surfaces } from 'slack-block-builder';
+import { Blocks, Elements, Modal } from 'slack-block-builder';
 
 import { MESSAGE_INPUT_ACTION, OPEN_MODAL_ACTION } from '@/constants';
 import {
@@ -24,6 +23,7 @@ import {
 } from '@/i18n';
 import { serializeMetadata } from '@/services/metadata';
 import { app } from '@/services/slack';
+import { deleteMessage } from '@/services/slack/functions/deleteMessage';
 
 export const OPEN_MODAL = 'openModal';
 export const repeatDailyPrefix = 'repeat_daily';
@@ -34,8 +34,7 @@ app.action<BlockButtonAction>({ action_id: OPEN_MODAL_ACTION }, async ({ ack, bo
 
   if (!body.channel?.id) return;
 
-  // delete add bot integration message
-  axios.post(body.response_url, Surfaces.Message().deleteOriginal(true).buildToObject());
+  await deleteMessage(body.response_url);
 
   const modal = Modal({
     callbackId: OPEN_MODAL,
