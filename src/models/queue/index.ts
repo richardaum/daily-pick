@@ -20,6 +20,8 @@ export class Iterator<T> {
   constructor(private queue: Queue<T>, private value: T) {}
 
   get() {
+    const index = this.queue.map.get(this.value);
+    if (index == null) return this.queue.elements[0];
     return this.value;
   }
 
