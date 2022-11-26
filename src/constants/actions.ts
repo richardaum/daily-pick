@@ -9,3 +9,4 @@ export const OPEN_MODAL_ACTION = 'open_modal';
 export const MESSAGE_INPUT_ACTION = 'message_input';
 export const TRIGGER_ACTION = 'trigger';
 export const IGNORE_ACTION = 'ignore_this_time';
+export const REMOVE_PARTICIPANT_ACTION = 'remove_participant';

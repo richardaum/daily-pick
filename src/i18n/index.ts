@@ -48,3 +48,4 @@ export const MESSAGE_INPUT_EXPLANATION = [
   '`{currentUserMention}`: Menciona a/o parcipante da vez',
   '`{nextUserName}`: Exibe o nome da/o próxima/o participante',
 ].join('\n');
+export const REMOVE_PARTICIPANT = 'Remover';
