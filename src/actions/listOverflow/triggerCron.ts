@@ -12,5 +12,5 @@ export const triggerCron = async ({
 }) => {
   const cron = await repository.fetchCronById(cronId);
   if (!cron) throw new Error(`The cron ${cronId} was not found`);
-  await handleSchedule(cron);
+  await handleSchedule(cron.id);
 };

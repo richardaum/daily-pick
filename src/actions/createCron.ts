@@ -58,7 +58,7 @@ app.view<ViewSubmitAction>({ type: 'view_submission', callback_id: OPEN_MODAL },
   scheduleMultiple([cron], (cron) => {
     logger.debug({ hint: 'cron is running', cron });
 
-    handleSchedule(cron);
+    void handleSchedule(cron.id);
   });
 
   logger.debug({ hint: 'cron is scheduled', cron });
