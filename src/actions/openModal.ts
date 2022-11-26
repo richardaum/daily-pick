@@ -1,8 +1,9 @@
 import { BlockButtonAction } from '@slack/bolt';
 import { Blocks, Elements, Modal } from 'slack-block-builder';
 
-import { MESSAGE_INPUT_ACTION, OPEN_MODAL_ACTION } from '@/constants';
+import { MESSAGE_INPUT_ACTION, OPEN_MODAL, OPEN_MODAL_ACTION } from '@/constants';
 import {
+  CLOSE_BUTTON,
   FRIDAY_LABEL,
   MESSAGE_INPUT_EXPLANATION,
   MESSAGE_LABEL,
@@ -25,7 +26,6 @@ import { serializeMetadata } from '@/services/metadata';
 import { app } from '@/services/slack';
 import { deleteMessage } from '@/services/slack/functions/deleteMessage';
 
-export const OPEN_MODAL = 'openModal';
 export const repeatDailyPrefix = 'repeat_daily';
 export const timePickerSuffix = 'time_picker';
 
@@ -40,12 +40,13 @@ app.action<BlockButtonAction>({ action_id: OPEN_MODAL_ACTION }, async ({ ack, bo
     callbackId: OPEN_MODAL,
     title: MODAL_TITLE,
     submit: SUBMIT_BUTTON,
+    close: CLOSE_BUTTON,
     privateMetaData: serializeMetadata({ c: body.channel.id, r: body.response_url }),
   })
     .blocks(...openModalBlocks())
     .buildToObject();
 
-  app.client.views.open({
+  void app.client.views.open({
     trigger_id: body.trigger_id,
     view: modal,
   });

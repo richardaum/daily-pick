@@ -46,6 +46,7 @@ export interface Repository {
   persistCron(cron: FirebasePersistingCron): Promise<Omit<Cron, 'createdAt'>>;
   updateCurrentUser(cronId: string, user: string): Promise<void>;
   updateLastMessage(cronId: string, lastMessage: string): Promise<void>;
+  updateCron(cron: Cron): Promise<void>;
 }
 
 export type Crons = (FirebaseCron & {
