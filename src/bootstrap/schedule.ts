@@ -5,7 +5,6 @@ import { createLogger } from '@/services/logger';
 import { repository } from '@/services/repository';
 import { buildQueueIterator } from '@/services/repository/common/buildQueueIterator';
 import { postMessage } from '@/services/slack/functions/postMessage';
-import { Cron } from '@/types';
 
 const logger = createLogger();
 
@@ -16,10 +15,13 @@ export const schedule = async () => {
     logger.trace(`Scheduled cron: ${cron.id}`);
   });
 
-  scheduleMultiple(crons, handleSchedule);
+  scheduleMultiple(crons, (cron) => handleSchedule(cron.id));
 };
 
-export const handleSchedule = async (cron: Omit<Cron, 'createdAt'>) => {
+export const handleSchedule = async (cronId: string) => {
+  const cron = await repository.fetchCronById(cronId);
+  if (!cron) throw new Error(`${cronId} was schedule but it not valid anymore`);
+
   const it = buildQueueIterator(cron.users, cron.current);
   const user = it.next().get();
   const lastMessage = v4();
