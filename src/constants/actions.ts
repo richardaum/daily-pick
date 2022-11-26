@@ -10,3 +10,7 @@ export const MESSAGE_INPUT_ACTION = 'message_input';
 export const TRIGGER_ACTION = 'trigger';
 export const IGNORE_ACTION = 'ignore_this_time';
 export const REMOVE_PARTICIPANT_ACTION = 'remove_participant';
+export const ADD_PARTICIPANT_ACTION = 'add_participant';
+export const ADD_PARTICIPANT_INPUT_ACTION = 'add_participant_input';
+export const ADD_PARTICIPANT_MODAL_CALLBACK_ID = 'add_participant_modal';
+export const PARTICIPANT_BLOCK_ID = 'participant';

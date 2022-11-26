@@ -1,4 +1,6 @@
-// @index('./*', f => `export * from '${f.path}'`)
+// @index('./*', f => `export * from '${f.path}';`)
+export * from './addParticipant';
+export * from './addParticipantOpenModal';
 export * from './backToList';
 export * from './createCron';
 export * from './deleteMessage';
