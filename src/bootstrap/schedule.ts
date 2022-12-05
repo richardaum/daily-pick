@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import { v4 } from 'uuid';
 
 import { scheduleMultiple } from '@/services/cron';
@@ -5,7 +6,6 @@ import { createLogger } from '@/services/logger';
 import { repository } from '@/services/repository';
 import { buildQueueIterator } from '@/services/repository/common/buildQueueIterator';
 import { postMessage } from '@/services/slack/functions/postMessage';
-
 const logger = createLogger();
 
 export const schedule = async () => {
@@ -21,6 +21,8 @@ export const schedule = async () => {
 export const handleSchedule = async (cronId: string) => {
   const cron = await repository.fetchCronById(cronId);
   if (!cron) throw new Error(`${cronId} was schedule but it not valid anymore`);
+
+  Sentry.setContext('cron', cron);
 
   const it = buildQueueIterator(cron.users, cron.current);
   const user = it.next().get();
