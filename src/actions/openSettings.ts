@@ -19,8 +19,9 @@ app.action<BlockButtonAction>(
 
     const view = settingsView(cron);
 
-    await app.client.chat.postMessage({
+    await app.client.chat.postEphemeral({
       channel: body.channel.id,
+      user: body.user.id,
       blocks: view.blocks,
       text: SETTINGS_TEXT.replace('{cronName}', cron.name),
     });

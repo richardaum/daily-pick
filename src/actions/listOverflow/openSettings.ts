@@ -1,9 +1,14 @@
 import { RespondFn } from '@slack/bolt';
 import { Blocks, Elements, SectionBuilder, Surfaces } from 'slack-block-builder';
 
-import { ADD_PARTICIPANT_ACTION, DELETE_MESSAGE_ACTION, REMOVE_PARTICIPANT_ACTION } from '@/constants';
+import {
+  ADD_PARTICIPANT_ACTION,
+  DELETE_MESSAGE_ACTION,
+  EDIT_SCHEDULE_ACTION,
+  REMOVE_PARTICIPANT_ACTION,
+} from '@/constants';
 import { BACK_TO_LIST_ACTION } from '@/constants/actions';
-import { ADD_PARTICIPANT, BACK_TO_LIST, DELETE_MESSAGE, REMOVE_PARTICIPANT } from '@/i18n';
+import { ADD_PARTICIPANT, BACK_TO_LIST, DELETE_MESSAGE, EDIT, REMOVE_PARTICIPANT } from '@/i18n';
 import { repository } from '@/services/repository';
 import { Cron } from '@/types';
 
@@ -22,12 +27,18 @@ export const settingsView = (cron: Cron) => {
     .blocks([
       Blocks.Section({ text: section('Id', code(cron.id)) }),
       Blocks.Section({ text: section('Nome', cron.name) }),
+      Blocks.Section({ text: section('Mensagem', code(cron.message ?? 'N/A')) }),
       Blocks.Section({ text: section('Horários', code(cron.intervals.join(', '))) }),
       Blocks.Section({ text: section('Participantes') }),
       ...cron.users.map((user) => maybeAddRemoveButton(cron, user, Blocks.Section({ text: `<@${user}>` }))),
       Blocks.Section({ text: `Atual: <@${cron.current}>` }),
       Blocks.Actions().elements(
         Elements.Button({ text: BACK_TO_LIST, actionId: BACK_TO_LIST_ACTION }),
+        Elements.Button({
+          text: EDIT,
+          actionId: EDIT_SCHEDULE_ACTION,
+          value: JSON.stringify({ c: cron.id }),
+        }),
         Elements.Button({
           text: ADD_PARTICIPANT,
           actionId: ADD_PARTICIPANT_ACTION,

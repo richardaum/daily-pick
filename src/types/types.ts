@@ -46,7 +46,7 @@ export interface Repository {
   persistCron(cron: FirebasePersistingCron): Promise<Omit<Cron, 'createdAt'>>;
   updateCurrentUser(cronId: string, user: string): Promise<void>;
   updateLastMessage(cronId: string, lastMessage: string): Promise<void>;
-  updateCron(cron: Cron): Promise<void>;
+  updateCron(cron: Cron): Promise<Cron>;
 }
 
 export type Crons = (FirebaseCron & {
@@ -61,3 +61,13 @@ export type FirebasePersistingCron = Omit<FirebaseCron, 'id' | 'current' | 'crea
 export type PostMessageNamedParams = {
   cron: Omit<Cron, 'createdAt'>;
 };
+
+export type TimePerWeeDay = Partial<{
+  sunday: string;
+  monday: string;
+  tuesday: string;
+  wednesday: string;
+  thursday: string;
+  friday: string;
+  saturday: string;
+}>;

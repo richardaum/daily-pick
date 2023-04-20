@@ -8,6 +8,7 @@ export const REMOVE = ':wastebasket: Remover';
 export const DELETE_MESSAGE = ':white_check_mark: OK';
 export const BACK_TO_LIST = ':back: Ir para agendamentos';
 export const ADD_PARTICIPANT = ':person_frowning: Adicionar participante';
+export const EDIT = ':pencil: Editar agendamento';
 export const ITS_YOUR_TURN = 'é sua vez na daily de hoje!';
 export const EXISTING_USER_ERROR_MESSAGE = 'Este usuário já participa desta atividade.';
 export const SEE_DETAILS_RESUMED_MESSAGE = 'Abra o Slack para ver os detalhes do agendamento.';

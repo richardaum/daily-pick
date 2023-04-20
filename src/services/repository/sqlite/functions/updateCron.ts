@@ -27,4 +27,6 @@ export const updateCron: Repository['updateCron'] = async (cron) => {
     `,
     values
   );
+
+  return cron;
 };
