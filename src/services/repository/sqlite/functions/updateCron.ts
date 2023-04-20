@@ -9,7 +9,7 @@ export const updateCron: Repository['updateCron'] = async (cron) => {
     const key = k as keyof typeof cron;
 
     if (key !== 'id') {
-      query = [query, `${key} = :${key}`].join(', ');
+      query = [query, `${key} = :${key}`].filter(Boolean).join(', ');
     }
 
     values = { ...values, [`:${key}`]: cron[key] };
