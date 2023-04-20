@@ -1,7 +1,7 @@
 import { BlockButtonAction } from '@slack/bolt';
 import { Blocks, Elements, Modal } from 'slack-block-builder';
 
-import { MESSAGE_INPUT_ACTION, OPEN_MODAL, OPEN_MODAL_ACTION } from '@/constants';
+import { CREATE_CRON, MESSAGE_INPUT_ACTION, OPEN_MODAL_ACTION, repeatDailyPrefix, timePickerSuffix } from '@/constants';
 import {
   CLOSE_BUTTON,
   FRIDAY_LABEL,
@@ -26,9 +26,6 @@ import { serializeMetadata } from '@/services/metadata';
 import { app } from '@/services/slack';
 import { deleteMessage } from '@/services/slack/functions/deleteMessage';
 
-export const repeatDailyPrefix = 'repeat_daily';
-export const timePickerSuffix = 'time_picker';
-
 app.action<BlockButtonAction>({ action_id: OPEN_MODAL_ACTION }, async ({ ack, body }) => {
   await ack();
 
@@ -37,7 +34,7 @@ app.action<BlockButtonAction>({ action_id: OPEN_MODAL_ACTION }, async ({ ack, bo
   await deleteMessage(body.response_url);
 
   const modal = Modal({
-    callbackId: OPEN_MODAL,
+    callbackId: CREATE_CRON,
     title: MODAL_TITLE,
     submit: SUBMIT_BUTTON,
     close: CLOSE_BUTTON,

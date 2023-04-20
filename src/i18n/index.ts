@@ -5,10 +5,9 @@ export const CRONS = 'Agendamentos';
 export const BY_CREATION_DATE = 'por data de criação';
 export const NO_CRONS_FOUND = 'Nenhum agendamento encontrado';
 export const REMOVE = ':wastebasket: Remover';
-export const SEE_DETAILS = ':information_source: Ver detalhes';
 export const DELETE_MESSAGE = ':white_check_mark: OK';
-export const BACK_TO_LIST = ':back: Voltar';
-export const ADD_PARTICIPANT = ':person_frowning: Adicionar participante';
+export const BACK_TO_LIST = ':back: Ir para agendamentos';
+export const EDIT = ':pencil: Editar agendamento';
 export const ITS_YOUR_TURN = 'é sua vez na daily de hoje!';
 export const EXISTING_USER_ERROR_MESSAGE = 'Este usuário já participa desta atividade.';
 export const SEE_DETAILS_RESUMED_MESSAGE = 'Abra o Slack para ver os detalhes do agendamento.';
@@ -28,9 +27,6 @@ export const THURSDAY_LABEL = 'Quinta';
 export const FRIDAY_LABEL = 'Sexta';
 export const SATURDAY_LABEL = 'Sábado';
 export const MODAL_TITLE = 'Daily Pick';
-export const ADD_PARTICIPANT_MODAL_TITLE = 'Adicionar participante';
-export const ADD_PARTICIPANT_INPUT_PLACEHOLDER = 'Escolha um participante para adicionar';
-export const PARTICIPANT_INPUT_LABEL = 'Participante';
 export const SUBMIT_BUTTON = 'Enviar';
 export const CLOSE_BUTTON = 'Fechar';
 export const SELECT_AT_LEAST_ONE_WEEKDAY = 'Selecione pelo menos um dia da semana';
@@ -51,8 +47,11 @@ export const ALREADY_ADDED_BOT_INTEGRATION = 'Já adicionei!';
 export const CANCELD_ADDING_BOT_INTEGRATION = 'Cancelar';
 export const MESSAGE_INPUT_EXPLANATION = [
   'Por exemplo: `Hoje é a sua vez, {currentUserMention}!`',
+  'Sugestão: Adicione links no seu agendamento. Exemplo: link do Google Meet.',
   '*Variáveis aceitas:*',
   '`{currentUserMention}`: Menciona a/o parcipante da vez',
   '`{nextUserName}`: Exibe o nome da/o próxima/o participante',
 ].join('\n');
-export const REMOVE_PARTICIPANT = 'Remover';
+export const SETTINGS = ':gear: Configurações';
+export const LIST_SETTINGS = ':gear: Configurações';
+export const SETTINGS_TEXT = 'Abra o Slack para ver as configurações de {cronName}';

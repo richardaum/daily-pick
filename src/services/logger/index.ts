@@ -16,8 +16,6 @@ export function createLogger() {
   return logger;
 }
 
-const LEVELS = Object.entries(['fatal', 'error', 'warn', 'info', 'debug', 'trace']);
-
 export const TRACE = 5;
 export const DEBUG = 4;
 export const INFO = 3;
@@ -25,8 +23,16 @@ export const WARN = 2;
 export const ERROR = 1;
 export const FATAL = 0;
 
+const LEVELS = new Map([
+  ['fatal', FATAL],
+  ['error', ERROR],
+  ['warn', WARN],
+  ['info', INFO],
+  ['debug', DEBUG],
+  ['trace', TRACE],
+]);
+
 export function getLogLevel(): number {
-  const levels = new Map<string, string>(LEVELS);
   const logLevel = `${env('LOG_LEVEL')}`;
-  return Number(levels.get(logLevel));
+  return Number(LEVELS.get(logLevel));
 }

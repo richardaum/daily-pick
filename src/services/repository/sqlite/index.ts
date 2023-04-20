@@ -3,9 +3,11 @@ import { resolve } from 'path';
 import { Database, open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 
-import { DEBUG, getLogLevel } from '@/services/logger';
+import { createLogger, DEBUG, getLogLevel } from '@/services/logger';
 
 let instance: Database<sqlite3.Database, sqlite3.Statement>;
+
+const logger = createLogger();
 
 export const database = () => {
   if (!instance) throw new Error('SQLite is being accessed before instantiated');
@@ -22,7 +24,13 @@ export const connectSqlite = async () => {
     migrationsPath: resolve(__dirname, 'migrations'),
   });
 
-  if (getLogLevel() >= DEBUG) sqlite3.verbose();
+  if (getLogLevel() >= DEBUG) {
+    sqlite3.verbose();
+
+    database.on('trace', function (sql: string) {
+      logger.debug(sql);
+    });
+  }
 
   instance = database;
 };

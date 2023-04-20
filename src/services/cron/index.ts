@@ -1,8 +1,10 @@
+import parser from 'cron-parser';
+import { toString } from 'lodash';
 import { cancelJob, scheduleJob } from 'node-schedule';
 
-import { TIMEZONE } from '@/constants';
+import { daysOfWeek, TIMEZONE } from '@/constants';
 import { buildCreatedAt } from '@/services/repository/common';
-import { Cron, FirebaseCron, FirebaseCronDocumentData, SQLiteCron } from '@/types';
+import { Cron, FirebaseCron, FirebaseCronDocumentData, SQLiteCron, TimePerWeeDay } from '@/types';
 
 export type CronFields = {
   second: number[];
@@ -51,6 +53,15 @@ export const buildCronFromSQLite = (cron: SQLiteCron): Cron => {
   };
 };
 
+export const buildCronToSQLite = (cron: Cron): SQLiteCron => {
+  return {
+    ...cron,
+    users: JSON.stringify(cron.users),
+    intervals: JSON.stringify(cron.intervals),
+    createTime: cron.createdAt,
+  };
+};
+
 export const buildCronFromFirebase = (
   snapshot: FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>
 ): Cron => {
@@ -59,4 +70,22 @@ export const buildCronFromFirebase = (
     createdAt: buildCreatedAt(snapshot.createTime?.toDate()),
     id: snapshot.id,
   };
+};
+
+export const getTimePerWeekday = (intervals: string[]): TimePerWeeDay => {
+  const response: TimePerWeeDay = {};
+
+  intervals.forEach((interval) => {
+    const parsed = parser.parseExpression(interval);
+    const dayOfWeek = parsed.fields.dayOfWeek[0];
+
+    if (!daysOfWeek[dayOfWeek]) return;
+
+    const dayOfWeekLabel = daysOfWeek[dayOfWeek];
+    const hour = toString(parsed.fields.hour).padStart(2, '0');
+    const minute = toString(parsed.fields.minute).padStart(2, '0');
+    response[dayOfWeekLabel] = `${hour}:${minute}`;
+  });
+
+  return response;
 };
