@@ -47,6 +47,7 @@ export const ALREADY_ADDED_BOT_INTEGRATION = 'Já adicionei!';
 export const CANCELD_ADDING_BOT_INTEGRATION = 'Cancelar';
 export const MESSAGE_INPUT_EXPLANATION = [
   'Por exemplo: `Hoje é a sua vez, {currentUserMention}!`',
+  'Sugestão: Adicione links no seu agendamento. Exemplo: link do Google Meet.',
   '*Variáveis aceitas:*',
   '`{currentUserMention}`: Menciona a/o parcipante da vez',
   '`{nextUserName}`: Exibe o nome da/o próxima/o participante',
