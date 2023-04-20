@@ -14,13 +14,16 @@ export const seeDetails = async ({ cronId, respond }: { cronId: string; respond:
   await respond(detailsView(cron));
 };
 
+const section = (title: string, content?: string) => `*${title}* \n ${content ?? ''}`;
+const code = (code: string) => `\`${code}\``;
+
 export const detailsView = (cron: Cron) => {
   return Surfaces.Message({ text: 'Cron details' })
     .blocks([
-      Blocks.Section({ text: `Id: ${cron.id}` }),
-      Blocks.Section({ text: `Nome: ${cron.name}` }),
-      Blocks.Section({ text: `Horários: ${cron.intervals.join(', ')}` }),
-      Blocks.Section({ text: `Participants:` }),
+      Blocks.Section({ text: section('Id', code(cron.id)) }),
+      Blocks.Section({ text: section('Nome', cron.name) }),
+      Blocks.Section({ text: section('Horários', code(cron.intervals.join(', '))) }),
+      Blocks.Section({ text: section('Participantes') }),
       ...cron.users.map((user) => maybeAddRemoveButton(cron, user, Blocks.Section({ text: `<@${user}>` }))),
       Blocks.Section({ text: `Atual: <@${cron.current}>` }),
       Blocks.Actions().elements(
