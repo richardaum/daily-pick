@@ -1,8 +1,8 @@
 import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 import VError from 'verror';
 
-import { BACK_ACTION, IGNORE_ACTION, SKIP_ACTION } from '@/constants';
-import { BACK, IGNORE, SKIP } from '@/i18n';
+import { BACK_ACTION, IGNORE_ACTION, SETTINGS_ACTION, SKIP_ACTION } from '@/constants';
+import { BACK, IGNORE, SETTINGS, SKIP } from '@/i18n';
 import { buildQueueIterator } from '@/services/repository/common/buildQueueIterator';
 import { app } from '@/services/slack';
 import { applyVariables, getMessage } from '@/services/slack/functions/getMessage';
@@ -40,6 +40,11 @@ export const postMessage = async (params: PostMessageNamedParams) => {
               text: SKIP.replace('{next}', next),
               actionId: SKIP_ACTION,
               value: JSON.stringify({ c: cron.id, u: it.next().get() }),
+            }),
+            Elements.Button({
+              text: SETTINGS.replace('{next}', next),
+              actionId: SETTINGS_ACTION,
+              value: JSON.stringify({ c: cron.id }),
             })
           )
         )

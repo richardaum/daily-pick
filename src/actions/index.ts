@@ -8,5 +8,6 @@ export * from './home';
 export * from './ignore';
 export * from './listOverflow';
 export * from './openModal';
+export * from './openSettings';
 export * from './removeParticipant';
 export * from './skipOrBack';

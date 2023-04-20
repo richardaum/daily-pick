@@ -1,4 +1,4 @@
-import { BlockAction, OverflowAction, RespondFn } from '@slack/bolt';
+import { RespondFn } from '@slack/bolt';
 import { Blocks, Elements, SectionBuilder, Surfaces } from 'slack-block-builder';
 
 import { ADD_PARTICIPANT_ACTION, DELETE_MESSAGE_ACTION, REMOVE_PARTICIPANT_ACTION } from '@/constants';
@@ -7,14 +7,7 @@ import { ADD_PARTICIPANT, BACK_TO_LIST, DELETE_MESSAGE, REMOVE_PARTICIPANT } fro
 import { repository } from '@/services/repository';
 import { Cron } from '@/types';
 
-export const seeDetails = async ({
-  cronId,
-  respond,
-}: {
-  body: BlockAction<OverflowAction>;
-  cronId: string;
-  respond: RespondFn;
-}) => {
+export const seeDetails = async ({ cronId, respond }: { cronId: string; respond: RespondFn }) => {
   const cron = await repository.fetchCronById(cronId);
   if (!cron) throw new Error(`The cron ${cronId} was not found`);
 

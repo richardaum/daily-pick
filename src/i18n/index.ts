@@ -56,3 +56,5 @@ export const MESSAGE_INPUT_EXPLANATION = [
   '`{nextUserName}`: Exibe o nome da/o próxima/o participante',
 ].join('\n');
 export const REMOVE_PARTICIPANT = 'Remover';
+export const SETTINGS = ':gear: Configurações';
+export const SETTINGS_TEXT = 'Abra para ver as configurações de {cronName}';
