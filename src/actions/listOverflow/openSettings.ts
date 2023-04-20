@@ -1,14 +1,9 @@
 import { RespondFn } from '@slack/bolt';
-import { Blocks, Elements, SectionBuilder, Surfaces } from 'slack-block-builder';
+import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 
-import {
-  ADD_PARTICIPANT_ACTION,
-  DELETE_MESSAGE_ACTION,
-  EDIT_SCHEDULE_ACTION,
-  REMOVE_PARTICIPANT_ACTION,
-} from '@/constants';
+import { DELETE_MESSAGE_ACTION, EDIT_SCHEDULE_ACTION } from '@/constants';
 import { BACK_TO_LIST_ACTION } from '@/constants/actions';
-import { ADD_PARTICIPANT, BACK_TO_LIST, DELETE_MESSAGE, EDIT, REMOVE_PARTICIPANT } from '@/i18n';
+import { BACK_TO_LIST, DELETE_MESSAGE, EDIT } from '@/i18n';
 import { repository } from '@/services/repository';
 import { Cron } from '@/types';
 
@@ -30,7 +25,7 @@ export const settingsView = (cron: Cron) => {
       Blocks.Section({ text: section('Mensagem', code(cron.message ?? 'N/A')) }),
       Blocks.Section({ text: section('Horários', code(cron.intervals.join(', '))) }),
       Blocks.Section({ text: section('Participantes') }),
-      ...cron.users.map((user) => maybeAddRemoveButton(cron, user, Blocks.Section({ text: `<@${user}>` }))),
+      Blocks.Section({ text: cron.users.map((user) => `<@${user}>`).join(', ') }),
       Blocks.Section({ text: `Atual: <@${cron.current}>` }),
       Blocks.Actions().elements(
         Elements.Button({ text: BACK_TO_LIST, actionId: BACK_TO_LIST_ACTION }),
@@ -39,24 +34,8 @@ export const settingsView = (cron: Cron) => {
           actionId: EDIT_SCHEDULE_ACTION,
           value: JSON.stringify({ c: cron.id }),
         }),
-        Elements.Button({
-          text: ADD_PARTICIPANT,
-          actionId: ADD_PARTICIPANT_ACTION,
-          value: JSON.stringify({ c: cron.id }),
-        }),
         Elements.Button({ text: DELETE_MESSAGE, actionId: DELETE_MESSAGE_ACTION })
       ),
     ])
     .buildToObject();
 };
-function maybeAddRemoveButton(cron: Cron, user: string, element: SectionBuilder): SectionBuilder {
-  if (cron.users.length <= 1) return element;
-
-  return element.accessory(
-    Elements.Button({
-      text: REMOVE_PARTICIPANT,
-      actionId: REMOVE_PARTICIPANT_ACTION,
-      value: JSON.stringify({ u: user, c: cron.id }),
-    }).danger()
-  );
-}
