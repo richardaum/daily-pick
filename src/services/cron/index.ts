@@ -51,6 +51,15 @@ export const buildCronFromSQLite = (cron: SQLiteCron): Cron => {
   };
 };
 
+export const buildCronToSQLite = (cron: Cron): SQLiteCron => {
+  return {
+    ...cron,
+    users: JSON.stringify(cron.users),
+    intervals: JSON.stringify(cron.intervals),
+    createTime: cron.createdAt,
+  };
+};
+
 export const buildCronFromFirebase = (
   snapshot: FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>
 ): Cron => {
