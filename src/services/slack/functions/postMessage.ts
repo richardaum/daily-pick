@@ -1,7 +1,7 @@
 import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 import VError from 'verror';
 
-import { BACK_ACTION, IGNORE_ACTION, SETTINGS_ACTION, SKIP_ACTION } from '@/constants';
+import { BACK_ACTION, IGNORE_ACTION, MESSAGE_SETTINGS_ACTION, SKIP_ACTION } from '@/constants';
 import { BACK, IGNORE, SETTINGS, SKIP } from '@/i18n';
 import { buildQueueIterator } from '@/services/repository/common/buildQueueIterator';
 import { app } from '@/services/slack';
@@ -43,7 +43,7 @@ export const postMessage = async (params: PostMessageNamedParams) => {
             }),
             Elements.Button({
               text: SETTINGS.replace('{next}', next),
-              actionId: SETTINGS_ACTION,
+              actionId: MESSAGE_SETTINGS_ACTION,
               value: JSON.stringify({ c: cron.id }),
             })
           )

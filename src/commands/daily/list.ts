@@ -1,8 +1,8 @@
 import { RespondFn, SlashCommand } from '@slack/bolt';
 import { Blocks, Elements, Option, Surfaces } from 'slack-block-builder';
 
-import { DELETE_MESSAGE_ACTION, REMOVE_CRON_ACTION, SEE_DETAILS_ACTION, TRIGGER_ACTION } from '@/constants';
-import { BY_CREATION_DATE, CRONS, DELETE_MESSAGE, NO_CRONS_FOUND, REMOVE, SEE_DETAILS, TRIGGER } from '@/i18n';
+import { DELETE_MESSAGE_ACTION, LIST_OVERFLOW_SETTINGS_ACTION, REMOVE_CRON_ACTION, TRIGGER_ACTION } from '@/constants';
+import { BY_CREATION_DATE, CRONS, DELETE_MESSAGE, LIST_SETTINGS, NO_CRONS_FOUND, REMOVE, TRIGGER } from '@/i18n';
 import { repository } from '@/services/repository';
 
 export const isListingCrons = (command: SlashCommand) => {
@@ -34,7 +34,7 @@ export const listCronsView = (crons: PartialCron[]) =>
           Elements.OverflowMenu({ actionId: 'list_overflow_click' })
             .options([
               Option({ value: `${REMOVE_CRON_ACTION}#${cron.id}`, text: REMOVE }),
-              Option({ value: `${SEE_DETAILS_ACTION}#${cron.id}`, text: SEE_DETAILS }),
+              Option({ value: `${LIST_OVERFLOW_SETTINGS_ACTION}#${cron.id}`, text: LIST_SETTINGS }),
               Option({ value: `${TRIGGER_ACTION}#${cron.id}`, text: TRIGGER }),
             ])
             .end()

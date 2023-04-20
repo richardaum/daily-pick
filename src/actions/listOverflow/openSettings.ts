@@ -7,17 +7,17 @@ import { ADD_PARTICIPANT, BACK_TO_LIST, DELETE_MESSAGE, REMOVE_PARTICIPANT } fro
 import { repository } from '@/services/repository';
 import { Cron } from '@/types';
 
-export const seeDetails = async ({ cronId, respond }: { cronId: string; respond: RespondFn }) => {
+export const openSettings = async ({ cronId, respond }: { cronId: string; respond: RespondFn }) => {
   const cron = await repository.fetchCronById(cronId);
   if (!cron) throw new Error(`The cron ${cronId} was not found`);
 
-  await respond(detailsView(cron));
+  await respond(settingsView(cron));
 };
 
 const section = (title: string, content?: string) => `*${title}* \n ${content ?? ''}`;
 const code = (code: string) => `\`${code}\``;
 
-export const detailsView = (cron: Cron) => {
+export const settingsView = (cron: Cron) => {
   return Surfaces.Message({ text: 'Cron details' })
     .blocks([
       Blocks.Section({ text: section('Id', code(cron.id)) }),

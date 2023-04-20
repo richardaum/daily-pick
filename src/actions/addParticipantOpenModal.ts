@@ -1,6 +1,6 @@
 import { ViewSubmitAction } from '@slack/bolt';
 
-import { detailsView } from '@/actions/listOverflow/seeDetails';
+import { settingsView } from '@/actions/listOverflow/openSettings';
 import { ADD_PARTICIPANT_INPUT_ACTION, ADD_PARTICIPANT_MODAL_CALLBACK_ID, PARTICIPANT_BLOCK_ID } from '@/constants';
 import { EXISTING_USER_ERROR_MESSAGE, SEE_DETAILS_RESUMED_MESSAGE } from '@/i18n';
 import { repository } from '@/services/repository';
@@ -42,7 +42,7 @@ app.view<ViewSubmitAction>(
       channel: channelId,
       user: body.user.id,
       text: SEE_DETAILS_RESUMED_MESSAGE,
-      blocks: detailsView(updatedCron).blocks,
+      blocks: settingsView(updatedCron).blocks,
     });
   }
 );

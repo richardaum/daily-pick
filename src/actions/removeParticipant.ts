@@ -1,7 +1,7 @@
 import { BlockButtonAction } from '@slack/bolt';
 import axios from 'axios';
 
-import { detailsView } from '@/actions/listOverflow/seeDetails';
+import { settingsView } from '@/actions/listOverflow/openSettings';
 import { REMOVE_PARTICIPANT_ACTION } from '@/constants';
 import { repository } from '@/services/repository';
 import { app } from '@/services/slack';
@@ -17,6 +17,6 @@ app.action<BlockButtonAction>(REMOVE_PARTICIPANT_ACTION, async ({ ack, action, b
   };
 
   await repository.updateCron(updatedCron);
-  await axios.post(body.response_url, detailsView(updatedCron));
+  await axios.post(body.response_url, settingsView(updatedCron));
   await ack();
 });

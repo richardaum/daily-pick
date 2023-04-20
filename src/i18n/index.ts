@@ -5,9 +5,8 @@ export const CRONS = 'Agendamentos';
 export const BY_CREATION_DATE = 'por data de criação';
 export const NO_CRONS_FOUND = 'Nenhum agendamento encontrado';
 export const REMOVE = ':wastebasket: Remover';
-export const SEE_DETAILS = ':information_source: Ver detalhes';
 export const DELETE_MESSAGE = ':white_check_mark: OK';
-export const BACK_TO_LIST = ':back: Voltar';
+export const BACK_TO_LIST = ':back: Ir para agendamentos';
 export const ADD_PARTICIPANT = ':person_frowning: Adicionar participante';
 export const ITS_YOUR_TURN = 'é sua vez na daily de hoje!';
 export const EXISTING_USER_ERROR_MESSAGE = 'Este usuário já participa desta atividade.';
@@ -57,4 +56,5 @@ export const MESSAGE_INPUT_EXPLANATION = [
 ].join('\n');
 export const REMOVE_PARTICIPANT = 'Remover';
 export const SETTINGS = ':gear: Configurações';
-export const SETTINGS_TEXT = 'Abra para ver as configurações de {cronName}';
+export const LIST_SETTINGS = ':gear: Configurações';
+export const SETTINGS_TEXT = 'Abra o Slack para ver as configurações de {cronName}';
