@@ -9,7 +9,9 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
-    "start": "NODE_ENV=production node build/main/index.js",
+    "start": "run-s start:migration start:bot",
+    "start:bot": "NODE_ENV=production node build/main/index.js",
+    "start:migration": "ts-node src/services/migration/migrate.ts",
     "dev": "NODE_ENV=development ts-node-dev --inspect -- src/index.ts | bunyan -L",
     "build": "run-p build:*",
     "build:main": "tsc -p tsconfig.build.json",
