@@ -8,5 +8,5 @@ export const app = new App({
   token: env('SLACK_BOT_TOKEN'),
   signingSecret: env('SLACK_SIGNING_SECRET'),
   logLevel: getLogLevel() >= DEBUG ? LogLevel.DEBUG : LogLevel.INFO,
-  port: Number(env('PORT')),
+  socketMode: true,
 });
