@@ -1,0 +1,56 @@
+---
+# Important Notice
+#
+# This file is managed by Tompero's indexing process.
+# Manual changes to the managed fields won't take effect and will be overwritten by Tompero.
+#
+# Tompero will also push commits directly to this file when needed
+# without previous notice.
+#
+# Currently, the following fields are managed by Tompero:
+#
+# * requiredForDR
+
+apiVersion: ifood/v2
+kind: Repository
+
+# Metadata information will be not indexed, only for legacy reference purpose
+metadata:
+  costCenter: technology
+  tribe: food delivery
+  squad: restaurant experience
+  team:
+    alias: richard.lopes
+    channel: daily-pick-bot
+    email: richard.lopes@ifood.com.br
+    owner: richard.lopes
+tags:
+  - api
+  - cronjob
+spec:
+  contents:
+    - name: ifood-daily-pick
+      description: Take turns with your teammates to complete a daily task
+      type: service
+      ownerLayerSlug: res-exp
+      subType:
+        - api
+      impactLevel: 5
+      deployment:
+        type: k8s_helm
+        chefRole: ''
+      certifications:
+        - name: IRC-MTDT
+          version: v2.0
+        - name: IRC-FAIL
+          version: not_applicable
+        - name: IRC-DTB
+          version: not_applicable
+        - name: IRC-LOG
+          version: v1.1
+        - name: IRC-WATCH
+          version: not_applicable
+      links:
+        - title: Repository
+          type: other
+          href: https://code.ifoodcorp.com.br/ifood/food-delivery/restaurant-experience/daily-pick
