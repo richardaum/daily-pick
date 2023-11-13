@@ -11,6 +11,9 @@ const config = {
   SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET,
   FIREBASE_TO_SQLITE_MIGRATION_TIMESTAMP: process.env.FIREBASE_TO_SQLITE_MIGRATION_TIMESTAMP,
   FIREBASE_TO_SQLITE_MIGRATION_ENABLED: process.env.FIREBASE_TO_SQLITE_MIGRATION_ENABLED as string,
+  PG_HOST: process.env.PG_HOST,
+  PG_USER: process.env.PG_USER,
+  PG_PASSWORD: process.env.PG_PASSWORD,
 };
 
 const optional = new Set<keyof typeof config>([
