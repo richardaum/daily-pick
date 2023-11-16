@@ -13,7 +13,9 @@ const config = {
   FIREBASE_TO_SQLITE_MIGRATION_ENABLED: process.env.FIREBASE_TO_SQLITE_MIGRATION_ENABLED as string,
   PG_HOST: process.env.PG_HOST,
   PG_USER: process.env.PG_USER,
-  PG_PASSWORD: process.env.PG_PASSWORD,
+  PG_DATABASE: process.env.PG_DATABASE,
+  PG_PORT: parseInt(process.env.PG_PORT ?? '0'),
+  DB_PASS_IFOOD_DAILY_PICK_APP: process.env.DB_PASS_IFOOD_DAILY_PICK_APP,
 };
 
 const optional = new Set<keyof typeof config>([
@@ -22,6 +24,7 @@ const optional = new Set<keyof typeof config>([
   'LOG_LEVEL',
   'FIREBASE_TO_SQLITE_MIGRATION_TIMESTAMP',
   'FIREBASE_TO_SQLITE_MIGRATION_ENABLED',
+  'DB_PASS_IFOOD_DAILY_PICK_APP',
 ]);
 
 export const env = <Key extends keyof typeof config>(key: Key) => {

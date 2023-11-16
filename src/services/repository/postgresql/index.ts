@@ -17,7 +17,9 @@ export const connectPostgresql = async () => {
   const config = {
     host: env('PG_HOST'),
     user: env('PG_USER'),
-    password: env('PG_PASSWORD'),
+    password: env('DB_PASS_IFOOD_DAILY_PICK_APP'),
+    database: env('PG_DATABASE'),
+    port: env('PG_PORT'),
   };
   const client = new pg.Client(config);
 
