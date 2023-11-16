@@ -14,19 +14,29 @@ export const database = () => {
 };
 
 export const connectPostgresql = async () => {
-  const config = {
+  const client = new pg.Client({
     host: env('PG_HOST'),
-    user: env('PG_USER'),
+    user: env('PG_APP_USER'),
     password: env('DB_PASS_IFOOD_DAILY_PICK_APP'),
     database: env('PG_DATABASE'),
-    port: env('PG_PORT'),
-  };
-  const client = new pg.Client(config);
+    port: env('PG_APP_PORT'),
+  });
 
   await client.connect();
 
   try {
-    await migrate({ client }, 'src/services/repository/postgresql/migrations');
+    await migrate(
+      {
+        client: new pg.Client({
+          host: env('PG_HOST'),
+          user: env('PG_MIGRATION_USER'),
+          password: env('DB_PASS_IFOOD_DAILY_PICK_MIGRATION'),
+          database: env('PG_DATABASE'),
+          port: env('PG_MIGRATION_PORT'),
+        }),
+      },
+      'src/services/repository/postgresql/migrations'
+    );
   } finally {
     await client.end();
   }
