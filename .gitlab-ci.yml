@@ -1,0 +1,39 @@
+include:
+  - project: 'ifood/pipelines/gitlab-pipelines'
+    ref: 'ifood-server-side-web-application-3-edge'
+    file: 'pipelines/ifood-server-side-web-application/main.yml'
+
+variables:
+  SERVICE_NAME: design-language-icons-font-upload
+  KUBERNETES_CLUSTER_SANDBOX: cluster-01.k8s.food-delivery-sandbox.dc-ifood.com
+  DESTINATION_CHANNELS: '#daily-pick-bot'
+
+  GOLDEN_IMG_TAG: '1-edge'
+  GOLDEN_IMG_NODE_VERSION: 18
+  NODE_VERSION: 18
+  BUILD_ARGS: >
+    GOLDEN_IMG_TAG="$GOLDEN_IMG_TAG"
+    GOLDEN_IMG_NODE_VERSION="$GOLDEN_IMG_NODE_VERSION"
+    NODE_VERSION="$NODE_VERSION"
+    NODE_ENV="$VAULT_SECRETS_ENV"
+
+  DATADOG_DEFAULT_MONITOR: 'true'
+  DATADOG_DEFAULT_MONITOR_CUSTOM_NOTIFICATION_SANDBOX: '#daily-pick-bot'
+  DATADOG_DEFAULT_MONITOR_CUSTOM_NOTIFICATION_PRODUCTION: '#daily-pick-bot'
+  DATADOG_MONITOR_OPERATIONS: 'http.client.request'
+
+production:
+  stage: deploy
+  rules:
+    - when: never
+
+production_helm_dry_run:
+  stage: test
+  rules:
+    - when: never
+
+release:
+  allow_failure: false
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
