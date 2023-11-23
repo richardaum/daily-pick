@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS cron (
-  id STRING NOT NULL PRIMARY KEY,
-  current STRING NULL,
-  intervals STRING NOT NULL,
-  name STRING NOT NULL,
-  team STRING NOT NULL,
-  users STRING NOT NULL,
-  createTime STRING NOT NULL,
-  channel STRING NULL
-)
+  id TEXT NOT NULL PRIMARY KEY,
+  current TEXT NULL,
+  intervals TEXT NOT NULL,
+  name TEXT NOT NULL,
+  team TEXT NOT NULL,
+  users TEXT NOT NULL,
+  createTime TEXT NOT NULL,
+  channel TEXT NULL
+);

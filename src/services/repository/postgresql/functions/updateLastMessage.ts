@@ -1,16 +1,13 @@
-import { database } from '@/services/repository/sqlite';
+import { database } from '@/services/repository/postgresql';
 import { Repository } from '@/types';
 
 export const updateLastMessage: Repository['updateLastMessage'] = async (cronId, lastMessage) => {
-  await database().run(
+  await database().query(
     `
-      UPDATE cron 
-      SET lastMessage = :lastMessage
-      WHERE id = :id
+      UPDATE cron
+      SET lastMessage = $1
+      WHERE id = $2
     `,
-    {
-      ':id': cronId,
-      ':lastMessage': lastMessage,
-    }
+    [lastMessage, cronId]
   );
 };

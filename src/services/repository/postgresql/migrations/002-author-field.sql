@@ -1,2 +1,2 @@
 ALTER TABLE cron
-ADD author STRING NULL;
+ADD COLUMN author TEXT NULL;

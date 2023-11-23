@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-import { database } from '@/services/repository/sqlite';
+import { database } from '@/services/repository/postgresql';
 import { Repository, SQLiteCron } from '@/types';
 
 export const persistCron: Repository['persistCron'] = async (cron) => {
@@ -13,13 +13,24 @@ export const persistCron: Repository['persistCron'] = async (cron) => {
     createTime: new Date().toISOString(),
   };
 
-  await database().run(
+  await database().query(
     `
-      INSERT INTO cron 
+      INSERT INTO cron
       (id, channel, current, intervals, name, team, users, createTime, author, message) VALUES
-      (:id, :channel, :current, :intervals, :name, :team, :users, :createTime, :author, :message)
+      ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     `,
-    Object.entries(persistedCron).reduce((prefixed, [key, value]) => ({ ...prefixed, [`:${key}`]: value }), {})
+    [
+      persistedCron.id,
+      persistedCron.channel,
+      persistedCron.current,
+      persistedCron.intervals,
+      persistedCron.name,
+      persistedCron.team,
+      persistedCron.users,
+      persistedCron.createTime,
+      persistedCron.author,
+      persistedCron.message,
+    ]
   );
 
   return { ...cron, id: persistedCron.id, current: persistedCron.current };

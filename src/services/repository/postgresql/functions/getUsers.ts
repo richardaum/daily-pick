@@ -1,15 +1,17 @@
 import { buildCronFromSQLite } from '@/services/cron';
-import { database } from '@/services/repository/sqlite';
+import { database } from '@/services/repository/postgresql';
 import { Repository, SQLiteCron } from '@/types';
 
 export const getUsers: Repository['getUsers'] = async (cronId: string) => {
-  const rawCron = await database().get<SQLiteCron>(
+  const result = await database().query<SQLiteCron>(
     `
     SELECT * FROM cron
-    WHERE id = :id
+    WHERE id = $1
   `,
-    { ':id': cronId }
+    [cronId]
   );
+
+  const rawCron = result.rows[0];
 
   if (!rawCron) throw new Error(`The cron ${cronId} does not exist`);
 

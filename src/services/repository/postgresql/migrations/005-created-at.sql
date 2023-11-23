@@ -1,2 +1,2 @@
 ALTER TABLE cron
-ADD createdAt STRING NULL;
+ADD COLUMN "createdAt" VARCHAR;

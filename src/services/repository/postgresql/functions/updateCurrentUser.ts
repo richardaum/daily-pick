@@ -1,16 +1,13 @@
-import { database } from '@/services/repository/sqlite';
+import { database } from '@/services/repository/postgresql';
 import { Repository } from '@/types';
 
 export const updateCurrentUser: Repository['updateCurrentUser'] = async (cronId: string, user: string) => {
-  await database().run(
+  await database().query(
     `
-      UPDATE cron 
-      SET current = :current
-      WHERE id = :id
+      UPDATE cron
+      SET current = $1
+      WHERE id = $2
     `,
-    {
-      ':id': cronId,
-      ':current': user,
-    }
+    [user, cronId]
   );
 };

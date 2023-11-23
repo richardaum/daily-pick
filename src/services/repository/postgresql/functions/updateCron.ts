@@ -1,32 +1,34 @@
 import { buildCronToSQLite } from '../../../cron/index';
 
-import { database } from '@/services/repository/sqlite';
-import { Cron, Repository } from '@/types';
+import { database } from '@/services/repository/postgresql';
+import { Repository } from '@/types';
 
 export const updateCron: Repository['updateCron'] = async (cron) => {
-  let query = '';
-  let values: Partial<Cron> = {};
+  const queryParts: string[] = [];
+  const values: (string | undefined)[] = [];
 
   const formattedCron = buildCronToSQLite(cron);
+  let valueIndex = 1;
 
-  for (const k of Object.keys(formattedCron)) {
-    const key = k as keyof typeof formattedCron;
-
+  for (const key of Object.keys(formattedCron)) {
     if (key !== 'id') {
-      query = [query, `${key} = :${key}`].filter(Boolean).join(', ');
+      queryParts.push(`${key} = $${valueIndex}`);
+      const value = formattedCron[key as keyof typeof formattedCron];
+      values.push(value);
+      valueIndex++;
     }
-
-    values = { ...values, [`:${key}`]: formattedCron[key] };
   }
 
-  await database().run(
-    `
-      UPDATE cron 
-      SET ${query}
-      WHERE id = :id
-    `,
-    values
-  );
+  // Adicione o ID ao final do array de valores
+  values.push(formattedCron.id);
+
+  const query = `
+    UPDATE cron
+    SET ${queryParts.join(', ')}
+    WHERE id = $${valueIndex}
+  `;
+
+  await database().query(query, values);
 
   return cron;
 };

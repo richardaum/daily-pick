@@ -1,15 +1,17 @@
 import { buildCronsFromSQLite } from '@/services/cron';
-import { database } from '@/services/repository/sqlite';
+import { database } from '@/services/repository/postgresql';
 import { Repository, SQLiteCron } from '@/types';
 
 export const fetchCronsByChannelAndTeam: Repository['fetchCronsByChannelAndTeam'] = async (channel, team) => {
-  const crons = await database().all<SQLiteCron[]>(
-    ` 
+  const result = await database().query<SQLiteCron>(
+    `
       SELECT * FROM cron
-      WHERE channel = :channel AND team = :team
+      WHERE channel = $1 AND team = $2
     `,
-    { ':channel': channel, ':team': team }
+    [channel, team]
   );
+
+  const crons = result.rows;
 
   return buildCronsFromSQLite(crons);
 };

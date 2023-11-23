@@ -1,2 +1,2 @@
 ALTER TABLE cron
-ADD lastMessage STRING NULL;
+ADD COLUMN lastMessage TEXT NULL;
