@@ -1,6 +1,7 @@
 import { App, LogLevel } from '@slack/bolt';
 
 import { env } from '@/services/env';
+import { health } from '@/services/health';
 import { DEBUG, getLogLevel } from '@/services/logger';
 
 export const app = new App({
@@ -9,4 +10,5 @@ export const app = new App({
   signingSecret: env('SLACK_SIGNING_SECRET'),
   logLevel: getLogLevel() >= DEBUG ? LogLevel.DEBUG : LogLevel.INFO,
   socketMode: true,
+  customRoutes: [health()],
 });
