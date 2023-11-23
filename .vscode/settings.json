@@ -10,6 +10,16 @@
       "driver": "SQLite",
       "database": "./database.sqlite3",
       "name": "daily-pick"
+    },
+    {
+      "previewLimit": 50,
+      "server": "pg-food-delivery-sandbox-rw1.intra.food-delivery-sandbox.dc-ifood.com",
+      "port": 5432,
+      "askForPassword": true,
+      "driver": "PostgreSQL",
+      "name": "daily-pick-postgresql",
+      "database": "ifood-daily-pick",
+      "username": "richard.lopes"
     }
   ],
   "sqltools.useNodeRuntime": true

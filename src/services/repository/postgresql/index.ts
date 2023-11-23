@@ -55,6 +55,8 @@ export const connectPostgresql = async () => {
   }
 
   instance = client;
+
+  return () => client.end();
 };
 
 export { postgresqlRepository } from './functions';

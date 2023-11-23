@@ -1,2 +1,0 @@
-ALTER TABLE cron
-ADD createdAt STRING NULL;

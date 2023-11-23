@@ -1,2 +1,0 @@
-ALTER TABLE cron
-ADD message STRING NULL;
