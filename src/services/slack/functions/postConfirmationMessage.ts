@@ -1,5 +1,4 @@
-import { AckFn, ViewResponseAction, ViewSubmitAction } from '@slack/bolt';
-import { WebClient } from '@slack/web-api';
+import { AckFn, AllMiddlewareArgs, ViewResponseAction, ViewSubmitAction } from '@slack/bolt';
 import { Blocks, Elements, Surfaces } from 'slack-block-builder';
 import { VError } from 'verror';
 
@@ -18,7 +17,7 @@ export const postConfirmationMessage = async ({
   channel: string;
   body: ViewSubmitAction;
   cron: Omit<Cron, 'createdAt'>;
-  client: WebClient;
+  client: AllMiddlewareArgs['client'];
 }) => {
   try {
     const text = `${YOUR_CRON} "${cron.name}" ${WAS_CREATED}`;

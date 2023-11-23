@@ -17,7 +17,7 @@ export const startServer = async () => {
   await connect();
   await schedule();
 
-  await app.start();
+  const server = await app.start();
 
   app.error(async (error) => {
     logger.error(error);
@@ -25,4 +25,6 @@ export const startServer = async () => {
   });
 
   logger.info(`⚡️ Bolt app is running!`);
+
+  return { server };
 };

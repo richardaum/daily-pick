@@ -13,8 +13,6 @@
 
     "strict": true,
 
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
 
@@ -23,7 +21,7 @@
     "listFiles": false,
     "pretty": true,
 
-    "lib": ["es2017", "DOM"],
+    "lib": ["es2017"],
 
     "baseUrl": ".",
     "paths": {

@@ -9,7 +9,9 @@ import { applyVariables, getMessage } from '@/services/slack/functions/getMessag
 import { getName } from '@/services/slack/functions/getName';
 import { PostMessageNamedParams } from '@/types';
 
-export const postMessage = async (params: PostMessageNamedParams) => {
+type ChatPostMessageResponse = Awaited<ReturnType<typeof app.client.chat.postMessage>>;
+
+export const postMessage = async (params: PostMessageNamedParams): Promise<ChatPostMessageResponse> => {
   const { cron } = params;
 
   const it = buildQueueIterator(cron.users, cron.current);
