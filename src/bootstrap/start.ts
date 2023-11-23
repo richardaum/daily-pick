@@ -17,7 +17,7 @@ export const startServer = async () => {
   await connect();
   await schedule();
 
-  const server = await app.start();
+  const server = await app.start(process.env.PORT || 3000);
 
   app.error(async (error) => {
     logger.error(error);
