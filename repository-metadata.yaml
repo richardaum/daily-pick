@@ -29,7 +29,7 @@ tags:
   - cronjob
 spec:
   contents:
-    - name: ifood-daily-pick
+    - name: daily-pick
       description: Take turns with your teammates to complete a daily task
       type: service
       ownerLayerSlug: res-exp
