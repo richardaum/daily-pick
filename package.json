@@ -31,8 +31,6 @@
     "version": "standard-version",
     "reset-hard": "git clean -dfx && git reset --hard && yarn",
     "prepare-release": "run-s reset-hard test cov:check doc:html version doc:publish",
-    "firestore-import": "npx -p node-firestore-import-export firestore-import -a credentials.json -b backup.json",
-    "firestore-export": "npx -p node-firestore-import-export firestore-export -a credentials.json -b backup.json"
   },
   "engines": {
     "node": ">=10"
@@ -80,7 +78,6 @@
     "jest": "^27.4.5",
     "jest-mock": "^27.4.2",
     "ngrok": "^4.3.3",
-    "node-firestore-import-export": "^1.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.1.1",
     "standard-version": "^9.0.0",
