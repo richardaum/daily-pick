@@ -4,7 +4,7 @@ include:
     file: 'pipelines/ifood-server-side-web-application/main.yml'
 
 variables:
-  SERVICE_NAME: daily-pick
+  SERVICE_NAME: ifood-daily-pick
   KUBERNETES_CLUSTER_SANDBOX: cluster-01.k8s.food-delivery-sandbox.dc-ifood.com
   DESTINATION_CHANNELS: '#daily-pick-bot'
 
