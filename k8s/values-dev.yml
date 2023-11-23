@@ -1,0 +1,50 @@
+---
+appDescription: Daily Pick
+costCenter: technology
+maintainers:
+  - richard.lopes
+
+backoffLimit: 3
+
+image:
+  pullPolicy: Always
+
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 1
+
+container:
+  restartPolicy: Always
+  healthCheck:
+    initialDelaySeconds: 40
+    port: 3000
+    livenessProbe:
+      path: '/api/health'
+    readinessProbe:
+      path: '/api/health'
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+
+logType: json
+
+serviceAccount:
+  name: daily-pick
+  create: true
+
+vault:
+  enabled: true
+  version: v2
+
+toggle:
+  enabled: true
+  version: v2
+
+workload:
+  mesh:
+    enabled: true
