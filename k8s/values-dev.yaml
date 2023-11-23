@@ -34,7 +34,7 @@ container:
 logType: json
 
 serviceAccount:
-  name: daily-pick
+  name: ifood-daily-pick
   create: true
 
 vault:
