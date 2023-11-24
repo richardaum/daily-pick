@@ -1,5 +1,6 @@
 {
   "name": "daily-pick",
+  "private": true,
   "version": "1.0.0",
   "description": "Daily pick slack app",
   "main": "src/index.ts",
