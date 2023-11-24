@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "incremental": true,
     "target": "es2017",
     "outDir": "build/main",
     "rootDir": "src",
@@ -10,25 +9,12 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowJs": true,
-
     "strict": true,
-
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-
-    "traceResolution": false,
-    "listEmittedFiles": false,
-    "listFiles": false,
-    "pretty": true,
-
-    "lib": ["es2017"],
-
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.js", "jest.config.js"],
-  "exclude": ["node_modules/**"],
-  "compileOnSave": false
+  "exclude": ["node_modules/**"]
 }

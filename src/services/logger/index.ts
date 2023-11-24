@@ -1,19 +1,19 @@
-import bunyan, { LogLevel } from 'bunyan';
+import pino from 'pino';
 
 import { env } from '@/services/env';
 
+const isoTime = () => `,"timestamp":"${new Date(Date.now()).toISOString()}"`;
+
 export function createLogger() {
-  const logger = bunyan.createLogger({
-    name: 'daily-pick',
-    src: true,
-    streams: [{ stream: process.stdout, level: (env('LOG_LEVEL') as LogLevel) ?? 'info' }],
+  return pino({
+    level: env('LOG_LEVEL') ?? 'info',
+    base: { service_name: 'ifood-daily-pick' },
+    messageKey: 'message',
+    formatters: {
+      level: (label) => ({ level: label }),
+    },
+    timestamp: isoTime,
   });
-
-  if (env('LOG_DISABLED') === 'true') {
-    logger.level(bunyan.FATAL + 1);
-  }
-
-  return logger;
 }
 
 export const TRACE = 5;
