@@ -37,6 +37,7 @@ WORKDIR /app/app
 
 COPY --from=safe /app/node_modules ./node_modules
 COPY --from=builder /app/build ./build
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
 # COPY --from=builder /app/packages ./packages
 # COPY --from=builder /app/start.sh .
 
