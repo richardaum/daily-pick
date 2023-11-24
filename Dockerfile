@@ -24,7 +24,7 @@ WORKDIR /app
 # Install dependencies to production
 COPY package.json yarn.lock .yarnrc.yml . .
 COPY .yarn .yarn
-RUN yarn install --production
+RUN yarn workspaces focus --production
 
 # Production ------------------------------------------------------------------
 FROM ${CI_REGISTRY}/ifood/docker-images/golden/nodejs/${GOLDEN_IMG_NODE_VERSION}:${GOLDEN_IMG_TAG} AS production
