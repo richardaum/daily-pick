@@ -31,6 +31,7 @@ FROM ${CI_REGISTRY}/ifood/docker-images/golden/nodejs/${GOLDEN_IMG_NODE_VERSION}
 # FROM node:${GOLDEN_IMG_NODE_VERSION}-alpine AS production
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
+ENV NODE_ENV=production
 
 WORKDIR /app/app
 
@@ -41,6 +42,6 @@ COPY --from=builder /app/build ./build
 
 EXPOSE 3000
 
-ENTRYPOINT ["/executor", "NODE_ENV=production node build/main/index.js"]
+ENTRYPOINT ["/executor", "/app/node/node /app/app/build/main/index.js"]
 # ENTRYPOINT ["sh", "-c", "node dist/slack-bot --cwd dist/slack-bot"]
 # ENTRYPOINT ["./start.sh"]
