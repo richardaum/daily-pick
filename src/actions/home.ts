@@ -19,10 +19,13 @@ app.event('app_home_opened', async ({ event, client }) => {
         ].join('\n'),
       }),
       Blocks.Section({
-        text: ':one: Use o comando `/daily pick` dentro de um canal, privado ou público, para criar um agendamento.',
+        text: ':one: Adicione o bot no canal desejado, através do camando `/invite @Daily Pick`.',
       }),
       Blocks.Section({
-        text: ':two: Siga as instruções de preenchimento com nome do agendamento, pessoas a serem acionadas e configure os horários.',
+        text: ':two: Use o comando `/daily pick` dentro de um canal, privado ou público, para criar um agendamento.',
+      }),
+      Blocks.Section({
+        text: ':three: Siga as instruções de preenchimento com nome do agendamento, pessoas a serem acionadas e configure os horários.',
       }),
       Blocks.Image({
         imageUrl: 'https://static.ifood.com.br/daily-pick/daily-pick-command-pick.png',
@@ -66,7 +69,7 @@ app.event('app_home_opened', async ({ event, client }) => {
       Blocks.Context().elements(
         ':eyes: Veja todas as tasks usando o comando `/daily list`.',
         ':question: Acesse o menu de ajuda através do comando `/daily`.',
-        ':star: Para solicitar novas funcionalidades ou pedir ajuda em problemas específicos, pode falar comigo via DM (<@richard.lopes>)'
+        ':star: Para solicitar novas funcionalidades ou pedir ajuda em problemas específicos, pode falar comigo via DM (<@richard.lopes>) ou use o canal (<#daily-pick-bot>)'
       )
     )
     .buildToObject();
