@@ -27,7 +27,8 @@ export const connectPostgresql = async () => {
     await migrationClient.query(`set role "${env('PG_DATABASE')}"`);
     await migrate({ client: migrationClient }, 'src/services/repository/postgresql/migrations');
   } catch (e) {
-    logger.error('Error migrating database:', e);
+    logger.error({ message: 'Error migrating database' });
+    logger.error(e);
   } finally {
     await migrationClient?.end();
   }
@@ -47,7 +48,7 @@ export const connectPostgresql = async () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     client.query = (...args) => {
-      logger.debug('query:', args);
+      logger.debug({ query: args });
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       return query.apply(client, args);
