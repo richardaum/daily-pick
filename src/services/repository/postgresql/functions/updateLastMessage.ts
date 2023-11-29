@@ -5,7 +5,7 @@ export const updateLastMessage: Repository['updateLastMessage'] = async (cronId,
   await database().query(
     `
       UPDATE cron
-      SET lastMessage = $1
+      SET "lastMessage" = $1
       WHERE id = $2
     `,
     [lastMessage, cronId]

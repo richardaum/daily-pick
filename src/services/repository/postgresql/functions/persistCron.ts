@@ -16,7 +16,7 @@ export const persistCron: Repository['persistCron'] = async (cron) => {
   await database().query(
     `
       INSERT INTO cron
-      (id, channel, current, intervals, name, team, users, createTime, author, message) VALUES
+      ("id", "channel", "current", "intervals", "name", "team", "users", "createTime", "author", "message") VALUES
       ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     `,
     [
