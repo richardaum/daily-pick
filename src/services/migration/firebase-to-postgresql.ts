@@ -1,10 +1,15 @@
 import { omit } from 'lodash';
 
+import { migratePostgresql } from '../repository/postgresql/migrate';
+
 import { connectFirebase, firebaseRepository } from '@/services/repository/firebase';
 import { connectPostgresql, database } from '@/services/repository/postgresql';
 
 export const migrateFirebaseToPostgresql = async () => {
   connectFirebase();
+
+  await migratePostgresql();
+
   const disconnect = await connectPostgresql();
 
   const crons = await firebaseRepository.fetchCrons();
