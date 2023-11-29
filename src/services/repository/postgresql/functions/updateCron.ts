@@ -12,7 +12,7 @@ export const updateCron: Repository['updateCron'] = async (cron) => {
 
   for (const key of Object.keys(formattedCron)) {
     if (key !== 'id') {
-      queryParts.push(`${key} = $${valueIndex}`);
+      queryParts.push(`"${key}" = $${valueIndex}`);
       const value = formattedCron[key as keyof typeof formattedCron];
       values.push(value);
       valueIndex++;
