@@ -23,7 +23,7 @@ export const migrateFirebaseToPostgresql = async () => {
       (sql, [key, value], index) => {
         return {
           marks: [...sql.marks, `$${index + 1}`],
-          columns: [...sql.columns, key],
+          columns: [...sql.columns, `"${key}"`],
           values: [...sql.values, value],
         };
       },
